@@ -66,12 +66,18 @@
     0 8px 24px -8px rgb(20 23 27 / 0.12);
   --lift-sm: 0 1px 3px -1px rgb(20 23 27 / 0.1);
 
-  /* ── Scene. Not a second palette: the page's own inks expressed as the six
+  /* ── Scene. Not a second palette: the page's own inks expressed as the
      values the drawing needs, read off `documentElement` and re-read whenever
      the theme class flips. The object has no colours of its own. */
   --scene-face: #eceeed;
   --scene-face-2: #f7f8f7;
   --scene-face-3: #d8dcdb;
+  /* The height ramp the surface is shaded with, basin to ridge. Not a third
+     hue: it is the process cyan pulled down into the deep loss and let go of
+     entirely at the peaks, so height reads as saturation against the stock. */
+  --scene-ramp-low: #6ea6b9;
+  --scene-ramp-mid: #bcd4da;
+  --scene-ramp-high: #f4f7f6;
   --scene-edge: #14171b;
   --scene-mark: #046a90;
   --scene-key: 1.15; /* how hard the single key light falls */
@@ -114,6 +120,9 @@
   --scene-face: #23282b;
   --scene-face-2: #2c3236;
   --scene-face-3: #191d20;
+  --scene-ramp-low: #142f39;
+  --scene-ramp-mid: #1d4a58;
+  --scene-ramp-high: #2e6675;
   --scene-edge: #cfd5d4;
   --scene-mark: #4fb9de;
   --scene-key: 0.95;

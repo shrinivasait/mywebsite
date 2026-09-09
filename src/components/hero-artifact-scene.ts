@@ -70,6 +70,9 @@ type Vars = {
   face: string;
   face2: string;
   face3: string;
+  rampLow: string;
+  rampMid: string;
+  rampHigh: string;
   edge: string;
   mark: string;
   key: number;
@@ -87,6 +90,9 @@ const readVars = (): Vars => {
     face: v("--scene-face", "#eceeed"),
     face2: v("--scene-face-2", "#f7f8f7"),
     face3: v("--scene-face-3", "#d8dcdb"),
+    rampLow: v("--scene-ramp-low", "#6ea6b9"),
+    rampMid: v("--scene-ramp-mid", "#bcd4da"),
+    rampHigh: v("--scene-ramp-high", "#f4f7f6"),
     edge: v("--scene-edge", "#14171b"),
     mark: v("--scene-mark", "#046a90"),
     key: parseFloat(v("--scene-key", "1.15")),
@@ -376,19 +382,32 @@ export function createHeroArtifact(
   };
 
   const colLow = new THREE.Color();
+  const colMid = new THREE.Color();
   const colHigh = new THREE.Color();
   const scratch = new THREE.Color();
 
-  /** Shades the surface by height, low in the recessed tone and high in the
-      raised one. A shading ramp on a data surface is the data, not decoration. */
+  /** Shades the surface by height along a three-stop ramp: saturated in the
+      deep basin, letting go of the tint as the ground rises. A two-stop ramp
+      between two near-neutrals — which is what this was — is not a gradient,
+      it is a flat face with a slight dirty edge, and it read as grey.
+      Interpolating in linear-sRGB (three.js's working space) keeps the middle
+      of the ramp from going muddy the way a raw hex lerp does.
+
+      A shading ramp on a data surface is the data, not decoration: `t` is the
+      normalised loss, so colour and height carry the same number. */
   const applyPalette = () => {
-    colLow.set(vars.face3);
-    colHigh.set(vars.face2);
+    colLow.set(vars.rampLow);
+    colMid.set(vars.rampMid);
+    colHigh.set(vars.rampHigh);
     const pos = surfaceGeo.attributes.position as THREE.BufferAttribute;
     const col = surfaceGeo.attributes.color as THREE.BufferAttribute;
     for (let i = 0; i < pos.count; i += 1) {
       const t = lossNorm(pos.getX(i), pos.getZ(i));
-      scratch.copy(colLow).lerp(colHigh, 0.25 + t * 0.75);
+      /* The midpoint sits at 0.45 rather than 0.5: most of the field is
+         upland, so the low half of the ramp gets the smaller share of the
+         range and the basin keeps its colour instead of washing out. */
+      if (t < 0.45) scratch.copy(colLow).lerp(colMid, t / 0.45);
+      else scratch.copy(colMid).lerp(colHigh, (t - 0.45) / 0.55);
       col.setXYZ(i, scratch.r, scratch.g, scratch.b);
     }
     col.needsUpdate = true;

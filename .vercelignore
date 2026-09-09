@@ -1,0 +1,9 @@
+# Agent tooling and design record — not needed to build or serve the site
+.agents/
+.claude/
+.codex/
+.impeccable/
+skills-lock.json
+archive/
+PRODUCT.md
+DESIGN.md

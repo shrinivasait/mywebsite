@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#C6D6BE">
+<title>Shreenivas Joshi | GenAI Architect &amp; AI Lead</title>
+<meta name="description" content="Shreenivas Joshi — GenAI Architect and AI Lead. Architects production AI systems and builds and funds the engineering organisations that sustain them. 18 engineers led, ₹3 Cr raised, 650–800 ms multimodal voice in production.">
+<meta name="author" content="Shreenivas Joshi">
+<link rel="canonical" href="https://shreenivasjoshi.com/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23C6D6BE'/%3E%3Cg fill='none' stroke='%23161A17' stroke-width='1.1'%3E%3Cellipse cx='32' cy='32' rx='22' ry='9'/%3E%3Cellipse cx='32' cy='32' rx='22' ry='9' transform='rotate(45 32 32)'/%3E%3Cellipse cx='32' cy='32' rx='22' ry='9' transform='rotate(90 32 32)'/%3E%3Cellipse cx='32' cy='32' rx='22' ry='9' transform='rotate(135 32 32)'/%3E%3C/g%3E%3C/svg%3E">
+
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Shreenivas Joshi">
+<meta property="og:url" content="https://shreenivasjoshi.com/">
+<meta property="og:title" content="Shreenivas Joshi — GenAI Architect &amp; AI Lead">
+<meta property="og:description" content="Architects production AI systems and builds and funds the engineering organisations that sustain them.">
+<meta property="og:image" content="https://shreenivasjoshi.com/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Shreenivas Joshi — GenAI Architect and AI Lead.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shreenivas Joshi — GenAI Architect &amp; AI Lead">
+<meta name="twitter:description" content="Architects production AI systems and builds and funds the engineering organisations that sustain them.">
+<meta name="twitter:image" content="https://shreenivasjoshi.com/assets/og.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600;6..96,700&family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preload" as="image" href="assets/profile.jpg" fetchpriority="high">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════════════
+   THE FUNDING INSTRUMENT
+   A career issued as the instrument that funded it. SPECIFICATION and
+   ALLOCATION run as paired columns, so architect and organisation-builder are
+   one structure rather than two sections.
+
+   House rule, enforced throughout: depth comes only from overlap and rule
+   weight. There is not one box-shadow, text-shadow or gradient in this file.
+   ═══════════════════════════════════════════════════════════════════════════ */
+:root{
+  --tint:#C6D6BE;          /* safety-tint ledger stock */
+  --tint-2:#D6E1CF;        /* lighter band */
+  --paper:#F7F6F1;
+  --ink:#161A17;
+  --ink-2:#3F4742;         /* secondary text, 7.4:1 on paper */
+  --ink-3:#5E6660;         /* tertiary, 5.1:1 on paper */
+  --oxide:#9E2B1E;         /* provenance, totals, annotation */
+  --rule:#161A17;
+  --hair:rgba(22,26,23,.26);
+  --hair-2:rgba(22,26,23,.5);
+  --max:1180px;
+  --ease:cubic-bezier(.2,.65,.3,1);
+  --serif:'Bodoni Moda',ui-serif,Georgia,serif;
+  --sans:'Archivo',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --narrow:'Archivo Narrow','Archivo',ui-sans-serif,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.55;
+  font-variant-numeric:tabular-nums lining-nums;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+::selection{background:var(--oxide);color:var(--paper)}
+:focus-visible{outline:2px solid var(--oxide);outline-offset:3px}
+::-webkit-scrollbar{width:12px;height:12px}
+::-webkit-scrollbar-track{background:var(--tint)}
+::-webkit-scrollbar-thumb{background:var(--ink-2);border:3px solid var(--tint)}
+::-webkit-scrollbar-thumb:hover{background:var(--ink)}
+
+.wrap{width:min(var(--max),calc(100% - 48px));margin-inline:auto}
+.skip{position:absolute;left:-9999px;top:0;z-index:60;padding:12px 18px;background:var(--ink);color:var(--paper);font-weight:600}
+.skip:focus{left:0}
+
+/* ── Type ─────────────────────────────────────────────────────────────── */
+.eng{font-family:var(--serif);font-weight:400;font-style:normal}
+.lbl{font-family:var(--narrow);font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3)}
+.lbl-ink{color:var(--ink)}
+.num{font-family:var(--serif);font-weight:500;font-variant-numeric:tabular-nums lining-nums;letter-spacing:-.01em}
+
+/* ── Instrument head ──────────────────────────────────────────────────── */
+.head{background:var(--tint);border-bottom:2px solid var(--rule)}
+.head-bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:24px;
+  padding:20px 0 17px;border-bottom:1px solid var(--hair)}
+.issuer{font-family:var(--serif);font-size:1.32rem;font-weight:600;letter-spacing:-.005em;line-height:1.1}
+.issuer small{display:block;margin-top:6px;font-family:var(--narrow);font-size:.7rem;font-weight:600;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--ink-2)}
+.ref{text-align:right;font-family:var(--narrow);font-size:.72rem;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-2);line-height:1.9}
+.ref b{color:var(--ink);font-weight:700}
+
+/* Engine-turned seal. Rotates once every four minutes — the only thing on the
+   page that moves on its own. */
+.seal{width:96px;height:96px;display:block}
+.seal g{fill:none;stroke:var(--ink);stroke-width:.7;opacity:.42;transform-origin:100px 100px}
+.seal .gr:nth-child(1){animation:turn 240s linear infinite}
+.seal .gr:nth-child(2){animation:turn 168s linear infinite reverse}
+.seal .gr:nth-child(3){animation:turn 96s linear infinite}
+@keyframes turn{to{transform:rotate(360deg)}}
+
+.subject{display:grid;grid-template-columns:minmax(0,1fr) 288px;gap:52px;padding:34px 0 26px;align-items:end}
+.subject h1{margin:0;font-family:var(--serif);font-weight:400;
+  font-size:clamp(2.5rem,5.1vw,4.6rem);line-height:1.02;letter-spacing:-.02em;text-wrap:balance}
+.subject h1 em{font-style:italic;font-weight:500}
+.subject h1 .and{display:block;font-family:var(--narrow);font-weight:600;font-style:normal;
+  font-size:clamp(.78rem,1.4vw,1rem);letter-spacing:.3em;text-transform:uppercase;color:var(--oxide);
+  margin:.5em 0 .38em}
+.abstract{margin:18px 0 0;max-width:56ch;font-size:1rem;line-height:1.58;color:var(--ink-2)}
+/* The docket puts the two figures that establish level above the fold; the
+   full account still opens the record below. */
+.docket{display:flex;flex-wrap:wrap;margin:22px 0 0;border-top:1px solid var(--hair-2)}
+.dk{padding:16px 30px 0 0;margin-right:30px;border-right:1px solid var(--hair)}
+.dk:last-child{border-right:0;margin-right:0;padding-right:0}
+.dk .v{display:block;font-family:var(--serif);font-size:2.3rem;font-weight:600;line-height:.96;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums lining-nums}
+.dk .k{display:block;margin-top:8px;font-family:var(--narrow);font-size:.68rem;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+
+/* The portrait is affixed to the instrument, with corner mounts. */
+.affix{align-self:end;margin:0}
+.mounted{position:relative;display:block}
+.affix img{display:block;width:100%;height:auto;aspect-ratio:.84;object-fit:cover;object-position:center top;
+  border:1px solid var(--rule);filter:grayscale(1) contrast(1.08)}
+.mounted:after{content:"";position:absolute;inset:7px;border:1px solid rgba(247,246,241,.34);pointer-events:none}
+.mount{position:absolute;width:19px;height:19px;border:1px solid var(--hair-2);background:var(--tint-2)}
+.mount.tl{top:-7px;left:-7px;border-right:0;border-bottom:0}
+.mount.tr{top:-7px;right:-7px;border-left:0;border-bottom:0}
+.mount.bl{bottom:-7px;left:-7px;border-right:0;border-top:0}
+.mount.br{bottom:-7px;right:-7px;border-left:0;border-top:0}
+.affix figcaption{margin:17px 0 0;font-family:var(--narrow);font-size:.66rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+
+/* Execution block — where a signature block belongs. */
+.execution{display:flex;flex-wrap:wrap;align-items:center;gap:0;border-top:1px solid var(--rule);
+  border-bottom:0;padding:0;margin:0}
+.exec-cell{flex:1 1 auto;padding:13px 24px 13px 0;border-right:1px solid var(--hair)}
+.exec-cell:last-child{border-right:0;padding-right:0}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border:1px solid var(--rule);
+  background:var(--ink);color:var(--paper);font-family:var(--narrow);font-size:.8rem;font-weight:700;
+  letter-spacing:.13em;text-transform:uppercase;transition:background .16s var(--ease),color .16s var(--ease)}
+.btn:hover{background:var(--oxide);border-color:var(--oxide)}
+.btn-2{background:transparent;color:var(--ink)}
+.btn-2:hover{background:var(--ink);color:var(--paper)}
+
+/* ── Schedules ────────────────────────────────────────────────────────── */
+.sched{padding:76px 0 0}
+.sched-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;
+  padding-bottom:11px;border-bottom:2px solid var(--rule)}
+.sched-head h2{margin:0;font-family:var(--narrow);font-size:.86rem;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase}
+.sched-head .note{font-family:var(--narrow);font-size:.7rem;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);text-align:right}
+
+/* Summary of account — magnitude drives scale, so the figures are not a six-up
+   grid of equals. Two headline, two secondary, two tertiary. */
+/* Spans total exactly 6 per row: 3+3, then 2+2+1+1. */
+.account{display:grid;grid-template-columns:repeat(6,1fr);border-bottom:1px solid var(--rule)}
+.acct{padding:30px 22px 26px;border-right:1px solid var(--hair);min-width:0}
+.acct:last-child{border-right:0}
+/* The cell that opens each row sits flush with the page margin. */
+.acct:nth-child(1),.acct:nth-child(3){padding-left:0}
+.acct:nth-child(2),.acct:nth-child(6){padding-right:0;border-right:0}
+.acct.t1{grid-column:span 3;background:var(--tint);padding-left:22px;border-bottom:1px solid var(--hair)}
+.acct:nth-child(1){padding-left:22px}
+.acct.t2{grid-column:span 2}
+.acct.t3{grid-column:span 1}
+.acct .v{display:block;font-family:var(--serif);font-weight:600;line-height:.94;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums lining-nums}
+.acct.t1 .v{font-size:clamp(2.6rem,5.4vw,4.3rem)}
+.acct.t2 .v{font-size:clamp(1.7rem,3vw,2.5rem)}
+.acct.t3 .v{font-size:clamp(1.25rem,2vw,1.6rem)}
+.acct .v .u,.dk .v .u{font-size:.46em;letter-spacing:0}
+/* + − ≈ – are hairlines in a Didone; the grotesque holds them. */
+.sgn{font-family:var(--narrow);font-weight:600;font-size:.78em;letter-spacing:0}
+.acct .k{display:block;margin-top:13px;font-family:var(--narrow);font-size:.7rem;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);line-height:1.45}
+.acct.t1 .k{color:var(--ink)}
+
+/* Schedule A — the paired ledger. This is the argument. */
+.ledger{border-bottom:1px solid var(--rule)}
+.lhead{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr) 168px;
+  border-bottom:1px solid var(--rule)}
+.lhead span{padding:9px 30px 9px 0;border-right:1px solid var(--hair);
+  font-family:var(--narrow);font-size:.66rem;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--ink-3)}
+.lhead span:last-child{border-right:0;padding-right:0}
+.lrow{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr) 168px;gap:0;
+  border-bottom:1px solid var(--hair);transition:background .18s var(--ease)}
+.lrow:last-child{border-bottom:0}
+.lrow:hover{background:var(--tint-2)}
+.lcell{padding:26px 30px 26px 0;border-right:1px solid var(--hair);min-width:0}
+.lcell:last-child{border-right:0;padding-right:0}
+.lrow h3{margin:0 0 9px;font-family:var(--serif);font-size:1.18rem;font-weight:600;line-height:1.24;
+  letter-spacing:-.005em;text-wrap:balance}
+.lrow p{margin:0;font-size:.9rem;line-height:1.62;color:var(--ink-2)}
+.alloc{font-family:var(--narrow);font-size:.86rem;line-height:1.75;color:var(--ink-2)}
+.alloc b{display:block;font-family:var(--serif);font-size:1.5rem;font-weight:650;color:var(--ink);
+  line-height:1.05;margin-bottom:6px;letter-spacing:-.015em}
+/* Where the allocation is a scope rather than a figure, it says so in the
+   grotesque instead of pretending to be a number. */
+.alloc b.rubric{font-family:var(--narrow);font-size:1rem;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;line-height:1.3;padding-top:6px}
+/* Direct child only: .sgn lives inside .alloc b and must not inherit this. */
+.alloc > span{display:block;font-size:.72rem;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3)}
+.marg{padding:26px 0;font-family:var(--narrow);font-size:.72rem;line-height:1.62;color:var(--oxide)}
+.marg em{font-style:normal;font-weight:700}
+
+/* Provenance apparatus: a reference in the text lights its margin note, and
+   the note lights its reference. The page's one signature interaction. */
+/* A reference must never wrap onto a line of its own, orphaned from the claim
+   it marks: the preceding word carries it. */
+.pv{font-family:var(--narrow);font-size:.62em;font-weight:700;vertical-align:.5em;color:var(--oxide);
+  margin-left:.18em;cursor:pointer;border:0;background:none;padding:0 .1em;font-variant-position:normal}
+.nb{white-space:nowrap}
+.pv:hover,.pv.lit{background:var(--oxide);color:var(--paper)}
+.marg.lit{color:var(--ink)}
+.marg.lit em{background:var(--oxide);color:var(--paper);padding:0 .25em}
+
+/* Schedule of technical specification */
+.spec{border-bottom:1px solid var(--rule)}
+.srow{display:grid;grid-template-columns:210px minmax(0,1fr);border-bottom:1px solid var(--hair);
+  transition:background .18s var(--ease)}
+.srow:last-child{border-bottom:0}
+.srow:hover{background:var(--tint-2)}
+.srow dt{padding:19px 24px 19px 0;border-right:1px solid var(--hair);
+  font-family:var(--narrow);font-size:.82rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink)}
+.srow dd{margin:0;padding:19px 0 19px 24px;font-family:var(--narrow);font-size:.86rem;color:var(--ink-2);line-height:1.9}
+.srow dd i{font-style:normal;color:var(--hair-2);padding:0 .45em}
+
+/* Record of service */
+.service{border-bottom:1px solid var(--rule)}
+.entry{display:grid;grid-template-columns:210px minmax(0,1fr);border-bottom:1px solid var(--hair);padding:0}
+.entry:last-child{border-bottom:0}
+.entry-when{padding:34px 24px 34px 0;border-right:1px solid var(--hair)}
+.entry-when .d{font-family:var(--narrow);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;line-height:1.6}
+.entry-when .now{display:inline-block;margin-top:9px;padding:3px 8px;background:var(--oxide);color:var(--paper);
+  font-family:var(--narrow);font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.entry-what{padding:34px 0 34px 24px;min-width:0}
+/* The record of service is the longest stretch of the document; the role
+   titles carry it at display scale so it is not 3,000px of even grey. */
+.entry-what h3{margin:0;font-family:var(--serif);font-size:clamp(1.7rem,2.6vw,2.4rem);font-weight:600;
+  letter-spacing:-.018em;line-height:1.1}
+.entry-what .org{margin:5px 0 16px;font-family:var(--narrow);font-size:.82rem;font-weight:600;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--oxide)}
+.entry-what ul{margin:0;padding:0;list-style:none;max-width:70ch}
+.entry-what li{position:relative;padding-left:22px;font-size:.92rem;line-height:1.66;color:var(--ink-2)}
+.entry-what li+li{margin-top:9px}
+.entry-what li:before{content:"";position:absolute;left:0;top:.72em;width:11px;height:1px;background:var(--ink-3)}
+
+/* Deliverables */
+.deliv{border-bottom:1px solid var(--rule)}
+.drow{display:grid;grid-template-columns:52px minmax(0,1.15fr) minmax(0,1fr);
+  border-bottom:1px solid var(--hair);transition:background .18s var(--ease)}
+.drow:last-child{border-bottom:0}
+.drow:hover{background:var(--tint-2)}
+.dno{padding:26px 0;font-family:var(--narrow);font-size:.78rem;font-weight:700;color:var(--ink-3);
+  border-right:1px solid var(--hair)}
+.dwhat{padding:26px 30px 26px 22px;border-right:1px solid var(--hair);min-width:0}
+.dwhat h3{margin:0 0 9px;font-family:var(--serif);font-size:1.34rem;font-weight:600;letter-spacing:-.014em}
+.dwhat p{margin:0;font-size:.89rem;line-height:1.62;color:var(--ink-2)}
+.dstack{padding:26px 0 26px 24px;font-family:var(--narrow);font-size:.8rem;line-height:1.95;color:var(--ink-2)}
+.dstack i{font-style:normal;color:var(--hair-2);padding:0 .4em}
+
+/* Figure 1 — the voice path, drawn as a technical plate rather than decoration */
+.plate{margin:76px 0 0;border:1px solid var(--rule);background:var(--tint)}
+.plate-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;
+  padding:14px 22px;border-bottom:1px solid var(--rule)}
+.plate-head .t{font-family:var(--narrow);font-size:.76rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.plate-head .s{font-family:var(--narrow);font-size:.7rem;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-2)}
+.plate-body{padding:34px 22px 26px;overflow-x:auto}
+.plate svg{display:block;min-width:660px;width:100%;height:auto}
+.plate svg .st{fill:none;stroke:var(--ink);stroke-width:1}
+.plate svg .sig{fill:none;stroke:var(--oxide);stroke-width:1.4}
+.plate svg text{font-family:'Archivo Narrow','Archivo',sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:.09em;text-transform:uppercase;fill:var(--ink)}
+.plate svg text.ms{fill:var(--oxide);font-size:10px}
+/* Indicative figures must not wear the colour reserved for measured provenance. */
+.plate svg text.ind{fill:var(--ink-3);font-size:10px;font-weight:500}
+.plate svg .box{fill:var(--paper);stroke:var(--ink);stroke-width:1}
+.plate-foot{padding:0 22px 20px;font-family:var(--narrow);font-size:.74rem;color:var(--ink-2);line-height:1.6;max-width:76ch}
+
+/* Enquiries — the assistant, as a ruled enquiry counter */
+.enq{margin:76px 0 0;border:1px solid var(--rule)}
+.enq-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:14px 22px;
+  background:var(--tint);border-bottom:1px solid var(--rule)}
+.enq-head .t{font-family:var(--narrow);font-size:.76rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.enq-head .s{font-family:var(--narrow);font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.log{height:300px;overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:0}
+.msg{padding:14px 0;border-bottom:1px solid var(--hair);max-width:78ch}
+.msg:last-child{border-bottom:0}
+.msg .who{display:block;font-family:var(--narrow);font-size:.66rem;font-weight:700;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.msg.q .who{color:var(--oxide)}
+.msg p{margin:0;font-size:.92rem;line-height:1.62;color:var(--ink-2)}
+.msg.q p{color:var(--ink);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid var(--hair)}
+.chip{flex:1 1 auto;padding:12px 16px;border-right:1px solid var(--hair);background:none;cursor:pointer;
+  font-family:var(--narrow);font-size:.74rem;font-weight:600;letter-spacing:.06em;color:var(--ink-2);
+  text-align:left;transition:background .16s var(--ease),color .16s var(--ease)}
+.chip:last-child{border-right:0}
+.chip:hover{background:var(--ink);color:var(--paper)}
+.enq-form{display:flex;border-top:1px solid var(--rule)}
+.enq-form input{flex:1;border:0;padding:16px 22px;background:var(--paper);color:var(--ink);
+  font-family:var(--narrow);font-size:.92rem;outline:none}
+.enq-form input::placeholder{color:var(--ink-3)}
+.enq-form input:focus{background:var(--tint-2)}
+.enq-form button{border:0;border-left:1px solid var(--rule);padding:0 28px;background:var(--ink);color:var(--paper);
+  font-family:var(--narrow);font-size:.76rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;
+  transition:background .16s var(--ease)}
+.enq-form button:hover:not(:disabled){background:var(--oxide)}
+.enq-form input:disabled,.enq-form button:disabled{opacity:.55;cursor:not-allowed}
+.enq-note{margin:12px 0 0;font-family:var(--narrow);font-size:.72rem;color:var(--ink-3);line-height:1.6;max-width:80ch}
+
+/* Execution / foot */
+.foot{margin-top:84px;background:var(--tint);border-top:2px solid var(--rule)}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:56px;padding:56px 0 46px;align-items:start}
+.foot h2{margin:0;font-family:var(--serif);font-size:clamp(1.9rem,3.6vw,3rem);font-weight:400;
+  line-height:1.06;letter-spacing:-.018em;max-width:18ch}
+.foot h2 em{font-style:italic;font-weight:500}
+.foot p{margin:18px 0 30px;max-width:52ch;font-size:.98rem;line-height:1.62;color:var(--ink-2)}
+.foot-acts{display:flex;flex-wrap:wrap;gap:12px}
+.sigblock{position:relative;border:1px solid var(--rule);padding:20px 22px 18px;background:var(--paper);overflow:hidden}
+/* An executed instrument bears its seal at the signature, struck rather than
+   turning: no animation here. */
+.sigseal{position:absolute;right:-34px;bottom:-34px;width:150px;height:150px;pointer-events:none}
+.sigseal g{fill:none;stroke:var(--ink);stroke-width:.7;opacity:.13}
+.sigblock .lbl{display:block;margin-bottom:14px}
+.sigblock .name{font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-.01em;line-height:1.1}
+.sigblock .rule{height:1px;background:var(--ink);margin:16px 0 9px}
+.sigblock .meta{font-family:var(--narrow);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);line-height:1.8}
+.colophon{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding:16px 0 40px;
+  border-top:1px solid var(--hair);font-family:var(--narrow);font-size:.7rem;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.colophon a:hover{color:var(--oxide)}
+
+/* ── Rules ink themselves in as the schedule is read ──────────────────── */
+/* Progressive enhancement. The hidden start state is applied only once the
+   inline head script proves JS is live, so with scripting off every schedule
+   heading — the reference apparatus itself — renders normally. */
+.rise{transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.js .rise{opacity:0;transform:translateY(9px)}
+.js .rise.on{opacity:1;transform:none}
+
+/* ── Adaptation ───────────────────────────────────────────────────────── */
+@media(max-width:1040px){
+  .lrow{grid-template-columns:minmax(0,1fr) minmax(0,.86fr);}
+  .marg{grid-column:1/-1;padding:0 0 22px;border-top:1px solid var(--hair)}
+  .marg br{display:none}
+}
+@media(max-width:860px){
+  .subject{grid-template-columns:1fr;gap:38px;padding:40px 0 34px}
+  .affix{max-width:288px}
+  .foot-grid{grid-template-columns:1fr;gap:38px}
+  .account{grid-template-columns:repeat(2,1fr)}
+  .acct{padding-right:20px;border-right:1px solid var(--hair)}
+  .acct:nth-child(2n){border-right:0;padding-right:0}
+  .acct.t1,.acct.t2{grid-column:span 1}
+  .acct.t1{padding-left:18px}
+  .head-bar{grid-template-columns:1fr auto;gap:16px}
+  .ref{grid-column:1/-1;text-align:left;order:3;padding-top:4px}
+}
+@media(max-width:680px){
+  .wrap{width:calc(100% - 32px)}
+  .lrow,.srow,.entry,.drow{grid-template-columns:1fr}
+  .lcell,.srow dt,.srow dd,.entry-when,.entry-what,.dno,.dwhat,.dstack{
+    border-right:0;padding-left:0;padding-right:0}
+  .lcell{padding-bottom:18px;border-bottom:1px solid var(--hair)}
+  .lcell:last-of-type{border-bottom:0}
+  .srow dt{padding-bottom:6px}
+  .srow dd{padding-top:0}
+  .entry-when{padding-bottom:12px}
+  .entry-what{padding-top:0}
+  .dno{padding:20px 0 0}
+  .dwhat{padding:10px 0 16px}
+  .dstack{padding:0 0 22px}
+  .sched{padding-top:58px}
+  /* Affixed like a document photograph, top left, so the claim and the figures
+     reach the first screen instead of sitting behind a full-width portrait.
+     The abstract is supporting prose and yields its place to the figures. */
+  .subject{display:flex;flex-direction:column;gap:20px}
+  .affix{order:-1;align-self:flex-start;max-width:116px}
+  .affix figcaption{margin-top:9px;font-size:.6rem}
+  .subject-copy{display:flex;flex-direction:column}
+  .subject-copy h1{order:1}
+  .docket{order:2;margin-top:22px}
+  .abstract{order:3;margin-top:22px}
+  .dk{padding:14px 18px 0 0;margin-right:18px}
+  .dk .v{font-size:1.75rem}
+  .dk .k{font-size:.63rem}
+  .chips{flex-direction:column}
+  .chip{border-right:0;border-bottom:1px solid var(--hair)}
+  .chip:last-child{border-bottom:0}
+  .exec-cell{flex:1 1 auto;border-right:0;padding:12px 14px 12px 0}
+  .btn{padding:11px 15px;font-size:.72rem;letter-spacing:.1em}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  /* Must out-specify .js .rise, or reduced motion hides the schedule headings. */
+  .js .rise,.js .rise.on{opacity:1;transform:none}
+}
+@media print{
+  .enq,.skip{display:none}
+  body{background:#fff}
+  .head,.foot,.plate,.acct.t1{background:none}
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Shreenivas Joshi",
+  "url": "https://shreenivasjoshi.com/",
+  "image": "https://shreenivasjoshi.com/assets/profile.jpg",
+  "jobTitle": "Lead AI / GenAI Architect",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "HB Software Solutions India Pvt. Ltd."
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Gurugram",
+    "addressCountry": "IN"
+  },
+  "email": "mailto:srinivasjoshi11@gmail.com",
+  "sameAs": [
+    "https://www.linkedin.com/in/shreenivas-joshi"
+  ],
+  "knowsAbout": [
+    "Generative AI",
+    "Large Language Models",
+    "Retrieval-Augmented Generation",
+    "Agentic AI",
+    "Voice AI",
+    "MLOps",
+    "Computer Vision",
+    "AI Engineering Leadership"
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#account">Skip to summary</a>
+
+<header class="head">
+<div class="wrap">
+
+  <div class="head-bar">
+    <div class="issuer">Shreenivas Joshi<small>GenAI Architect · AI Lead · Gurugram, India</small></div>
+    <svg class="seal" viewBox="0 0 200 200" aria-hidden="true"><g class="gr"><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(0.0 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(12.9 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(25.7 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(38.6 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(51.4 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(64.3 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(77.1 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(90.0 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(102.9 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(115.7 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(128.6 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(141.4 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(154.3 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(167.1 100 100)"/></g><g class="gr"><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(0.0 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(16.4 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(32.7 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(49.1 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(65.5 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(81.8 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(98.2 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(114.5 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(130.9 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(147.3 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(163.6 100 100)"/></g><g class="gr"><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(0.0 100 100)"/><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(22.5 100 100)"/><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(45.0 100 100)"/><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(67.5 100 100)"/><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(90.0 100 100)"/><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(112.5 100 100)"/><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(135.0 100 100)"/><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(157.5 100 100)"/></g></svg>
+    <div class="ref">
+      Instrument <b>SJ/AI/26</b><br>
+      Issued <b>2026 · 09</b><br>
+      Status <b>Open to offers</b>
+    </div>
+  </div>
+
+  <div class="subject">
+    <div class="subject-copy">
+      <h1>Architects the system <span class="and">and</span> <em>funds the team</em> that sustains it.</h1>
+      <p class="abstract">Five years building AI: from computer vision for geospatial defence, to an AI
+      function raised from zero, to eighteen engineers shipping enterprise GenAI today. The two halves
+      are the point — the architecture and the organisation that keeps it running.</p>
+      <div class="docket">
+        <div class="dk"><span class="v">18</span><span class="k">Engineers led today</span></div>
+        <div class="dk"><span class="v">₹3 Cr</span><span class="k">Funding secured</span></div>
+        <div class="dk"><span class="v">650<span class="sgn">–</span>800<span class="u"> ms</span></span><span class="k">Voice, in production</span></div>
+      </div>
+    </div>
+    <figure class="affix">
+      <span class="mounted">
+        <span class="mount tl"></span><span class="mount tr"></span><span class="mount bl"></span><span class="mount br"></span>
+        <img src="assets/profile.jpg" width="860" height="996" alt="Shreenivas Joshi" fetchpriority="high" decoding="async">
+      </span>
+      <figcaption>Affixed · S. Joshi</figcaption>
+    </figure>
+  </div>
+
+  <div class="execution">
+    <div class="exec-cell"><a class="btn" href="mailto:srinivasjoshi11@gmail.com">Open a conversation</a></div>
+    <div class="exec-cell"><a class="btn btn-2" href="assets/Shreenivas_Joshi_Resume.pdf" download>Résumé, PDF</a></div>
+    <div class="exec-cell"><a class="btn btn-2" href="https://www.linkedin.com/in/shreenivas-joshi" target="_blank" rel="noopener">LinkedIn</a></div>
+  </div>
+
+</div>
+</header>
+
+<main class="wrap">
+
+<!-- ── Summary of account ────────────────────────────────────────────── -->
+<section class="sched" id="account">
+  <div class="sched-head rise">
+    <h2>Summary of account</h2>
+    <span class="note">Figures as at September 2026</span>
+  </div>
+  <div class="account">
+    <div class="acct t1"><span class="v">18</span><span class="k">Engineers led<br>HB Software Solutions</span></div>
+    <div class="acct t1"><span class="v">₹3 Cr</span><span class="k">Incubation funding secured<br>≈ USD 360,000</span></div>
+    <div class="acct t2"><span class="v">$50K<span class="sgn">+</span></span><span class="k">Cloud grants<br>AWS · Azure · Google</span></div>
+    <div class="acct t2"><span class="v">650<span class="sgn">–</span>800<span class="u"> ms</span></span><span class="k">Multimodal voice<br>end to end, in production</span></div>
+    <div class="acct t3"><span class="v"><span class="sgn">+</span>30%</span><span class="k">Customer<br>acquisition</span></div>
+    <div class="acct t3"><span class="v">5 yrs</span><span class="k">In AI<br>and deep learning</span></div>
+  </div>
+</section>
+
+<!-- ── Schedule A — the paired ledger ────────────────────────────────── -->
+<section class="sched" id="schedule-a">
+  <div class="sched-head rise">
+    <h2>Schedule A · Specification and allocation</h2>
+    <span class="note">What was built · what it took</span>
+  </div>
+  <div class="ledger">
+    <div class="lhead" aria-hidden="true"><span>Specification</span><span>Allocation</span><span>Provenance</span></div>
+
+    <article class="lrow">
+      <div class="lcell">
+        <h3>Built an AI function from zero</h3>
+        <p>First AI hire at Basal Analytics. Established the architecture, the delivery practice and the
+        review <span class="nb">standards<button class="pv" data-pv="a1" aria-describedby="n-a1">a</button></span> — several of which are still in use there.</p>
+      </div>
+      <div class="lcell alloc">
+        <b>6<span class="sgn"> → </span>10</b><span>Engineers recruited and led</span>
+      </div>
+      <div class="marg" id="n-a1"><em>a</em> Documentation and code-review standards introduced 2022, reported still in use at time of writing.</div>
+    </article>
+
+    <article class="lrow">
+      <div class="lcell">
+        <h3>Funded the work before spending the budget</h3>
+        <p>Authored and presented the company's AI implementation strategy to cloud partner programmes and
+        an <span class="nb">incubator<button class="pv" data-pv="a2" aria-describedby="n-a2">b</button></span>, so the AI initiative ran without drawing on core engineering budget.</p>
+      </div>
+      <div class="lcell alloc">
+        <b>₹3 Cr<span class="sgn"> + </span>$50K</b><span>Incubation funding · cloud grants</span>
+      </div>
+      <div class="marg" id="n-a2"><em>b</em> AWS ≈ $20K, Microsoft Azure ≈ $25K, Google ≈ $5K, plus ₹3 Cr incubation funding.</div>
+    </article>
+
+    <article class="lrow">
+      <div class="lcell">
+        <h3>Put multimodal voice into production</h3>
+        <p>A unified architecture for real-time voice agents — speech in, LLM reasoning, speech out —
+        holding conversational latency end to <span class="nb">end<button class="pv" data-pv="a3" aria-describedby="n-a3">c</button></span> under live telephony conditions.</p>
+      </div>
+      <div class="lcell alloc">
+        <b>650<span class="sgn">–</span>800 ms</b><span>Round trip, sustained</span>
+      </div>
+      <div class="marg" id="n-a3"><em>c</em> Measured end to end, caller speech to agent speech, over Twilio in production.</div>
+    </article>
+
+    <article class="lrow">
+      <div class="lcell">
+        <h3>Standardised how models ship</h3>
+        <p>Defined the microservice reference architecture and the MLOps pipelines for training, deployment
+        and monitoring, plus the LLM evaluation framework covering accuracy, interpretability and regression
+        tracking across production <span class="nb">models.<button class="pv" data-pv="a4" aria-describedby="n-a4">d</button></span></p>
+      </div>
+      <div class="lcell alloc">
+        <b class="rubric">Org-wide</b><span>Adopted as the standard</span>
+      </div>
+      <div class="marg" id="n-a4"><em>d</em> Internal standards at HB Software Solutions. Not publicly published.</div>
+    </article>
+
+    <article class="lrow">
+      <div class="lcell">
+        <h3>Turned partnerships into product</h3>
+        <p>Worked with the AWS, Microsoft and Google programmes to bring current AI tooling into the product
+        stack, and converted client proofs-of-concept into paid <span class="nb">engagements.<button class="pv" data-pv="a5" aria-describedby="n-a5">e</button></span></p>
+      </div>
+      <div class="lcell alloc">
+        <b><span class="sgn">+</span>30%</b><span>Customer acquisition growth</span>
+      </div>
+      <div class="marg" id="n-a5"><em>e</em> Growth attributed to AI-enabled analytics offerings at Basal Analytics. Client names withheld.</div>
+    </article>
+
+    <article class="lrow">
+      <div class="lcell">
+        <h3>Made the practice outlast the projects</h3>
+        <p>Mentors engineers on GenAI architecture and prompt engineering, and runs internal workshops
+        driving responsible AI adoption across the <span class="nb">organisation.<button class="pv" data-pv="a6" aria-describedby="n-a6">f</button></span></p>
+      </div>
+      <div class="lcell alloc">
+        <b class="rubric">Continuing</b><span>Mentoring · internal workshops</span>
+      </div>
+      <div class="marg" id="n-a6"><em>f</em> Ongoing internal programme. No external certification claimed.</div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ── Figure 1 — the voice path ─────────────────────────────────────── -->
+<figure class="plate" id="figure-1">
+  <div class="plate-head">
+    <span class="t">Figure 1 · Multimodal voice path</span>
+    <span class="s">Round trip · caller speech to agent speech</span>
+  </div>
+  <div class="plate-body">
+    <svg viewBox="0 0 880 166" role="img" aria-label="Signal path for the real-time voice agent: caller audio over telephony, to speech recognition, to language model reasoning with tool and CRM calls, to speech synthesis, and back to the caller. End-to-end budget 800 milliseconds, sustained at 650 to 800 milliseconds.">
+      <path class="st" d="M14 26 V14 H866 V26"/>
+      <text x="440" y="9" text-anchor="middle" class="ms">Measured end to end · 650–800 ms sustained</text>
+      <g>
+        <rect class="box" x="14"  y="44" width="118" height="42"/><text x="73"  y="69" text-anchor="middle">Caller</text>
+        <rect class="box" x="176" y="44" width="118" height="42"/><text x="235" y="69" text-anchor="middle">Speech in</text>
+        <rect class="box" x="338" y="44" width="152" height="42"/><text x="414" y="69" text-anchor="middle">LLM reasoning</text>
+        <rect class="box" x="534" y="44" width="118" height="42"/><text x="593" y="69" text-anchor="middle">Speech out</text>
+        <rect class="box" x="696" y="44" width="170" height="42"/><text x="781" y="69" text-anchor="middle">Caller hears reply</text>
+      </g>
+      <g class="sig">
+        <path d="M132 65 H172"/><path d="M166 60 l7 5 -7 5"/>
+        <path d="M294 65 H334"/><path d="M328 60 l7 5 -7 5"/>
+        <path d="M490 65 H530"/><path d="M524 60 l7 5 -7 5"/>
+        <path d="M652 65 H692"/><path d="M686 60 l7 5 -7 5"/>
+      </g>
+      <text x="235" y="104" text-anchor="middle" class="ind">≈ 180 ms</text>
+      <text x="414" y="104" text-anchor="middle" class="ind">≈ 320 ms</text>
+      <text x="440" y="162" text-anchor="middle" class="ind">Stage figures indicative of the budget split, not measured</text>
+      <text x="593" y="104" text-anchor="middle" class="ind">≈ 190 ms</text>
+      <path class="st" d="M452 86 V128 H322" stroke-dasharray="3 3"/>
+      <text x="314" y="132" text-anchor="end" class="ind">Tools · CRM</text>
+    </svg>
+  </div>
+  <figcaption class="plate-foot">Speech recognition, language-model reasoning and speech synthesis run as separate
+  services against one latency budget, so a regression in any stage is visible against its own allowance rather
+  than as a slower call. Only the end-to-end figure is measured.</figcaption>
+</figure>
+
+<!-- ── Schedule B — record of service ────────────────────────────────── -->
+<section class="sched" id="schedule-b">
+  <div class="sched-head rise">
+    <h2>Schedule B · Record of service</h2>
+    <span class="note">Three appointments · 2021 to date<br>Detail not already carried in Schedule A</span>
+  </div>
+  <div class="service">
+
+    <article class="entry">
+      <div class="entry-when">
+        <div class="d">Aug 2025 —<br>Present</div>
+        <span class="now">Current</span>
+      </div>
+      <div class="entry-what">
+        <h3>Lead AI</h3>
+        <div class="org">HB Software Solutions India Pvt. Ltd.</div>
+        <ul>
+          <li>Owns end-to-end GenAI architecture and delivery for enterprise conversational and agentic products.</li>
+          <li>Built the organisation's LLM evaluation and benchmarking framework, covering accuracy, interpretability and regression tracking across production models.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="entry-when"><div class="d">Jun 2022 —<br>Jul 2025</div></div>
+      <div class="entry-what">
+        <h3>Head of AI</h3>
+        <div class="org">Basal Analytics Pvt. Ltd.</div>
+        <ul>
+          <li>Architected scalable training and evaluation infrastructure that shortened experiment-to-decision cycles for the whole team.</li>
+          <li>Delivered client proofs-of-concept end to end, converting several into paid engagements.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="entry-when"><div class="d">Oct 2021 —<br>May 2022</div></div>
+      <div class="entry-what">
+        <h3>Deep Learning Engineer</h3>
+        <div class="org">MC&amp;ME Techserve Pvt. Ltd.</div>
+        <ul>
+          <li>Built computer-vision systems for geospatial defence applications.</li>
+          <li>Improved image-recognition accuracy by 25% by optimising network architectures for defence imagery.</li>
+          <li>Reduced object-detection false positives by 30%; built semantic-segmentation tooling for terrain analysis contributing to 20% faster mission response.</li>
+          <li>Led integration of ML models with GIS data pipelines for high-stakes operational environments.</li>
+        </ul>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ── Schedule C — deliverables ─────────────────────────────────────── -->
+<section class="sched" id="schedule-c">
+  <div class="sched-head rise">
+    <h2>Schedule C · Selected deliverables</h2>
+    <span class="note">Systems in production or delivered to client</span>
+  </div>
+  <div class="deliv">
+    <article class="drow">
+      <div class="dno">C.1</div>
+      <div class="dwhat"><h3>Enterprise RAG sales assistant</h3>
+        <p>Retrieval architecture over large-scale client document sets, built to cut sales-team lookup time.</p></div>
+      <div class="dstack">LangChain<i>·</i>Meta-LLaMA 3<i>·</i>FAISS<i>·</i>Custom embeddings</div>
+    </article>
+    <article class="drow">
+      <div class="dno">C.2</div>
+      <div class="dwhat"><h3>Real-time phone-call negotiator</h3>
+        <p>Voice agent combining speech recognition, synthesis and LLM reasoning for live negotiation, wired into CRM workflows.</p></div>
+      <div class="dstack">Twilio<i>·</i>STT / TTS<i>·</i>LLM reasoning<i>·</i>CRM integration</div>
+    </article>
+    <article class="drow">
+      <div class="dno">C.3</div>
+      <div class="dwhat"><h3>MedicalGPT</h3>
+        <p>LLaMA-based clinical assistant taken from continued pretraining on unstructured clinical text through instruction fine-tuning to deployment.</p></div>
+      <div class="dstack">LLaMA<i>·</i>Continued pretraining<i>·</i>SFT<i>·</i>Evaluation</div>
+    </article>
+    <article class="drow">
+      <div class="dno">C.4</div>
+      <div class="dwhat"><h3>Virtual trial room</h3>
+        <p>Diffusion-based virtual try-on MVP with custom preprocessing, led across model, backend and platform integration.</p></div>
+      <div class="dstack">Stable Diffusion<i>·</i>Computer vision<i>·</i>Platform integration</div>
+    </article>
+  </div>
+</section>
+
+<!-- ── Schedule D — technical specification ──────────────────────────── -->
+<section class="sched" id="schedule-d">
+  <div class="sched-head rise">
+    <h2>Schedule D · Technical specification</h2>
+    <span class="note">Working competence, by area</span>
+  </div>
+  <dl class="spec">
+    <div class="srow"><dt>GenAI &amp; LLM</dt><dd>LLaMA<i>·</i>BERT<i>·</i>Mamba<i>·</i>Fine-tuning<i>·</i>Continued pretraining<i>·</i>LLM evaluation</dd></div>
+    <div class="srow"><dt>Retrieval</dt><dd>RAG architecture<i>·</i>LangChain<i>·</i>FAISS<i>·</i>Embeddings<i>·</i>Vector search</dd></div>
+    <div class="srow"><dt>Agentic systems</dt><dd>Task orchestration<i>·</i>Automated reasoning<i>·</i>Enterprise agents<i>·</i>Tool workflows</dd></div>
+    <div class="srow"><dt>Voice &amp; speech</dt><dd>Real-time voice agents<i>·</i>STT<i>·</i>TTS<i>·</i>Twilio<i>·</i>Low-latency pipelines</dd></div>
+    <div class="srow"><dt>Vision &amp; generation</dt><dd>Stable Diffusion<i>·</i>Object detection<i>·</i>Semantic segmentation<i>·</i>OCR / ICR</dd></div>
+    <div class="srow"><dt>Cloud &amp; MLOps</dt><dd>AWS Bedrock<i>·</i>SageMaker<i>·</i>Azure AI Studio<i>·</i>Vertex AI<i>·</i>Docker<i>·</i>CI/CD</dd></div>
+    <div class="srow"><dt>Engineering</dt><dd>Python<i>·</i>FastAPI<i>·</i>PyTorch<i>·</i>Hugging Face<i>·</i>Microservices</dd></div>
+    <div class="srow"><dt>Leadership</dt><dd>Team building<i>·</i>Mentoring<i>·</i>Technical roadmapping<i>·</i>Client engagement<i>·</i>Pre-sales</dd></div>
+  </dl>
+</section>
+
+<!-- ── Enquiries ─────────────────────────────────────────────────────── -->
+<section class="enq" id="enquiries" aria-label="Enquiries">
+  <div class="enq-head">
+    <span class="t">Enquiries</span>
+    <span class="s">Answered from the record on this page</span>
+  </div>
+  <div class="log" id="log" role="log" aria-live="polite">
+    <div class="msg"><span class="who">Counter</span><p>Ask about the appointments, the systems, the funding or the team. Answers are drawn from the record on this page.</p></div>
+  </div>
+  <div class="chips">
+    <button class="chip">What is he responsible for now?</button>
+    <button class="chip">How did he secure the funding?</button>
+    <button class="chip">What has he actually shipped?</button>
+    <button class="chip">How large a team has he led?</button>
+  </div>
+  <form class="enq-form" id="enqForm">
+    <label class="skip" for="enqInput">Your enquiry</label>
+    <input id="enqInput" type="text" autocomplete="off" placeholder="Type an enquiry…">
+    <button type="submit" id="enqSend">Submit</button>
+  </form>
+</section>
+<p class="enq-note">This counter matches keywords against a fixed set of answers written from the record above.
+It is not a language model and makes no external request — nothing you type leaves your browser.</p>
+
+</main>
+
+<footer class="foot">
+<div class="wrap">
+  <div class="foot-grid">
+    <div>
+      <h2>Hiring for a role that needs <em>both halves?</em></h2>
+      <p>Enterprise GenAI, LLM systems, voice architecture, or an AI function that has to be built and funded
+      before it can ship. Gurugram, India, and open to offers.</p>
+      <div class="foot-acts">
+        <a class="btn" href="mailto:srinivasjoshi11@gmail.com">srinivasjoshi11@gmail.com</a>
+        <a class="btn btn-2" href="assets/Shreenivas_Joshi_Resume.pdf" download>Résumé, PDF</a>
+      </div>
+    </div>
+    <div class="sigblock">
+      <svg class="sigseal" viewBox="0 0 200 200" aria-hidden="true"><g class="gr"><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(0.0 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(12.9 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(25.7 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(38.6 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(51.4 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(64.3 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(77.1 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(90.0 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(102.9 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(115.7 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(128.6 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(141.4 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(154.3 100 100)"/><ellipse cx="100" cy="100" rx="56" ry="20" transform="rotate(167.1 100 100)"/></g><g class="gr"><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(0.0 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(16.4 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(32.7 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(49.1 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(65.5 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(81.8 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(98.2 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(114.5 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(130.9 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(147.3 100 100)"/><ellipse cx="100" cy="100" rx="40" ry="14" transform="rotate(163.6 100 100)"/></g><g class="gr"><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(0.0 100 100)"/><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(22.5 100 100)"/><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(45.0 100 100)"/><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(67.5 100 100)"/><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(90.0 100 100)"/><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(112.5 100 100)"/><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(135.0 100 100)"/><ellipse cx="100" cy="100" rx="24" ry="8" transform="rotate(157.5 100 100)"/></g></svg>
+      <span class="lbl">Executed by</span>
+      <div class="name">Shreenivas Joshi</div>
+      <div class="rule"></div>
+      <div class="meta">
+        GenAI Architect · AI Lead<br>
+        Gurugram, India<br>
+        <a href="https://www.linkedin.com/in/shreenivas-joshi" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+  </div>
+  <div class="colophon">
+    <span>Instrument SJ/AI/26 · Issued September 2026</span>
+    <span>Set in Bodoni Moda and Archivo</span>
+  </div>
+</div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   The instrument's working parts. No dependencies, no network calls.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Rules ink themselves in as each schedule is reached ──────────────── */
+const seen = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('on'); seen.unobserve(e.target); }
+}), {threshold:.16, rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rise').forEach(el => seen.observe(el));
+
+/* ── Provenance apparatus ─────────────────────────────────────────────────
+   A reference in the text lights its margin note, and hovering the note lights
+   the reference. Both directions, and keyboard-reachable, because the notes are
+   the page's evidence rather than an ornament. */
+document.querySelectorAll('.pv').forEach(ref => {
+  const note = document.getElementById('n-' + ref.dataset.pv);
+  if (!note) return;
+  let pinned = false;
+  const set = on => { ref.classList.toggle('lit', on); note.classList.toggle('lit', on); };
+  const hover = on => { if (!pinned) set(on); };
+  ref.addEventListener('pointerenter', () => hover(true));
+  ref.addEventListener('pointerleave', () => hover(false));
+  ref.addEventListener('focus', () => hover(true));
+  ref.addEventListener('blur', () => hover(false));
+  note.addEventListener('pointerenter', () => hover(true));
+  note.addEventListener('pointerleave', () => hover(false));
+  // Hover and focus are not available on touch, where a reference would
+  // otherwise be inert. A tap pins the note; a second tap releases it.
+  ref.addEventListener('click', e => {
+    e.preventDefault();
+    pinned = !pinned; set(pinned);
+    ref.setAttribute('aria-expanded', String(pinned));
+  });
+  ref.setAttribute('aria-expanded', 'false');
+});
+
+/* ── Enquiry counter ──────────────────────────────────────────────────────
+   Keyword matching over a fixed set of answers written from the record above.
+   Not a language model; makes no request. */
+const RECORD = [
+  {k:['current','now','today','responsible','hb software','lead ai','role'],
+   a:'He is Lead AI at HB Software Solutions in Gurugram, where he owns end-to-end GenAI architecture and delivery for enterprise conversational and agentic products, and leads an 18-member AI engineering team.'},
+  {k:['fund','funding','grant','raise','money','budget','incubation','₹3','3 cr','investment'],
+   a:'At Basal Analytics he authored and presented the company’s AI implementation strategy, and on that basis secured roughly USD 50K in cloud grants — AWS about $20K, Microsoft Azure about $25K, Google about $5K — plus ₹3 Cr, roughly USD 360K, in incubation funding. The point of it was that the AI work ran without drawing on core engineering budget.'},
+  {k:['team','manage','led','lead','people','headcount','mentor','hire','grew','size'],
+   a:'He leads 18 engineers at HB Software Solutions today. Before that he was the first AI hire at Basal Analytics, built the function from zero and grew it from 6 to 10 engineers, introducing documentation and review standards reported still in use. He mentors on GenAI architecture and prompt engineering and runs internal workshops on responsible AI adoption.'},
+  {k:['voice','latency','phone','call','speech','stt','tts','twilio','real-time','realtime','650','800','ms'],
+   a:'He designed a unified multimodal voice architecture — speech recognition, LLM reasoning and speech synthesis as separate services against one latency budget — sustaining 650–800 ms end to end in production over telephony. Figure 1 on this page draws the signal path. He also built a real-time phone-call negotiator on the same approach, wired into CRM workflows.'},
+  {k:['rag','retrieval','vector','faiss','langchain','embedding','search','document'],
+   a:'The enterprise RAG sales assistant is the clearest example: LangChain, Meta-LLaMA 3, FAISS and custom embeddings over large-scale client document sets, built to cut sales-team lookup time. Retrieval architecture, embeddings and vector search are listed under Schedule D.'},
+  {k:['ship','shipped','built','project','deliverable','production','system','work'],
+   a:'Four are listed in Schedule C: an enterprise RAG sales assistant, a real-time phone-call negotiator, MedicalGPT — a LLaMA-based clinical assistant taken from continued pretraining through instruction fine-tuning to deployment — and a diffusion-based virtual trial room. The voice architecture and the LLM evaluation framework are both running in production.'},
+  {k:['medical','medicalgpt','clinical','health','pretrain','fine-tun','finetun','sft'],
+   a:'MedicalGPT was a LLaMA-based clinical assistant. He ran continued pretraining on unstructured clinical text plus instruction fine-tuning, and owned preprocessing, training, evaluation and deployment.'},
+  {k:['mlops','pipeline','deploy','infrastructure','standard','evaluation','eval','benchmark','monitor','regression'],
+   a:'He defined the microservice reference architecture and the MLOps pipelines for training, deployment and monitoring, adopted org-wide, and built the LLM evaluation and benchmarking framework covering accuracy, interpretability and regression tracking across production models.'},
+  {k:['vision','image','diffusion','detection','segmentation','defence','defense','geospatial','ocr','satellite'],
+   a:'His first role was computer vision for geospatial defence at MC&ME Techserve: image-recognition accuracy improved 25%, object-detection false positives reduced 30%, and semantic-segmentation tooling for terrain analysis that contributed to 20% faster mission response. On the generative side, a Stable Diffusion virtual try-on MVP.'},
+  {k:['experience','years','career','background','history','journey','senior'],
+   a:'Five years across three appointments: Deep Learning Engineer at MC&ME Techserve from 2021, Head of AI at Basal Analytics from 2022 to 2025, and Lead AI at HB Software Solutions since August 2025. The progression is individual contributor to function owner to engineering leader.'},
+  {k:['skill','stack','tech','technology','tool','language','python','framework'],
+   a:'Schedule D lists it by area. The core is Python, PyTorch, FastAPI and Hugging Face; LLaMA, BERT and Mamba for models; LangChain and FAISS for retrieval; AWS Bedrock, SageMaker, Azure AI Studio and Vertex AI for platform; Docker and CI/CD for delivery.'},
+  {k:['contact','email','reach','hire','available','offer','open','linkedin','relocat'],
+   a:'srinivasjoshi11@gmail.com, or LinkedIn at linkedin.com/in/shreenivas-joshi. He is in Gurugram, India, and open to offers. The résumé PDF is linked at the top and bottom of this page.'},
+  {k:['cost','saving','efficien','spend','compute','reduce'],
+   a:'Two threads. The MLOps standardisation shortened experiment-to-decision cycles and cut redundant compute spend and engineering overhead. Separately, ₹3 Cr in incubation funding plus about USD 50K in cloud grants meant the AI initiative did not draw on core budget at all.'},
+  {k:['partner','aws','azure','microsoft','google','cloud programme','cloud program'],
+   a:'He worked with the AWS, Microsoft and Google partner programmes to bring current AI tooling into the product stack, and converted client proofs-of-concept into paid engagements. Those same programmes are where about USD 50K of the cloud grants came from.'}
+];
+
+const log = document.getElementById('log');
+const form = document.getElementById('enqForm');
+const input = document.getElementById('enqInput');
+const send = document.getElementById('enqSend');
+
+const answer = q => {
+  const s = q.toLowerCase();
+  let best = null, score = 0;
+  for (const item of RECORD) {
+    let n = 0;
+    for (const key of item.k) if (s.includes(key)) n += key.length;
+    if (n > score) { score = n; best = item; }
+  }
+  return best ? best.a
+    : 'Nothing on this page covers that directly. The record here runs to the three appointments, the funding, the voice architecture, the retrieval work and the team. For anything outside it, srinivasjoshi11@gmail.com is the better route.';
+};
+
+const post = (who, text, cls) => {
+  const el = document.createElement('div');
+  el.className = 'msg' + (cls ? ' ' + cls : '');
+  const w = document.createElement('span'); w.className = 'who'; w.textContent = who;
+  const p = document.createElement('p'); p.textContent = text;
+  el.append(w, p); log.append(el);
+  log.scrollTop = log.scrollHeight;
+  return el;
+};
+
+let busy = false;
+const ask = q => {
+  q = q.trim();
+  if (!q || busy) return;
+  busy = true; input.value = ''; input.disabled = send.disabled = true;
+  post('Enquiry', q, 'q');
+  const pending = post('Counter', 'Consulting the record…');
+  setTimeout(() => {
+    pending.querySelector('p').textContent = answer(q);
+    input.disabled = send.disabled = false; busy = false;
+    log.scrollTop = log.scrollHeight;
+  }, 380);
+};
+
+form.addEventListener('submit', e => { e.preventDefault(); ask(input.value); });
+document.querySelectorAll('.chip').forEach(c =>
+  c.addEventListener('click', () => ask(c.textContent)));
+</script>
+</body>
+</html>

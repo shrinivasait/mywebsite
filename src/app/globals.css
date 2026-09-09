@@ -1,0 +1,620 @@
+@import "tailwindcss";
+
+/* ───────────────────────────────────────────────────────────────────────────
+   THE DATASHEET
+
+   This file replaces a world, it does not refine one. What stood here before
+   was a neutral ramp plus a violet accent carrying an aurora of blurred
+   blooms, a transmissive glass artifact, grain, gradient rules and a
+   pointer-tracked spotlight. It was well built and it was the single most
+   over-represented look in generated interfaces — violet light, glass, glow —
+   which is what the user reported: "still looks AI generated."
+
+   The replacement world is the component datasheet: a two-ink technical
+   document printed on cool spec stock. Black ink carries every word and every
+   rule; one process cyan carries the plotted mark and the primary action.
+   Nothing glows, nothing blurs, nothing is round, and there is no gradient
+   anywhere on the page.
+
+   Why this world and not another: this product's own principles ask for it.
+   PRODUCT.md says numbers are the proof and the page must be judgeable in
+   forty seconds. A datasheet is the document form that exists to make a
+   claim checkable at a glance — every value carries its unit and its test
+   condition. So the four hero metrics became a characteristics table, which
+   is both more evidence and less decoration.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Stock. The printed ground. Cool, not cream: warm paper plus a serif is
+     the other cluster this redesign is escaping, and a real technical print
+     run is on bright stock with a faint green-grey cast. */
+  --stock: #f7f8f7;
+  --stock-plate: #ffffff;
+  --stock-sunken: #eef0ef;
+
+  /* ── Ink. One black, three weights of it, each measured on stock. */
+  --ink: #14171b; /* 16.0:1 — every heading, every rule at full strength */
+  --ink-2: #4a5157; /* 7.3:1 — all prose */
+  --ink-3: #626a70; /* 4.9:1 — units, conditions, captions. Deliberate
+                       headroom over the 4.5 floor, so a value sitting on
+                       --stock-sunken still passes. */
+
+  /* ── Reticule. Drawn structure: the graph grid, the table hairline, the
+     plate edge. This is a pattern, and it is allowed here for a reason the
+     old world's Light-Not-Pattern Rule did not cover: it never sits behind
+     prose. It sits inside plot and diagram regions, where it is the graph the
+     data is plotted on. */
+  --reticule: #dcdfde; /* minor grid */
+  --reticule-2: #c4c9c8; /* major grid, plate edge, table hairline */
+
+  /* ── The second ink. Process cyan, the plate a technical document actually
+     runs as its second colour. Two values because one has to carry text and
+     one has to carry a mark: --trace passes AA on stock, --trace-bright is
+     the full-chroma ink and is never used for body text. */
+  --trace: #046a90; /* 5.6:1 on stock */
+  --trace-bright: #0a93c4; /* 3.3:1 — graphics and large type only */
+  --trace-wash: rgb(4 106 144 / 0.07);
+  --trace-fg: #ffffff;
+  --ring: #046a90;
+
+  /* ── The only two shadows in the system, and they exist only for the two
+     things that genuinely float above the sheet: the running head once it
+     detaches, and the query panel. Print has no drop shadows; a page full of
+     them was the old world. Both carry an offset and a blur. */
+  --lift:
+    0 2px 6px -1px rgb(20 23 27 / 0.1),
+    0 8px 24px -8px rgb(20 23 27 / 0.12);
+  --lift-sm: 0 1px 3px -1px rgb(20 23 27 / 0.1);
+
+  /* ── Scene. Not a second palette: the page's own inks expressed as the six
+     values the drawing needs, read off `documentElement` and re-read whenever
+     the theme class flips. The object has no colours of its own. */
+  --scene-face: #eceeed;
+  --scene-face-2: #f7f8f7;
+  --scene-face-3: #d8dcdb;
+  --scene-edge: #14171b;
+  --scene-mark: #046a90;
+  --scene-key: 1.15; /* how hard the single key light falls */
+
+  --ease-plot: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-set: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ── The negative. Not a dark theme: the same document as a photostat
+   reversal, which is why the reticule survives and the cyan brightens rather
+   than the whole palette going grey. The use scene is a recruiter at a desk
+   in daylight, so light is the primary and this is the second material. */
+.dark {
+  --stock: #101315;
+  --stock-plate: #171b1e;
+  --stock-sunken: #0b0e0f;
+
+  --ink: #e7eae9; /* 15.3:1 */
+  --ink-2: #a7afb3; /* 8.4:1 */
+  --ink-3: #8b9297; /* 5.9:1 */
+
+  --reticule: #23282b;
+  --reticule-2: #363d41;
+
+  --trace: #4fb9de; /* 8.1:1 */
+  --trace-bright: #67c9ea;
+  --trace-wash: rgb(79 185 222 / 0.1);
+  --trace-fg: #05242e;
+  --ring: #4fb9de;
+
+  --lift:
+    0 2px 6px -1px rgb(0 0 0 / 0.5),
+    0 8px 24px -8px rgb(0 0 0 / 0.6);
+  --lift-sm: 0 1px 3px -1px rgb(0 0 0 / 0.5);
+
+  /* The reversal needs its own exposure. A face value that reads as pale
+     ceramic against stock reads as a grey blob against the negative, so the
+     faces go dark and the edges go light — the drawing inverts with the
+     document rather than staying a light object on a dark ground. */
+  --scene-face: #23282b;
+  --scene-face-2: #2c3236;
+  --scene-face-3: #191d20;
+  --scene-edge: #cfd5d4;
+  --scene-mark: #4fb9de;
+  --scene-key: 0.95;
+}
+
+@theme inline {
+  --color-stock: var(--stock);
+  --color-stock-plate: var(--stock-plate);
+  --color-stock-sunken: var(--stock-sunken);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-reticule: var(--reticule);
+  --color-reticule-2: var(--reticule-2);
+  --color-trace: var(--trace);
+  --color-trace-bright: var(--trace-bright);
+  --color-trace-fg: var(--trace-fg);
+
+  --font-sans: var(--font-archivo);
+  --font-mono: var(--font-chivo-mono);
+
+  --ease-plot: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-set: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* Radius is zero everywhere in this world. A printed rule has no rounded
+     corner, and four radius steps was the clearest tell of the old one. The
+     two exceptions are drawn as circles on purpose: the portrait and the
+     status dot. */
+  --radius-none: 0px;
+}
+
+html {
+  color-scheme: light;
+  background: var(--stock);
+}
+.dark {
+  color-scheme: dark;
+}
+
+body {
+  color: var(--ink);
+  font-family: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  font-variant-numeric: proportional-nums;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Typography. Two faces, and only two weights of the text face.
+
+   Archivo is a grotesque drawn from printed signage and reference material —
+   flat terminals, tight apertures, numerals that hold a column. Chivo Mono
+   carries symbols, units, values and conditions: measurement, which is the
+   one thing monospace is actually for. Prose never goes mono.
+
+   Weights are 400 and 600. There is no third weight, so nothing can drift
+   into a semibold that means nothing.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* The part header. The one place type is allowed to be large. */
+.spec-title {
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+/* A section head, in the document's own grammar: small, set in caps, sitting
+   on a two-pixel ink rule that spans the measure. It is deliberately smaller
+   than the content beneath it — in a reference document the table outranks
+   its own label. This is the heading itself, not an eyebrow above one. */
+.spec-section {
+  font-weight: 600;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+/* A block title inside a section. */
+.spec-head {
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  /* 1.32, not 1.25. At display size 1.25 is correct typography, but this class
+     also sets the 17px block titles, and those are the ones that wrap. */
+  line-height: 1.32;
+  text-wrap: balance;
+}
+
+/* Column heads and field labels. Mono, caps, tracked. Never above a heading. */
+.spec-label {
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* A measured value. Tabular, because these are read down a column. */
+.spec-value {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  letter-spacing: -0.012em;
+}
+
+/* A symbol, a unit, a date, a test condition: mono, sentence case, tabular. */
+.spec-datum {
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+  font-variant-numeric: tabular-nums;
+}
+
+.measure {
+  max-width: 68ch; /* inside the 65–75ch window */
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Structure. Rules, plates, wells, tables, reticule.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* The section rule. Two pixels of solid ink, edge to edge of the measure —
+   hard, because a gradient that fades at both ends was the old world's
+   signature and a printed rule does not fade. */
+.rule-ink {
+  height: 2px;
+  background: var(--ink);
+  border: 0;
+}
+.rule-hair {
+  height: 1px;
+  background: var(--reticule-2);
+  border: 0;
+}
+.rule-hair-v {
+  width: 1px;
+  background: var(--reticule-2);
+  border: 0;
+}
+
+/* A plate: a bordered region of print stock. No radius, no shadow, no sheen,
+   no edge highlight. It separates by its own hard edge, which is how a boxed
+   region on a printed page separates. */
+.plate {
+  background: var(--stock-plate);
+  border: 1px solid var(--reticule-2);
+}
+.plate-sunken {
+  background: var(--stock-sunken);
+  border: 1px solid var(--reticule-2);
+}
+
+/* The graph reticule. Minor at 8px, major at 40px, drawn from the ink family
+   so it belongs to the document rather than sitting on top of it. Applied
+   only inside plot and diagram regions — never behind a line of prose. */
+.reticule-field {
+  /* A solid ground under the grid, not a transparent overlay. A drawing region
+     is printed on plate stock with the reticule laid over it; leaving this
+     transparent let the page ground show through and left every annotation
+     sitting on an unresolvable backdrop. */
+  background-color: var(--stock-plate);
+  background-image:
+    linear-gradient(to right, var(--reticule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--reticule) 1px, transparent 1px),
+    linear-gradient(to right, var(--reticule-2) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--reticule-2) 1px, transparent 1px);
+  background-size:
+    8px 8px,
+    8px 8px,
+    40px 40px,
+    40px 40px;
+  background-position: -1px -1px;
+}
+
+/* The characteristics table. Its header band is a well, its rows are divided
+   by hairlines, and every value column is tabular. Wide content scrolls
+   inside its own container so the sheet never scrolls sideways. */
+.tbl-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+/* The frame belongs to the table, not to a wrapper around it: the outer rule
+   of a ruled table is one of its own rules, and a bordered wrapper would open
+   a gutter between the frame and the row rules. */
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--reticule-2);
+  background: var(--stock-plate);
+  font-variant-numeric: tabular-nums;
+}
+.tbl thead th {
+  background: var(--stock-sunken);
+  border-bottom: 1px solid var(--reticule-2);
+  padding: 0.5rem 0.875rem;
+  text-align: left;
+  white-space: nowrap;
+  color: var(--ink-3);
+}
+.tbl tbody td,
+.tbl tbody th {
+  border-bottom: 1px solid var(--reticule);
+  padding: 0.75rem 0.875rem;
+  vertical-align: baseline;
+}
+.tbl tbody tr:last-child td,
+.tbl tbody tr:last-child th {
+  border-bottom: 0;
+}
+/* A row lights its own condition cell on hover: the reading gesture a spec
+   table actually wants, and the only hover response on the page that is not
+   a control. Pointer devices only, so a touch device never sticks. */
+@media (hover: hover) {
+  .tbl tbody tr:hover {
+    background: var(--trace-wash);
+  }
+  .tbl tbody tr:hover .tbl-cond {
+    color: var(--ink-2);
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Controls. A control in this world is a printed key: a hard-edged bordered
+   rectangle that goes down one pixel and loses its lift when pressed.
+   ─────────────────────────────────────────────────────────────────────────── */
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.008em;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition:
+    background-color 0.15s var(--ease-set),
+    border-color 0.15s var(--ease-set),
+    box-shadow 0.15s var(--ease-set),
+    color 0.15s var(--ease-set),
+    transform 0.1s var(--ease-set);
+}
+.key:active {
+  transform: translateY(1px);
+}
+
+/* The primary action is the second ink. It is the only large field of cyan on
+   the page, which is what makes it the primary action. */
+.key-primary {
+  background: var(--trace);
+  border-color: var(--trace);
+  color: var(--trace-fg);
+  box-shadow: var(--lift-sm);
+}
+@media (hover: hover) {
+  .key-primary:hover {
+    background: color-mix(in oklab, var(--trace) 88%, var(--ink));
+    border-color: color-mix(in oklab, var(--trace) 88%, var(--ink));
+  }
+}
+.key-primary:active {
+  box-shadow: none;
+}
+
+/* The secondary is ink on stock, bordered. */
+.key-secondary {
+  background: var(--stock-plate);
+  border-color: var(--reticule-2);
+  color: var(--ink);
+  box-shadow: var(--lift-sm);
+}
+@media (hover: hover) {
+  .key-secondary:hover {
+    border-color: var(--ink);
+  }
+}
+.key-secondary:active {
+  box-shadow: none;
+}
+
+.key-quiet {
+  color: var(--ink-2);
+  padding-inline: 0.5rem;
+}
+@media (hover: hover) {
+  .key-quiet:hover {
+    color: var(--ink);
+    background: var(--stock-sunken);
+  }
+}
+
+/* A link inside prose is underlined, because a printed cross-reference is.
+   The offset and thickness are set from the design rather than the browser. */
+.link {
+  color: var(--trace);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 0.15s var(--ease-set);
+}
+@media (hover: hover) {
+  .link:hover {
+    text-decoration-thickness: 2px;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Browser surfaces. The parts we did not draw still belong to the document.
+   ─────────────────────────────────────────────────────────────────────────── */
+::selection {
+  background: var(--trace);
+  color: var(--trace-fg);
+}
+:root {
+  caret-color: var(--trace);
+  accent-color: var(--trace);
+}
+/* A bracket rather than a rounded ring: square, to match a world with no
+   radius in it. Never removed, never replaced per component. */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 0;
+}
+a {
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+/* The scrollbar reads as the sheet's own trim margin. */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--stock-sunken);
+  border-left: 1px solid var(--reticule);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--reticule-2);
+  border: 3px solid var(--stock-sunken);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-3);
+}
+::-webkit-scrollbar-corner {
+  background: var(--stock-sunken);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Motion. One authored moment: the sheet plots itself.
+
+   A pen plotter draws a technical page in a fixed order — rules first, then
+   the type, then the values into the table. That is the entrance: the section
+   rules draw from zero width, the header type sets, and the characteristics
+   rows come in one after another. It happens once, in the first viewport, and
+   it is the only place the page performs.
+
+   Below the fold there is a second, deliberately duller population: opacity
+   and six pixels, no travel to speak of. It exists because the user asked for
+   the page to feel alive as it is scrolled, and it is kept quiet so it reads
+   as pages turning rather than as eight sections each doing a trick.
+   ─────────────────────────────────────────────────────────────────────────── */
+.js [data-set] {
+  opacity: 0;
+  transform: translateY(6px);
+}
+.js [data-set].is-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.55s var(--ease-plot),
+    transform 0.7s var(--ease-plot);
+}
+
+/* A rule draws itself, left to right, the way a plotter lays one down. */
+.js [data-plot] {
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.js [data-plot].is-in {
+  transform: none;
+  transition: transform 0.9s var(--ease-plot);
+}
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(6px);
+}
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.5s var(--ease-plot),
+    transform 0.55s var(--ease-plot);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  /* Specificity has to match or beat `.js [data-set]`, or the start state
+     wins and the page renders blank. That exact failure has shipped here
+     before, which is why all three populations are listed explicitly. */
+  .js [data-set],
+  .js [data-set].is-in,
+  .js [data-reveal],
+  .js [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+  .js [data-plot],
+  .js [data-plot].is-in {
+    transform: none;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   The query panel. Opening it is a state change, not the page's entrance.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* Nothing in the panel works without scripting, so without scripting it is
+   not offered — the same `.js` gate the entrance uses, inverted. */
+.js-only {
+  display: none;
+}
+.js .js-only {
+  display: contents;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.query-panel {
+  animation: panel-in 0.2s var(--ease-set) both;
+}
+
+/* Three small squares, not three dots: the world has no radius in it. Left out
+   entirely under reduced motion, so they sit still at their own opacity rather
+   than freezing on whichever keyframe happened to land. */
+.query-dot {
+  opacity: 0.4;
+}
+@keyframes query-blink {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .query-dot {
+    animation: query-blink 1.1s var(--ease-set) infinite;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Print. This page and the résumé both get forwarded and printed inside
+   hiring teams, so print is a real target, not a nicety: an entrance that has
+   not fired yet prints as one header followed by empty sheets.
+
+   It is also the one medium this world was designed for, so almost nothing
+   needs undoing — the sheet is already a printed document.
+   ─────────────────────────────────────────────────────────────────────────── */
+@media print {
+  .js [data-set],
+  .js [data-set].is-in,
+  .js [data-reveal],
+  .js [data-reveal].is-in,
+  .js [data-plot],
+  .js [data-plot].is-in {
+    opacity: 1;
+    transform: none;
+  }
+  .js-only,
+  .no-print {
+    display: none !important;
+  }
+  .plate,
+  .plate-sunken {
+    background: #ffffff;
+  }
+}

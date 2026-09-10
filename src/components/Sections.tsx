@@ -16,6 +16,7 @@ import { CircuitPackets } from "./Circuit";
 import { CodeTerminal } from "./CodeTerminal";
 import { MegaName, Parallax, StatusRail, Tilt, TimelineSpine, Uptime, Words } from "./Hud";
 import { Magnetic, Marquee, Scramble, Ticker } from "./Kinetic";
+import { LatencyBudget } from "./LatencyBudget";
 import { Year } from "./Year";
 
 /* ── Shared shells ───────────────────────────────────────────────────────────
@@ -73,8 +74,12 @@ function Section({
         </div>
         {/* One pass of light runs the rule as the head arrives. */}
         {/* A div, not an <hr>: the scan is a pseudo-element and `hr` is not
-            a reliable host for one. `role="separator"` keeps the semantics. */}
-        <div role="separator" className="rule-ink rule-scan" data-wipe />
+            a reliable host for one. `role="separator"` keeps the semantics.
+            The wrapper exists so the observer has a box with area to watch —
+            see the `data-wipe` note in globals.css. */}
+        <div data-wipe>
+          <div role="separator" className="rule-ink rule-scan" />
+        </div>
         <div className="mt-7 sm:mt-9">{children}</div>
       </Container>
     </section>
@@ -580,7 +585,16 @@ export function Work() {
             {featured.detail}
           </p>
         </div>
-      </div>
+
+        {/* The claim, running. This system's whole argument is that four
+            stages of a spoken turn fit inside 800 ms over telephony, and
+            this is that budget being spent in real time — the most animated
+            thing on the page after the terminal, and also the most
+            informative, which is the order those two have to come in. */}
+        <div className="mt-7">
+          <LatencyBudget />
+        </div>
+        </div>
       </Tilt>
 
       <ul className="mt-10">
@@ -588,7 +602,7 @@ export function Work() {
           <li
             key={p.slug}
             data-slide
-            className="grid gap-x-10 gap-y-2 border-t border-reticule-2 py-6 sm:grid-cols-[1fr_1.35fr]"
+            className="row-live grid gap-x-10 gap-y-2 border-t border-reticule-2 py-6 sm:grid-cols-[1fr_1.35fr]"
           >
             <h3 className="spec-head flex items-baseline gap-3 text-[1.0625rem]">
               <span aria-hidden className="sec-index">
@@ -629,7 +643,7 @@ export function Leadership() {
           <li
             key={pillar.title}
             data-slide
-            className={`grid gap-x-10 gap-y-2.5 py-6 sm:grid-cols-[1fr_1.35fr] ${
+            className={`row-live grid gap-x-10 gap-y-2.5 py-6 sm:grid-cols-[1fr_1.35fr] ${
               i > 0 ? "border-t border-reticule-2" : "pt-0"
             }`}
           >
@@ -661,7 +675,7 @@ export function Expertise() {
           <li
             key={area.title}
             data-slide
-            className={`grid gap-x-10 gap-y-2 py-6 sm:grid-cols-[1fr_1.35fr] ${
+            className={`row-live grid gap-x-10 gap-y-2 py-6 sm:grid-cols-[1fr_1.35fr] ${
               i > 0 ? "border-t border-reticule-2" : "pt-0"
             }`}
           >
@@ -855,7 +869,9 @@ export function Contact() {
           </span>
           <Scramble as="h2" className="spec-section" text="Contact" />
         </div>
-        <div role="separator" className="rule-ink rule-scan" data-wipe />
+        <div data-wipe>
+          <div role="separator" className="rule-ink rule-scan" />
+        </div>
         <div className="callout bracket mt-8 grid gap-10 sm:grid-cols-[1.3fr_1fr] sm:gap-14">
           <div>
             <p className="hud mb-4 flex items-center gap-2" data-reveal>
@@ -922,7 +938,10 @@ export function Contact() {
 
 export function Footer() {
   return (
-    <footer className="mt-20 border-t-2 border-ink sm:mt-24">
+    <footer className="mt-20 sm:mt-24">
+      {/* The document's closing rule draws itself like every other rule here,
+          rather than being a border that is simply present. */}
+      <div role="separator" className="rule-ink foot-rule" data-reveal />
       <Container className="flex flex-col gap-2 py-6 sm:flex-row sm:items-center sm:justify-between">
         <p className="spec-datum text-ink-2">
           {site.name} &nbsp;·&nbsp; {site.role}

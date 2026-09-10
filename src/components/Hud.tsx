@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Ticker } from "./Kinetic";
 
 /* ── The name ───────────────────────────────────────────────────────────────
    Set enormous, and arriving one glyph at a time. Each character is its own
@@ -195,7 +196,9 @@ export function StatusRail() {
         <div key={g.label} className="rail-cell">
           <p className="hud">{g.label}</p>
           <p className="rail-value mt-1.5">
-            {g.value}
+            {/* The figure rolls its digits once, on first sight, and then
+                holds. It is a résumé number: it settles and stays settled. */}
+            <Ticker value={g.value} />
             <span className="ml-1 text-[0.75rem] font-normal tracking-normal text-ink-3">
               {g.unit}
             </span>

@@ -1037,3 +1037,88 @@ Chrome, 1440 / 768 / 390: no horizontal scroll, no console or page errors,
 nothing stuck at `opacity: 0` after reveal. Under
 `prefers-reduced-motion: reduce`: **zero** running animations, zero hidden
 elements, no boot overlay, no reticle.
+
+---
+
+## The featured system, and the last of the motion
+
+### Why the phone-call negotiator leads
+
+`Work` features `projects[0]` and sets the register beneath it, so that slot
+is an editorial decision, not an accident of array order. The real-time
+phone-call negotiator holds it because it is the **hardest claim on the page**
+— a live spoken turn inside 800 ms over telephony — and because it is the only
+one whose claim the site can show running.
+
+The ordering rationale now sits in a comment above `projects` in
+`content.ts`, so the next person to add a project knows the first entry is
+load-bearing.
+
+### The latency budget
+
+The featured panel carries `LatencyBudget`: the four stages of a spoken turn
+played in real time at 1 ms per millisecond, against a dashed ceiling at
+800 ms, with the last fourteen turns kept as a strip underneath.
+
+It shares `latency-budget.ts` with the WebGL object in `/lab`, so the flat
+version and the dimensional one cannot disagree about what the figure says.
+Runs come from a cycle index rather than `Math.random`, so a given cycle is
+the same run on the server, on the client and on a reload — and every fourth
+run is a **hot** one where every stage lands at the slow end at once and the
+bar nearly touches the ceiling. That run is the point of the object: a budget
+you always clear by 150 ms is not a budget anyone had to engineer.
+
+Nothing in it is React state. One rAF loop writes widths and text through
+refs — a 60 Hz re-render of nine nodes to move a playhead is work for nothing.
+The bars carry no CSS transition on purpose: the width is written every frame
+from the playhead, and a transition would fight the loop and lag the fill.
+
+### Also added
+
+Power-on flicker on `main` (two dips, once, first paint only); a very low
+contrast sweep crossing the terminal every seven seconds; corner brackets that
+scale out of their corner as a region arrives instead of appearing formed;
+`.row-live` — a trace rule that grows at the left edge of a ruled-register row
+on hover, with its index lighting; ticker items that light under the pointer;
+the rail's figures rolling their digits once on first sight; and the closing
+rule of the document drawing itself like every other rule here.
+
+### Three bugs, all of the same family
+
+Each of these was silent — valid CSS, no error, no warning, and a page that
+merely looked slightly wrong.
+
+**1. One element has one `::after`.** `.bracket::after` (the bottom-right
+corner mark) and `.plate-live::after` (the hover beam) were both correct on
+their own. On the featured panel, which carries both classes, they merged into
+one pseudo-element — the bracket's 10×10 box wearing the beam's fill, glow and
+four-sided inset — and painted a glowing filled square over the panel's
+top-left corner.
+
+`.plate-live` is a `background-image` with an animating `background-size` now,
+so it claims no pseudo-element at all and can be combined with anything.
+
+**2. Unlayered CSS beats `@layer utilities`.** Covered in the previous
+section: `.key { position: relative }` overrode Tailwind's `fixed` everywhere.
+Same resolution — a background instead of a positioned pseudo-element.
+
+**3. IntersectionObserver uses the *clipped* box.** `data-wipe` started its
+targets at `clip-path: inset(0 100% 0 0)`. That is zero area, so the observer
+never reported them as intersecting, so they never received `.is-in` — and
+**every section rule on the page was invisible.** A `transform: scaleX(0)`
+start state has the identical problem for the identical reason.
+
+`data-wipe` is now a wrapper: the observed parent keeps its full box, the
+child gets the clip.
+
+**The family resemblance:** all three are cases where a decorative technique
+quietly claimed a shared resource — the element's single `::after`, the
+cascade position of a utility class, the geometry the observer measures.
+Worth checking for by name when adding to this file.
+
+### Verified
+
+Chrome at 1440 / 768 / 390, scrolling the full page: no horizontal scroll, no
+console or page errors, **zero** elements left at `opacity: 0`, zero rules
+left clipped. Under `prefers-reduced-motion: reduce`: zero running animations
+and zero hidden elements.

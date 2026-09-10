@@ -988,32 +988,34 @@ body > footer {
    ink and a thin beam runs along its top. No lift, no scale, no shadow — the
    sheet does not levitate, the trace lights up.
    ─────────────────────────────────────────────────────────────────────────── */
+/* The beam is a background-image whose width animates, NOT a pseudo-element.
+
+   An element has exactly one `::after`, and `.bracket` already claims it for
+   the bottom-right corner mark. On the one panel that carried both classes
+   the two declarations merged — the bracket's 10x10 box with the beam's fill,
+   glow and four-sided inset — and painted a glowing filled square over the
+   panel's top-left corner. Nothing warns about this: both rules are valid and
+   each is correct on its own.
+
+   Using a background here means `.plate-live` claims no pseudo-element at
+   all, so it can be combined with `.bracket`, or with anything else that
+   needs one, without a collision being possible. */
 .plate-live {
-  position: relative;
+  background-image: linear-gradient(var(--trace-bright), var(--trace-bright));
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-size: 0% 2px;
   transition:
-    border-color 0.25s var(--ease-set),
-    background-color 0.25s var(--ease-set);
+    background-size 0.4s var(--ease-plot),
+    border-color 0.25s var(--ease-set);
 }
-.plate-live::after {
-  content: "";
-  position: absolute;
-  inset: -1px -1px auto -1px;
-  height: 2px;
-  background: var(--trace-bright);
-  box-shadow: 0 0 10px var(--trace-glow);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.4s var(--ease-plot);
-}
-.plate-live:focus-within::after {
-  transform: none;
+.plate-live:focus-within {
+  background-size: 100% 2px;
 }
 @media (hover: hover) {
   .plate-live:hover {
     border-color: var(--trace);
-  }
-  .plate-live:hover::after {
-    transform: none;
+    background-size: 100% 2px;
   }
 }
 
@@ -1025,7 +1027,7 @@ body > footer {
   .marquee-track {
     animation: none;
   }
-  .plate-live::after {
+  .plate-live {
     transition: none;
   }
 }
@@ -1305,7 +1307,8 @@ body > footer {
   transform: translateX(-120%);
 }
 @media (prefers-reduced-motion: no-preference) {
-  .is-in.rule-scan::after {
+  .is-in.rule-scan::after,
+  .is-in .rule-scan::after {
     animation: scan 1.15s var(--ease-plot) 0.1s both;
   }
 }
@@ -1778,13 +1781,24 @@ body > footer {
     transform 0.8s var(--ease-plot);
 }
 
-/* Drawn, not faded: the block appears as a wipe from the left, the way a
-   plotter lays down a filled region. */
-.js [data-wipe] {
+/* Drawn, not faded: the region appears as a wipe from the left, the way a
+   plotter lays down a filled one.
+
+   The clip is on the CHILD and the observer watches the PARENT, which looks
+   like indirection and is not. IntersectionObserver computes its intersection
+   rect from the target's *clipped* box, so an element starting at
+   `inset(0 100% 0 0)` has zero area, never reports as intersecting, and never
+   receives `.is-in` — it stays invisible forever. Every section rule on this
+   page was hidden by exactly that until it was caught. A transform-based
+   version (`scaleX(0)`) has the identical problem for the identical reason.
+
+   The wrapper keeps its full box, so it is always observable; the child is
+   the thing that gets drawn. */
+.js [data-wipe] > * {
   opacity: 0;
   clip-path: inset(0 100% 0 0);
 }
-.js [data-wipe].is-in {
+.js [data-wipe].is-in > * {
   opacity: 1;
   clip-path: inset(0 0 0 0);
   transition:
@@ -2012,8 +2026,8 @@ body > footer {
 @media (prefers-reduced-motion: reduce) {
   .js [data-rise],
   .js [data-rise].is-in,
-  .js [data-wipe],
-  .js [data-wipe].is-in,
+  .js [data-wipe] > *,
+  .js [data-wipe].is-in > *,
   .js [data-slide],
   .js [data-slide].is-in,
   .js [data-rows] tr,
@@ -2034,8 +2048,8 @@ body > footer {
 @media print {
   .js [data-rise],
   .js [data-rise].is-in,
-  .js [data-wipe],
-  .js [data-wipe].is-in,
+  .js [data-wipe] > *,
+  .js [data-wipe].is-in > *,
   .js [data-slide],
   .js [data-slide].is-in,
   .js [data-rows] tr,
@@ -2047,5 +2061,374 @@ body > footer {
     opacity: 1 !important;
     transform: none !important;
     clip-path: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   THE LATENCY BUDGET, AND THE LAST OF THE MOTION
+
+   The featured system is the phone-call negotiator, and its whole claim is
+   that four stages of a spoken turn fit inside 800 ms over telephony. So the
+   featured panel carries the budget and plays turns through it. This is the
+   most animated thing on the page after the terminal, and it is also the most
+   informative — which is the order those two properties have to come in.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.lat {
+  margin: 0;
+  border: 1px solid var(--reticule-2);
+  background: var(--stock-sunken);
+  padding: 0.875rem 1rem 1rem;
+}
+.lat-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+.lat-read {
+  color: var(--trace);
+  font-variant-numeric: tabular-nums;
+  /* Tabular plus a floor on the width: the readout counts up in real time and
+     a proportional one would jitter the whole header line as digits change. */
+  min-width: 17ch;
+  text-align: right;
+}
+
+.lat-track {
+  position: relative;
+  height: 34px;
+  margin-top: 0.75rem;
+  background: var(--stock-plate);
+  border: 1px solid var(--reticule);
+}
+.lat-bar {
+  position: absolute;
+  top: 0;
+  /* No transition: the width is written every frame from the playhead, so a
+     transition here would fight the loop and lag the fill behind the head. */
+  will-change: width;
+}
+/* Four steps of one hue, dark to light in pipeline order, so the bar reads as
+   one budget being spent rather than four unrelated categories. */
+.lat-bar-0 {
+  background: color-mix(in oklab, var(--trace) 32%, var(--stock-plate));
+}
+.lat-bar-1 {
+  background: color-mix(in oklab, var(--trace) 52%, var(--stock-plate));
+}
+.lat-bar-2 {
+  background: color-mix(in oklab, var(--trace) 74%, var(--stock-plate));
+}
+.lat-bar-3 {
+  background: var(--trace);
+}
+
+.lat-playhead {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 1px;
+  background: var(--volt);
+  box-shadow: 0 0 8px var(--volt-glow);
+}
+.lat-ceiling {
+  position: absolute;
+  top: -6px;
+  bottom: -6px;
+  width: 0;
+  border-left: 1px dashed var(--ink-3);
+}
+.lat-ceiling-tag {
+  position: absolute;
+  left: 0.375rem;
+  top: -0.15rem;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+/* A hot turn is a different kind of run, not a slow one, so it is marked
+   rather than merely longer. */
+.lat.is-hot .lat-playhead {
+  background: var(--code-warn);
+  box-shadow: 0 0 10px var(--code-warn);
+}
+.lat.is-hot .lat-read {
+  color: var(--code-warn);
+}
+
+.lat-legend {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem 1.25rem;
+  margin-top: 0.875rem;
+}
+@media (min-width: 480px) {
+  .lat-legend {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.lat-key {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  min-width: 0;
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+}
+.lat-swatch {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  transform: translateY(-1px);
+}
+.lat-key-0 .lat-swatch {
+  background: color-mix(in oklab, var(--trace) 32%, var(--stock-plate));
+}
+.lat-key-1 .lat-swatch {
+  background: color-mix(in oklab, var(--trace) 52%, var(--stock-plate));
+}
+.lat-key-2 .lat-swatch {
+  background: color-mix(in oklab, var(--trace) 74%, var(--stock-plate));
+}
+.lat-key-3 .lat-swatch {
+  background: var(--trace);
+}
+.lat-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lat-ms {
+  margin-left: auto;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.lat-ms i {
+  font-style: normal;
+  color: var(--ink-3);
+  margin-left: 0.15rem;
+}
+
+/* Recent turns. Fourteen of them, so the run-to-run spread and the hot ones
+   are both visible — one bar would only ever say "it fit". */
+.lat-strip {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 26px;
+  margin-top: 0.875rem;
+  padding-top: 1px;
+  border-top: 1px solid var(--reticule);
+}
+.lat-tick {
+  width: 4px;
+  min-height: 2px;
+  background: var(--trace);
+  opacity: 0.55;
+  animation: lat-tick-in 0.3s var(--ease-plot) both;
+}
+.lat-tick.is-hot {
+  background: var(--code-warn);
+  opacity: 0.9;
+}
+@keyframes lat-tick-in {
+  from {
+    opacity: 0;
+    transform: scaleY(0.2);
+    transform-origin: bottom;
+  }
+}
+
+/* ── Power-on ───────────────────────────────────────────────────────────────
+   The document comes up the way a screen does: two fast dips before it
+   settles. Once, on the first paint of the session, and only on the content
+   root — the running head and the instruments are already steady by then.
+   ─────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .js main {
+    animation: power-on 0.62s steps(1, end) both;
+  }
+}
+@keyframes power-on {
+  0% {
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.55;
+  }
+  30% {
+    opacity: 0.1;
+  }
+  44% {
+    opacity: 0.85;
+  }
+  58% {
+    opacity: 0.35;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ── The screen's sweep ─────────────────────────────────────────────────────
+   A band of light crossing the terminal every few seconds. Very low contrast:
+   a CRT tell, not a scanline overlay, and it must never make the code harder
+   to read than it was without it.
+   ─────────────────────────────────────────────────────────────────────────── */
+.term::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 42%,
+    rgb(139 241 255 / 0.05) 50%,
+    transparent 58%
+  );
+  transform: translateY(-100%);
+}
+.term {
+  position: relative;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .term::after {
+    animation: term-sweep 7s linear infinite;
+  }
+}
+@keyframes term-sweep {
+  0%,
+  55% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* ── Brackets that draw ─────────────────────────────────────────────────────
+   The corner marks were appearing fully formed. Now they scale out of the
+   corner they belong to as the region arrives, which is what a registration
+   mark being laid down looks like.
+   ─────────────────────────────────────────────────────────────────────────── */
+.js .bracket::before,
+.js .bracket::after {
+  transform: scale(0.2);
+  opacity: 0;
+  transition:
+    transform 0.5s var(--ease-plot) 0.15s,
+    opacity 0.3s var(--ease-set) 0.15s;
+}
+.js .bracket::before {
+  transform-origin: top left;
+}
+.js .bracket::after {
+  transform-origin: bottom right;
+}
+.js .bracket.is-in::before,
+.js .bracket.is-in::after,
+/* A bracket on a region with no entrance of its own (the hero's identity
+   plate arrives with `data-set` on a parent) still has to end up drawn. */
+.js [data-set] .bracket::before,
+.js [data-set] .bracket::after,
+.js .is-in .bracket::before,
+.js .is-in .bracket::after {
+  transform: none;
+  opacity: 1;
+}
+
+/* ── A register row that answers ────────────────────────────────────────────
+   The ruled lists are the least interactive part of the page and the largest.
+   On hover a row takes a trace rule at its left edge and its index lights —
+   the reading gesture a ruled register wants, and it costs one transform.
+   ─────────────────────────────────────────────────────────────────────────── */
+.row-live {
+  position: relative;
+}
+.row-live::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -0.75rem;
+  width: 2px;
+  background: var(--trace);
+  box-shadow: 0 0 8px var(--trace-glow);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform 0.35s var(--ease-plot);
+}
+@media (hover: hover) {
+  .row-live:hover::before {
+    transform: none;
+  }
+  .row-live:hover .sec-index {
+    color: var(--volt);
+  }
+}
+
+/* ── A ticker item that answers ─────────────────────────────────────────── */
+@media (hover: hover) {
+  .marquee-item {
+    transition: color 0.2s var(--ease-set);
+  }
+  .marquee-item:hover {
+    color: var(--trace);
+  }
+}
+
+/* ── The running foot ───────────────────────────────────────────────────────
+   The document's closing rule draws itself like every other rule on the page.
+   ─────────────────────────────────────────────────────────────────────────── */
+.js .foot-rule {
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.js .foot-rule.is-in {
+  transform: none;
+  transition: transform 1s var(--ease-plot);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js main {
+    animation: none;
+  }
+  .term::after,
+  .lat-tick {
+    animation: none;
+  }
+  .js .bracket::before,
+  .js .bracket::after {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
+  .js .foot-rule,
+  .js .foot-rule.is-in {
+    transform: none;
+  }
+}
+
+@media print {
+  .term::after,
+  .lat-playhead,
+  .lat-strip {
+    display: none !important;
+  }
+  .js main {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .js .bracket::before,
+  .js .bracket::after {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .js .foot-rule {
+    transform: none !important;
   }
 }

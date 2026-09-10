@@ -142,16 +142,13 @@ export type Project = {
   stack: string[];
 };
 
+/**
+ * Ordered by what the first one has to carry: `Work` features `projects[0]`
+ * and sets the register beneath it. The phone-call negotiator leads because
+ * it is the hardest claim on the page — a live spoken turn inside 800 ms over
+ * telephony — and it is the only one with a budget the site can show running.
+ */
 export const projects: Project[] = [
-  {
-    slug: "rag-sales-assistant",
-    title: "Enterprise RAG sales assistant",
-    summary:
-      "Retrieval over large client document sets, built to cut the time a sales team spends looking things up.",
-    detail:
-      "Production retrieval architecture combining LangChain, Meta-LLaMA 3, FAISS and custom embeddings across large-scale enterprise documents.",
-    stack: ["LangChain", "LLaMA 3", "FAISS", "Embeddings"],
-  },
   {
     slug: "voice-negotiator",
     title: "Real-time phone-call negotiator",
@@ -160,6 +157,15 @@ export const projects: Project[] = [
     detail:
       "Speech recognition, LLM reasoning and speech synthesis run as separate services against a single latency budget, sustaining 650–800 ms end to end over telephony.",
     stack: ["Twilio", "STT / TTS", "LLM reasoning", "CRM"],
+  },
+  {
+    slug: "rag-sales-assistant",
+    title: "Enterprise RAG sales assistant",
+    summary:
+      "Retrieval over large client document sets, built to cut the time a sales team spends looking things up.",
+    detail:
+      "Production retrieval architecture combining LangChain, Meta-LLaMA 3, FAISS and custom embeddings across large-scale enterprise documents.",
+    stack: ["LangChain", "LLaMA 3", "FAISS", "Embeddings"],
   },
   {
     slug: "medicalgpt",

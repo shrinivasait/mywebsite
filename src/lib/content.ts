@@ -27,16 +27,14 @@ export const site = {
 
 /* ── Characteristics ────────────────────────────────────────────────────────
    The same figures as `stats`, restructured the way a reference document
-   states a measured value: parameter, symbol, value, unit, and the condition
-   the value was measured under. Nothing here is new — every row is already in
+   states a measured value: parameter, value, unit, and the condition the
+   value was measured under. Nothing here is new — every row is already in
    `roles`, `leadership` or PRODUCT.md. What is new is that a reader can no
    longer take a number without also taking where it came from.
    ─────────────────────────────────────────────────────────────────────────── */
 
 export type Characteristic = {
   parameter: string;
-  /** The symbol column. Blank where a figure genuinely has no symbol. */
-  symbol?: string;
   value: string;
   unit: string;
   conditions: string;
@@ -45,21 +43,18 @@ export type Characteristic = {
 export const characteristics: Characteristic[] = [
   {
     parameter: "AI engineering team led",
-    symbol: "N",
     value: "18",
     unit: "engineers",
     conditions: "HB Software Solutions, current seat",
   },
   {
     parameter: "Voice response latency",
-    symbol: "t",
     value: "650–800",
     unit: "ms",
     conditions: "End to end, production telephony",
   },
   {
     parameter: "Projects delivered to production",
-    symbol: "N",
     value: "20+",
     unit: "projects",
     conditions: "Across HB Software Solutions and Basal Analytics",
@@ -90,21 +85,18 @@ export const characteristics: Characteristic[] = [
   },
   {
     parameter: "Image-recognition accuracy",
-    symbol: "Δ",
     value: "+25",
     unit: "%",
     conditions: "Geospatial defence imagery",
   },
   {
     parameter: "Object-detection false positives",
-    symbol: "Δ",
     value: "−30",
     unit: "%",
     conditions: "Defence imagery pipeline",
   },
   {
     parameter: "Customer acquisition",
-    symbol: "Δ",
     value: "+30",
     unit: "%",
     conditions: "AI-enabled analytics offerings",

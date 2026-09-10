@@ -345,16 +345,13 @@ export function Characteristics() {
       lead="Every figure on this page, with the condition it was measured under."
     >
       <div className="tbl-scroll" data-reveal>
-        <table className="tbl min-w-[44rem]">
+        <table className="tbl min-w-[40rem]">
           <caption className="sr-only">
-            Measured characteristics, with symbol, value, unit and test conditions
+            Measured characteristics, with value, unit and test conditions
           </caption>
           <thead>
             <tr className="spec-label">
               <th scope="col">Parameter</th>
-              <th scope="col" className="w-14">
-                Sym
-              </th>
               <th scope="col" className="w-28 text-right">
                 Value
               </th>
@@ -370,7 +367,6 @@ export function Characteristics() {
                 <th scope="row" className="text-left text-[0.875rem] font-normal text-ink">
                   {c.parameter}
                 </th>
-                <td className="spec-datum text-ink-3">{c.symbol ?? "—"}</td>
                 <td className="spec-value whitespace-nowrap text-right text-[1.0625rem]">
                   <Ticker value={c.value} />
                 </td>

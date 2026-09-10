@@ -1183,3 +1183,30 @@ Chrome at 1440 / 768 / 390, full-page scroll: no horizontal scroll, no console
 or page errors, zero elements stuck at `opacity: 0`. WebGL scene confirmed
 live (`data-artifact="live"`, readout reporting `global min`). Under
 `prefers-reduced-motion: reduce`: zero running animations.
+
+---
+
+## The symbol column is gone
+
+The characteristics table shipped with a `Sym` column — `N`, `t`, `Δ` —
+borrowed from the electronics datasheet the original world was modelled on,
+where a symbol exists so a figure can be referenced in a formula elsewhere in
+the document.
+
+Nothing on this page ever referenced one. Five of the ten rows had no symbol
+at all and showed an em dash, because a figure like "incubation funding
+secured" genuinely has no conventional symbol and inventing one would be
+worse than leaving it blank. The column was spending horizontal space —
+enough to push the table into a sideways scroll at 1440 — on atmosphere.
+
+It is removed, from the markup, from the `Characteristic` type and from every
+row. The table is `Parameter | Value | Unit | Conditions` now, it fits at
+1440 without scrolling, and Conditions — the column that actually does the
+work, because it is what stops a reader taking a number without taking where
+it came from — got the space.
+
+**The general note:** this world inherited its grammar from the datasheet, and
+some of that grammar was doing real work while some of it was costume. A
+column no reader can use is costume. Worth re-asking of anything else here
+that is present because the metaphor implies it rather than because the page
+needs it.

@@ -58,6 +58,13 @@ export const characteristics: Characteristic[] = [
     conditions: "End to end, production telephony",
   },
   {
+    parameter: "Projects delivered to production",
+    symbol: "N",
+    value: "20+",
+    unit: "projects",
+    conditions: "Across HB Software Solutions and Basal Analytics",
+  },
+  {
     parameter: "Incubation funding secured",
     value: "₹3",
     unit: "Cr",
@@ -77,7 +84,7 @@ export const characteristics: Characteristic[] = [
   },
   {
     parameter: "Experience in AI and deep learning",
-    value: "5",
+    value: "5+",
     unit: "years",
     conditions: "Deep learning through enterprise GenAI",
   },
@@ -102,6 +109,36 @@ export const characteristics: Characteristic[] = [
     unit: "%",
     conditions: "AI-enabled analytics offerings",
   },
+];
+
+/* ── The status rail ────────────────────────────────────────────────────────
+   The four figures under the hero.
+
+   They live here rather than in the component because the rail's own caption
+   promises they come from the characteristics table, and a figure hardcoded
+   in a component is exactly how that promise quietly stops being true. Every
+   `value` and `unit` below is copied from a row above; `base` and `swing`
+   belong to the trace behind the figure and mean nothing about the number.
+
+   Which four, and why: the rail is the forty-second read, so it carries one
+   figure for scale (projects shipped), two for leadership (the team led and
+   the money raised to build one), and one for depth (years in the field).
+   ─────────────────────────────────────────────────────────────────────────── */
+
+export type RailFigure = {
+  label: string;
+  value: string;
+  unit: string;
+  /** Resting centre of the trace, 0–1, and how far it wanders. Decoration. */
+  base: number;
+  swing: number;
+};
+
+export const railFigures: RailFigure[] = [
+  { label: "Projects in production", value: "20+", unit: "projects", base: 0.7, swing: 0.14 },
+  { label: "AI engineers led", value: "18", unit: "engineers", base: 0.78, swing: 0.06 },
+  { label: "Funding secured", value: "₹3", unit: "Cr", base: 0.52, swing: 0.18 },
+  { label: "Experience in AI", value: "5+", unit: "years", base: 0.6, swing: 0.1 },
 ];
 
 /**

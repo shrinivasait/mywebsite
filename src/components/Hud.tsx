@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { railFigures } from "@/lib/content";
 import { Ticker } from "./Kinetic";
 
 /* ── The name ───────────────────────────────────────────────────────────────
@@ -112,29 +113,17 @@ export function Tilt({
 /* ── The status rail ────────────────────────────────────────────────────────
    Four readouts under the hero, each with a trace behind it.
 
-   An honesty note, because this is the one place a portfolio is tempted to
-   lie: three of these are figures from the résumé and they do not move. Only
-   the trace behind them moves, and the rail says in its own label that the
-   traces are the shape these systems run at, not a live feed from anything.
-   A fake dashboard reporting fake live traffic would be the exact thing this
-   whole document is built to avoid.
+   The figures come from `railFigures` in content.ts, alongside the
+   characteristics table they are quoted from — the rail's caption promises
+   exactly that, and a copy of the numbers living in this file is how such a
+   promise stops being true without anyone noticing.
+
+   The honesty note, because this is the one place a portfolio is tempted to
+   lie: the figures do not move. Only the trace behind them does, and the
+   caption under the rail says in plain words that the traces are indicative
+   and not a live feed. A fake dashboard reporting fake live traffic would be
+   the exact thing this whole document is built to avoid.
    ─────────────────────────────────────────────────────────────────────────── */
-
-type Gauge = {
-  label: string;
-  value: string;
-  unit: string;
-  /** Centre of the trace, 0–1, and how much it wanders. */
-  base: number;
-  swing: number;
-};
-
-const GAUGES: Gauge[] = [
-  { label: "Voice round trip", value: "650–800", unit: "ms", base: 0.62, swing: 0.16 },
-  { label: "Team led", value: "18", unit: "engineers", base: 0.78, swing: 0.06 },
-  { label: "Retrieval p95", value: "1.9", unit: "s", base: 0.45, swing: 0.2 },
-  { label: "Years in AI", value: "5", unit: "years", base: 0.55, swing: 0.1 },
-];
 
 const N = 44;
 
@@ -192,7 +181,7 @@ function Spark({ base, swing, phase }: { base: number; swing: number; phase: num
 export function StatusRail() {
   return (
     <div className="rail" role="group" aria-label="Key figures">
-      {GAUGES.map((g, i) => (
+      {railFigures.map((g, i) => (
         <div key={g.label} className="rail-cell">
           <p className="hud">{g.label}</p>
           <p className="rail-value mt-1.5">

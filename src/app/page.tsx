@@ -1,7 +1,10 @@
-import { AmbientCode } from "@/components/AmbientCode";
 import { AskMe } from "@/components/AskMe";
+import { Boot } from "@/components/Boot";
+import { CommandPalette } from "@/components/CommandPalette";
+import { Field } from "@/components/Field";
 import { Header } from "@/components/Header";
 import { ScrollProgress } from "@/components/Kinetic";
+import { Reticle } from "@/components/Reticle";
 import { Reveal } from "@/components/Reveal";
 import {
   About,
@@ -52,11 +55,14 @@ export default function Page() {
       >
         Skip to content
       </a>
-      {/* The screen spill, behind everything, and the read-position hairline
-          above everything. Both are decoration with a job: the first says the
-          page is running, the second says how much of it is left. */}
-      <AmbientCode />
+      {/* The room, behind everything: a lattice that answers to the pointer
+          and shears with scroll velocity. Then the instruments on top of it —
+          read position, a viewfinder tracking the pointer, and the boot the
+          machine runs once per session. */}
+      <Field />
       <ScrollProgress />
+      <Reticle />
+      <Boot />
       <Header />
       {/* No container here: every sheet owns its own container, so the measure
           is stated once per section rather than inherited from a wrapper. */}
@@ -74,6 +80,9 @@ export default function Page() {
       <Footer />
       <Reveal />
       <AskMe />
+      {/* A machine takes commands. Everything in the palette is reachable
+          another way, which is what makes it safe behind a keystroke. */}
+      <CommandPalette />
     </>
   );
 }

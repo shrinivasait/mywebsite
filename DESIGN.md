@@ -893,3 +893,63 @@ it does not re-layout. The spill is one canvas at capped DPR that halts on
 `visibilitychange` and re-reads its colours from a `MutationObserver` on the
 theme class rather than sampling `getComputedStyle` every frame. Scroll
 progress writes a transform through a ref, so scrolling never re-renders React.
+
+---
+
+## The machine room
+
+The kinetic layer above set a screen into a printed sheet. This pass turns the
+room the sheet is read in into the machine, and it is the world the site now
+ships in.
+
+**The console is the primary material; daylight is the second.** `<html>`
+carries `.dark` from the server and the inline script only ever removes it, so
+an unset preference — and a thrown `localStorage` — both land on the console
+rather than stranding the page in the wrong material. The light theme is
+unchanged in structure: the same document under a lamp.
+
+### What is new, and what each thing is for
+
+| Machine | What it does | Why it is allowed |
+| --- | --- | --- |
+| **Boot** | Six lines and a bar, ~1.6 s, then wipes upward. | Once per session, any key or click ends it, never runs under reduced motion, and the page underneath is fully rendered the whole time. An overlay, not a gate. |
+| **Command palette** (⌘K / Ctrl-K) | Jump to any section; email, résumé, LinkedIn, copy address, flip theme, back to top. Subsequence matching, so `dlr` finds *Download résumé*. | Every entry is reachable another way — that is what makes it safe behind a keystroke. Listbox pattern with `aria-activedescendant`; Escape returns focus to the opener. |
+| **Reticle** | A viewfinder that lags the pointer, with a live coordinate readout, opening up over anything clickable. | The native cursor is deliberately **kept**. Replacing it costs the text I-beam and the link pointer and buys a nicer screenshot. Fine pointers only. |
+| **Field** | A lattice of points: a standing wave, a pointer push, and a shear driven by scroll velocity, with packets running the rows. | Replaces the first pass's falling glyphs — glyph rain is the most-used technical backdrop there is, and it was competing with the terminal, which is the thing on this page that genuinely has code in it. |
+| **Status rail** | Four figures with a trace behind each. | The traces move; **the figures do not**, and the caption says the traces are indicative and not a live feed. A fake dashboard reporting fake live traffic is exactly what this document exists to avoid. |
+| **Timeline spine** | Fills as Experience is scrolled; each role's node lights as it passes the reading line. | A scroll indicator for one section. The revision-history list underneath is unchanged and carries all the information. |
+| **Tilt** | The featured system leans ≤5° into the pointer. | Written as two CSS variables so the easing stays in the stylesheet and the panel settles rather than snapping. |
+| **Uptime** | How long this tab has been open, in the hero status line. | The one genuinely live number on the page, and honest about being trivial. |
+
+### The name
+
+Set at `clamp(2.75rem, 12.5vw, 9rem)`, arriving one glyph at a time off a
+per-character transition delay. Under the pointer a **single** glyph
+mis-registers — cyan plate left, volt plate right, the ink plate staying put
+on top so the letter never stops being legible.
+
+The first attempt split every glyph at once and turned a crisp headline into
+green mush. That is the difference between a registration error and a blurry
+print, and it is why the effect is scoped to `.mega-ch:hover` rather than
+`.mega:hover`.
+
+### Two bugs worth remembering
+
+- **`.js-only` is `display: contents`.** Putting it on the fixed-position ⌘K
+  chip stripped the element's own box and with it the positioning; the chip
+  vanished into the corner. Fixed-position elements get their own `display`
+  guard, never that helper.
+- **An auto grid track sizes to `max-content`.** The terminal sets its code in
+  `white-space: pre`, so on a phone the implicit single-column track grew to
+  the longest line and dragged the prose column out with it — 521px of content
+  in a 390px viewport. The hero grid is now explicitly `grid-cols-1`
+  (`minmax(0, 1fr)`), and the terminal wrapper carries `min-w-0`.
+
+### The guards, restated
+
+Everything above stops under `prefers-reduced-motion: reduce` — the boot never
+mounts, the field never starts its loop, the reticle is `display: none`, tilt
+is `transform: none !important`, and the timeline spine renders full. Print
+drops the field, the reticle, the boot, both chips and the spine. Nothing moves
+an interactive target by more than 4px. The page has no horizontal scroll at
+390px, 768px or 1440px.

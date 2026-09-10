@@ -794,20 +794,34 @@ body > footer {
 
 .term-body {
   flex: 1;
+  min-width: 0;
   min-height: 0;
-  overflow: hidden;
+  /* Vertical is script-driven (the pane follows the caret) and horizontal is
+     the reader's: on a narrow screen a long line is draggable rather than
+     silently guillotined at the panel edge. */
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
   padding: 0.75rem 0.25rem 0.75rem 0;
 }
 .term-code {
   margin: 0;
   font-family: var(--font-chivo-mono), ui-monospace, monospace;
-  font-size: 0.75rem;
+  /* Smaller on a phone so most lines land inside the panel unaided. */
+  font-size: 0.6875rem;
   line-height: 1.6;
   white-space: pre;
+}
+@media (min-width: 640px) {
+  .term-code {
+    font-size: 0.75rem;
+  }
 }
 .term-line {
   display: flex;
   gap: 0.75rem;
+  width: max-content;
+  min-width: 100%;
 }
 .term-gutter {
   flex: none;
@@ -1024,5 +1038,708 @@ body > footer {
   }
   .term {
     box-shadow: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   THE MACHINE ROOM
+
+   The first pass set a screen into a printed sheet. This one turns the room
+   the sheet was sitting in into the machine.
+
+   The move: the console is now the primary material and daylight is the
+   second. The page opens dark, boots, and runs. Every structural part of the
+   datasheet survives — the measure, the two inks, the rules, the tables, the
+   units on every figure — because that is what makes the thing legible. What
+   changes is the light it is read under, and how much of it is alive.
+
+   Reading order of this file: tokens, then the display type, then the HUD
+   furniture (brackets, panels, rails), then the four new machines (boot,
+   palette, reticle, field), then motion, then the guards.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Tokens ─────────────────────────────────────────────────────────────────
+   The console is the default world, so `.dark` is where the real palette now
+   lives; `:root` (daylight) is tuned to be the same document under a lamp.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Daylight keeps the printed ground, but picks up the console's second
+     signal so a "running" state means the same thing in both. */
+  --volt: #2f8f2f;
+  --volt-glow: rgb(47 143 47 / 0.35);
+  --hud-line: rgb(4 106 144 / 0.22);
+  --field-line: rgb(20 23 27 / 0.055);
+  --field-dot: rgb(4 106 144 / 0.28);
+  --ambient-alpha: 0.07;
+}
+
+.dark {
+  /* The room. Near-black with a green-blue cast, three depths of it. */
+  --stock: #06090b;
+  --stock-plate: #0b1114;
+  --stock-sunken: #030607;
+
+  --ink: #e9f4f6; /* 16.8:1 */
+  --ink-2: #a3b4ba; /* 8.7:1 */
+  --ink-3: #7f9299; /* 5.8:1 */
+
+  --reticule: #121a1e;
+  --reticule-2: #223037;
+
+  /* The signal. Hotter than the printed cyan, because this one is emitted. */
+  --trace: #4fe3ff; /* 11.4:1 on --stock */
+  --trace-bright: #8bf1ff;
+  --trace-wash: rgb(79 227 255 / 0.09);
+  --trace-glow: rgb(79 227 255 / 0.55);
+  --trace-fg: #041a20;
+  --ring: #4fe3ff;
+
+  /* The second signal: "this is running". Never carries body text. */
+  --volt: #b8ff5c;
+  --volt-glow: rgb(184 255 92 / 0.45);
+
+  --hud-line: rgb(79 227 255 / 0.16);
+  --field-line: rgb(233 244 246 / 0.032);
+  --field-dot: rgb(79 227 255 / 0.34);
+
+  --term-bg: #04080a;
+  --term-bar: #070d10;
+  --term-edge: #16242a;
+  --ambient-alpha: 0.14;
+}
+
+@theme inline {
+  --color-volt: var(--volt);
+}
+
+/* ── Display type ───────────────────────────────────────────────────────────
+   One size of type is allowed to be enormous, and it is the name. Everything
+   else in the document keeps the sizes it had.
+   ─────────────────────────────────────────────────────────────────────────── */
+.mega {
+  font-weight: 600;
+  font-size: clamp(2.75rem, 12.5vw, 9rem);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+/* Per-character arrival. Each glyph is its own inline-block so it can be
+   thrown in from below with a delay set inline by index. */
+.mega-ch {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+.js .mega-ch {
+  opacity: 0;
+  transform: translateY(0.42em) rotate(4deg);
+}
+.js .mega.is-in .mega-ch {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.5s var(--ease-plot),
+    transform 0.75s var(--ease-plot);
+  transition-delay: var(--d, 0ms);
+}
+
+/* A glyph mis-registers under the pointer: the cyan plate slips left, the
+   volt plate slips right, and the black plate stays put on top of both. Per
+   character, not across the whole name — the version that split every glyph
+   at once turned a crisp headline into green mush, which is the difference
+   between a registration error and a blurry print.
+
+   The letter itself keeps painting in ink above the two offset plates, so
+   the name never stops being legible while it is being played with. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .mega-ch {
+    position: relative;
+    isolation: isolate;
+  }
+  .mega-ch::before,
+  .mega-ch::after {
+    content: attr(data-ch);
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition:
+      opacity 0.12s var(--ease-set),
+      transform 0.18s var(--ease-plot);
+  }
+  .mega-ch::before {
+    color: var(--trace);
+  }
+  .mega-ch::after {
+    color: var(--volt);
+  }
+  .mega-ch:hover::before {
+    opacity: 0.9;
+    transform: translate(-4px, -2px);
+  }
+  .mega-ch:hover::after {
+    opacity: 0.75;
+    transform: translate(4px, 2px);
+  }
+}
+
+/* ── HUD furniture ──────────────────────────────────────────────────────── */
+
+/* Mono microtype, the machine's own voice. */
+.hud {
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.hud-on {
+  color: var(--volt);
+}
+
+/* Corner brackets: four L-marks at the corners of a region, the way a
+   viewfinder or a plotter registration mark frames one. Cheaper and more
+   honest than a glowing border, and they survive in daylight. */
+.bracket {
+  position: relative;
+}
+.bracket::before,
+.bracket::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--trace);
+  pointer-events: none;
+}
+.bracket::before {
+  top: -1px;
+  left: -1px;
+  border-right: 0;
+  border-bottom: 0;
+}
+.bracket::after {
+  right: -1px;
+  bottom: -1px;
+  border-left: 0;
+  border-top: 0;
+}
+
+/* A panel: the console's version of a plate. Same hard edge, plus an inner
+   hairline of signal so it reads as backlit rather than printed. */
+.panel {
+  position: relative;
+  background: var(--stock-plate);
+  border: 1px solid var(--reticule-2);
+  box-shadow: inset 0 1px 0 var(--hud-line);
+}
+
+/* The status rail: a row of live readouts under the hero. */
+.rail {
+  display: grid;
+  gap: 1px;
+  background: var(--reticule-2);
+  border: 1px solid var(--reticule-2);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (min-width: 640px) {
+  .rail {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.rail-cell {
+  background: var(--stock-plate);
+  padding: 0.75rem 0.875rem 0.625rem;
+  min-width: 0;
+}
+.rail-value {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  letter-spacing: -0.02em;
+  font-size: 1.25rem;
+  line-height: 1.1;
+}
+.spark {
+  display: block;
+  width: 100%;
+  height: 22px;
+  margin-top: 0.5rem;
+  overflow: visible;
+}
+.spark-path {
+  fill: none;
+  stroke: var(--trace);
+  stroke-width: 1.25;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.spark-head {
+  fill: var(--volt);
+}
+
+/* A numbered section head. The document already counts its sheets in the
+   running head; now each head carries its own index, set in the signal. */
+.sec-index {
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.09em;
+  color: var(--trace);
+}
+
+/* The section rule, scanned. A single pass of light runs the rule when the
+   head arrives, then never again. */
+.rule-scan {
+  position: relative;
+  overflow: hidden;
+}
+.rule-scan::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 28%;
+  background: linear-gradient(90deg, transparent, var(--trace-bright), transparent);
+  transform: translateX(-120%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .is-in.rule-scan::after {
+    animation: scan 1.15s var(--ease-plot) 0.1s both;
+  }
+}
+@keyframes scan {
+  to {
+    transform: translateX(460%);
+  }
+}
+
+/* ── Tilt panels ────────────────────────────────────────────────────────────
+   The work cards lean into the pointer. Capped at 5 degrees and driven by a
+   CSS variable the script writes, so the transition still owns the easing and
+   the card settles rather than snapping back.
+   ─────────────────────────────────────────────────────────────────────────── */
+.tilt {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.5s var(--ease-plot);
+  will-change: transform;
+}
+.tilt-lift {
+  transform: translateZ(24px);
+}
+
+/* ── The field ──────────────────────────────────────────────────────────────
+   The canvas backdrop is drawn by script, but the static grid under it is
+   CSS, so the room has structure before a single frame renders and still has
+   it if the canvas never starts.
+   ─────────────────────────────────────────────────────────────────────────── */
+.field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--field-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--field-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  /* Denser at the top of the room, gone by the time it is behind long prose. */
+  mask-image: linear-gradient(to bottom, #000, transparent 62%);
+}
+
+/* ── The reticle ────────────────────────────────────────────────────────────
+   A square viewfinder that lags the pointer, with a live coordinate readout.
+   The native cursor is deliberately kept: hiding it costs a text I-beam and a
+   pointer over links, and the reticle reads better as an instrument watching
+   the pointer than as a replacement for it.
+   ─────────────────────────────────────────────────────────────────────────── */
+.reticle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 55;
+  pointer-events: none;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  opacity: 0;
+  transition:
+    opacity 0.25s var(--ease-set),
+    width 0.22s var(--ease-plot),
+    height 0.22s var(--ease-plot),
+    margin 0.22s var(--ease-plot);
+}
+.reticle.is-live {
+  opacity: 1;
+}
+.reticle.is-hot {
+  width: 54px;
+  height: 54px;
+  margin: -27px 0 0 -27px;
+}
+.reticle i {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--trace);
+  opacity: 0.85;
+}
+.reticle i:nth-child(1) {
+  top: 0;
+  left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+.reticle i:nth-child(2) {
+  top: 0;
+  right: 0;
+  border-left: 0;
+  border-bottom: 0;
+}
+.reticle i:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  border-right: 0;
+  border-top: 0;
+}
+.reticle i:nth-child(4) {
+  bottom: 0;
+  right: 0;
+  border-left: 0;
+  border-top: 0;
+}
+.reticle b {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 6px;
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  color: var(--trace);
+  opacity: 0.7;
+}
+
+/* ── The boot ───────────────────────────────────────────────────────────────
+   One session, one boot. It is short, it is skippable with any key or click,
+   and it never runs for a visitor who asked for less motion — a splash you
+   cannot dismiss is a toll booth, not a flourish.
+   ─────────────────────────────────────────────────────────────────────────── */
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--stock);
+  animation: boot-out 0.5s var(--ease-plot) forwards;
+  animation-play-state: paused;
+}
+.boot.is-done {
+  animation-play-state: running;
+}
+@keyframes boot-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    clip-path: inset(0 0 100% 0);
+  }
+}
+.boot-inner {
+  width: min(36rem, calc(100vw - 3rem));
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  line-height: 1.85;
+  color: var(--ink-3);
+}
+.boot-line {
+  display: flex;
+  gap: 0.75rem;
+  animation: boot-line-in 0.2s var(--ease-plot) both;
+}
+@keyframes boot-line-in {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+}
+.boot-ok {
+  margin-left: auto;
+  color: var(--volt);
+}
+.boot-bar {
+  margin-top: 1.25rem;
+  height: 2px;
+  background: var(--reticule-2);
+}
+.boot-bar i {
+  display: block;
+  height: 100%;
+  background: var(--trace);
+  box-shadow: 0 0 10px var(--trace-glow);
+  transition: width 0.18s linear;
+}
+.boot-skip {
+  margin-top: 0.75rem;
+  text-align: right;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.625rem;
+  opacity: 0.5;
+}
+
+/* ── The command palette ────────────────────────────────────────────────────
+   The page is a machine, so it takes commands. Everything in it is reachable
+   another way — this is a shortcut for people who prefer a keyboard, not the
+   only door to anything.
+   ─────────────────────────────────────────────────────────────────────────── */
+.cmdk-hint {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 45;
+  /* Hidden without scripting rather than tagged `.js-only`: that helper
+     resolves to `display: contents`, which strips the element's own box and
+     with it the fixed positioning — the chip vanished into the corner. */
+  display: none;
+  align-items: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--stock-plate);
+  border: 1px solid var(--reticule-2);
+  box-shadow: var(--lift-sm);
+  transition:
+    border-color 0.2s var(--ease-set),
+    color 0.2s var(--ease-set);
+}
+@media (hover: hover) {
+  .cmdk-hint:hover {
+    border-color: var(--trace);
+    color: var(--ink);
+  }
+}
+/* A phone has no ⌘K and no room for a second fixed chip beside the query
+   panel, so the hint is a pointer-and-keyboard affordance only. The palette
+   itself still works anywhere a keyboard is attached. */
+@media (min-width: 768px) {
+  .js .cmdk-hint {
+    display: inline-flex;
+  }
+}
+
+.kbd {
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.06em;
+  padding: 0.1rem 0.3rem;
+  border: 1px solid var(--reticule-2);
+  color: var(--ink-2);
+}
+
+.cmdk-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  justify-content: center;
+  padding: 12vh 1rem 1rem;
+  background: color-mix(in oklab, var(--stock) 72%, transparent);
+  backdrop-filter: blur(6px);
+  animation: cmdk-scrim-in 0.14s var(--ease-set) both;
+}
+@keyframes cmdk-scrim-in {
+  from {
+    opacity: 0;
+  }
+}
+.cmdk {
+  width: min(34rem, 100%);
+  height: fit-content;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--stock-plate);
+  border: 1px solid var(--trace);
+  box-shadow:
+    0 0 0 1px var(--trace-wash),
+    var(--lift);
+  animation: cmdk-in 0.18s var(--ease-plot) both;
+}
+@keyframes cmdk-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+.cmdk-field {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.75rem 0.875rem;
+  border-bottom: 1px solid var(--reticule-2);
+}
+.cmdk-prompt {
+  color: var(--trace);
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.8125rem;
+}
+.cmdk-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.8125rem;
+}
+.cmdk-input::placeholder {
+  color: var(--ink-3);
+}
+.cmdk-list {
+  overflow-y: auto;
+  padding: 0.25rem;
+}
+.cmdk-group {
+  padding: 0.5rem 0.625rem 0.25rem;
+}
+.cmdk-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.5rem 0.625rem;
+  text-align: left;
+  border: 1px solid transparent;
+  color: var(--ink-2);
+  font-size: 0.875rem;
+}
+.cmdk-item[aria-selected="true"] {
+  background: var(--trace-wash);
+  border-color: var(--trace);
+  color: var(--ink);
+}
+.cmdk-item-key {
+  margin-left: auto;
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+.cmdk-empty {
+  padding: 1.25rem 0.875rem;
+  color: var(--ink-3);
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+}
+.cmdk-foot {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 0.875rem;
+  border-top: 1px solid var(--reticule-2);
+}
+
+/* ── Timeline ───────────────────────────────────────────────────────────────
+   The experience list gains a spine that draws itself as the list is scrolled,
+   with a node at each role. The revision-history shape survives underneath —
+   this only makes the passage of time visible while you move through it.
+   ─────────────────────────────────────────────────────────────────────────── */
+.timeline {
+  position: relative;
+}
+.timeline-spine {
+  position: absolute;
+  top: 0.35rem;
+  bottom: 0.35rem;
+  left: 3px;
+  width: 1px;
+  background: var(--reticule-2);
+}
+.timeline-spine i {
+  display: block;
+  width: 100%;
+  height: 0%;
+  background: var(--trace);
+  box-shadow: 0 0 8px var(--trace-glow);
+}
+.timeline-node {
+  position: absolute;
+  /* The list is padded 2rem and the spine sits 3px inside that; a node is
+     positioned against its own row, so it has to walk back out to the spine.
+     One padding at all widths keeps this a single constant instead of a
+     breakpoint-matched pair that drifts. */
+  left: calc(-2rem + 3px);
+  width: 7px;
+  height: 7px;
+  background: var(--stock);
+  border: 1px solid var(--reticule-2);
+  transition:
+    background-color 0.3s var(--ease-set),
+    border-color 0.3s var(--ease-set);
+}
+.timeline-node.is-lit {
+  background: var(--trace);
+  border-color: var(--trace);
+  box-shadow: 0 0 10px var(--trace-glow);
+}
+
+/* ── The screen, restated for the console ───────────────────────────────── */
+.term {
+  box-shadow:
+    0 0 0 1px var(--hud-line),
+    0 24px 70px -30px rgb(0 0 0 / 0.8);
+}
+
+/* ── Contact, as an outgoing line ───────────────────────────────────────── */
+.callout {
+  position: relative;
+  border: 1px solid var(--reticule-2);
+  background:
+    radial-gradient(120% 140% at 0% 0%, var(--trace-wash), transparent 55%),
+    var(--stock-plate);
+  padding: 2rem 1.5rem;
+}
+@media (min-width: 640px) {
+  .callout {
+    padding: 3rem 2.5rem;
+  }
+}
+
+/* ── Guards ─────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .js .mega-ch,
+  .js .mega.is-in .mega-ch {
+    opacity: 1;
+    transform: none;
+  }
+  .rule-scan::after,
+  .reticle,
+  .boot {
+    display: none;
+  }
+  .tilt {
+    transform: none !important;
+  }
+  .timeline-spine i {
+    height: 100% !important;
+  }
+}
+
+@media print {
+  .field,
+  .reticle,
+  .boot,
+  .cmdk-hint,
+  .cmdk-scrim {
+    display: none !important;
+  }
+  .timeline-spine {
+    display: none;
   }
 }

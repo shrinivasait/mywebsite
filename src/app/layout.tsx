@@ -60,9 +60,13 @@ export const metadata: Metadata = {
  */
 const themeScript = `
 try {
-  var s = localStorage.getItem('theme');
-  var d = s === 'dark' || (!s && matchMedia('(prefers-color-scheme: dark)').matches);
-  document.documentElement.classList.toggle('dark', d);
+  // The console is the primary world, so <html> ships with .dark already on
+  // it and this script only ever takes it off. That way a thrown
+  // localStorage (private mode, storage disabled) leaves the intended
+  // default standing instead of stranding the page in the second material.
+  if (localStorage.getItem('theme') === 'light') {
+    document.documentElement.classList.remove('dark');
+  }
 } catch (e) {}
 document.documentElement.classList.add('js');
 `;
@@ -72,7 +76,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${archivo.variable} ${chivoMono.variable} scroll-smooth antialiased`}
+      className={`dark ${archivo.variable} ${chivoMono.variable} scroll-smooth antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />

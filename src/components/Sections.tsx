@@ -8,10 +8,12 @@ import {
   leadership,
   projects,
   roles,
+  sheets,
   site,
   skills,
 } from "@/lib/content";
 import { CodeTerminal } from "./CodeTerminal";
+import { MegaName, StatusRail, Tilt, TimelineSpine, Uptime } from "./Hud";
 import { Magnetic, Marquee, Scramble, Ticker } from "./Kinetic";
 import { Year } from "./Year";
 
@@ -57,10 +59,21 @@ function Section({
           data-reveal
           className="flex flex-col gap-1.5 pb-2.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10"
         >
-          <Scramble as="h2" className="spec-section shrink-0" text={title} />
+          <div className="flex shrink-0 items-baseline gap-3">
+            {/* The sheet index, taken from the document's own order rather
+                than hand-numbered here, so inserting a section renumbers
+                everything below it for free. */}
+            <span aria-hidden className="sec-index">
+              {String(sheets.findIndex((sh) => sh.id === id) + 1).padStart(2, "0")}
+            </span>
+            <Scramble as="h2" className="spec-section" text={title} />
+          </div>
           {lead && <p className="spec-datum max-w-md text-ink-3 sm:text-right">{lead}</p>}
         </div>
-        <hr className="rule-ink" />
+        {/* One pass of light runs the rule as the head arrives. */}
+        {/* A div, not an <hr>: the scan is a pseudo-element and `hr` is not
+            a reliable host for one. `role="separator"` keeps the semantics. */}
+        <div role="separator" className="rule-ink rule-scan" data-reveal />
         <div className="mt-7 sm:mt-9">{children}</div>
       </Container>
     </section>
@@ -142,31 +155,50 @@ function LinkedInIcon() {
 export function PartHeader() {
   return (
     <section id="top" tabIndex={-1} className="focus:outline-none">
-      <Container className="pt-10 pb-14 sm:pt-14 sm:pb-16">
-        <div className="grid gap-10 sm:grid-cols-12 sm:gap-10">
-          <div className="order-1 min-w-0 sm:order-none sm:col-span-7">
-            <h1 className="spec-title text-[2.375rem] sm:text-[3.375rem]" data-set>
-              {site.name}
-            </h1>
-            <p className="spec-datum mt-2.5 text-[0.8125rem] text-ink-3" data-set>
-              {site.role} &nbsp;·&nbsp; {site.location}
-            </p>
+      <Container className="pt-8 pb-12 sm:pt-12 sm:pb-16">
+        {/* The status line. What a machine prints before it prints anything
+            else: what it is, where it is, how long it has been up. */}
+        <div
+          className="flex flex-wrap items-center gap-x-5 gap-y-2 border-b border-reticule-2 pb-3"
+          data-set
+        >
+          <span className="hud">{site.role}</span>
+          <span aria-hidden className="hud text-reticule-2">
+            /
+          </span>
+          <span className="hud">{site.location}</span>
+          <span className="hud ml-auto flex items-center gap-2">
+            <span aria-hidden className="size-1.5 bg-volt" />
+            <span className="hud-on">uptime</span>
+            <Uptime />
+          </span>
+        </div>
 
-            <hr className="rule-ink mt-6" data-plot />
+        {/* The name, at the size a title block is set at when the document is
+            the person. One glyph at a time, and it splits into its two ink
+            channels under the pointer — a registration error, which is the
+            print world's own version of a glitch. */}
+        <div className="mt-6 sm:mt-8" data-set>
+          <MegaName text={site.name} />
+        </div>
 
-            <p
-              className="spec-head mt-6 max-w-[34ch] text-[1.375rem] sm:text-[1.625rem]"
-              data-set
-            >
+        {/* `grid-cols-1` and not the implicit single track: the terminal sets its
+            code in `white-space: pre`, so an auto track sizes to the longest
+            line and drags the prose column out with it. Tailwind's numbered
+            column utilities are `minmax(0, 1fr)`, which is the cap that keeps
+            the sheet from scrolling sideways on a phone. */}
+        <div className="mt-8 grid grid-cols-1 gap-10 sm:mt-12 sm:grid-cols-12 sm:gap-10">
+          <div className="order-2 min-w-0 sm:order-none sm:col-span-5">
+            <p className="spec-head max-w-[28ch] text-[1.375rem] sm:text-[1.5rem]" data-set>
               {site.tagline}
             </p>
             <p className="measure mt-4 text-[0.9375rem] leading-[1.65] text-ink-2" data-set>
               {site.intro}
             </p>
 
-            <div className="mt-8" data-set>
+            <div className="mt-7" data-set>
               <FieldLabel>Features</FieldLabel>
-              <ul className="mt-3 max-w-[64ch] space-y-2">
+              <ul className="mt-3 space-y-2">
                 {features.map((f) => (
                   <li key={f} className="flex gap-3 text-[0.875rem] leading-[1.55] text-ink-2">
                     <SquareBullet />
@@ -176,7 +208,7 @@ export function PartHeader() {
               </ul>
             </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-2" data-set>
+            <div className="mt-7 flex flex-wrap items-center gap-2" data-set>
               <Magnetic>
                 <a href={`mailto:${site.email}`} className="key key-primary">
                   <MailIcon />
@@ -200,22 +232,8 @@ export function PartHeader() {
                 <ArrowOut className="size-3.5" />
               </a>
             </div>
-          </div>
 
-          {/* The drawing, in the first viewport and in flow — a grid cell with
-              its own height, never absolutely positioned behind type. Under it
-              the identity strip, so the face is present without spending five
-              columns of height on it. */}
-          <div className="order-3 flex flex-col gap-4 sm:order-none sm:col-span-5" data-set>
-            {/* No caption. The drawing is the object, framed on a measurement
-                surface; a line under it either states something the drawing
-                already says or, worse, claims the object is something it is
-                not. The identity strip below carries the real information. */}
-            <div className="h-[22rem] w-full sm:h-[27rem]">
-              <CodeTerminal />
-            </div>
-
-            <div className="plate plate-live flex items-center gap-3.5 p-3.5">
+            <div className="panel bracket mt-8 flex items-center gap-3.5 p-3.5" data-set>
               <Image
                 src="/profile.jpg"
                 alt={`${site.name}, ${site.role}`}
@@ -226,7 +244,7 @@ export function PartHeader() {
                 className="size-16 shrink-0 rounded-full object-cover object-top"
               />
               <div className="min-w-0">
-                <p className="spec-label text-ink-3">Current seat</p>
+                <p className="hud">Current seat</p>
                 <p className="mt-1 text-[0.9375rem] leading-snug font-semibold">
                   {roles[0].title}
                 </p>
@@ -235,13 +253,31 @@ export function PartHeader() {
                 </p>
                 {site.available && (
                   <p className="mt-2.5 flex items-center gap-2 border-t border-reticule pt-2.5 text-[0.8125rem] text-ink-2">
-                    <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-trace" />
+                    <span aria-hidden className="size-1.5 shrink-0 bg-volt" />
                     {site.availability}
                   </p>
                 )}
               </div>
             </div>
           </div>
+
+          {/* The screen, given the wider half of the spread. It is the first
+              thing in the viewport that moves, and the numbers it prints are
+              the ones the characteristics table states below. */}
+          <div className="order-1 min-w-0 sm:order-none sm:col-span-7" data-set>
+            <div className="h-[24rem] w-full sm:h-[28rem]">
+              <CodeTerminal />
+            </div>
+          </div>
+        </div>
+
+        {/* The rail. Three résumé figures and a trace behind each, with the
+            caption saying plainly that the traces are shapes and not a feed. */}
+        <div className="mt-10 sm:mt-14" data-set>
+          <StatusRail />
+          <p className="hud mt-2.5 text-ink-3">
+            Figures from the characteristics table · traces are indicative, not a live feed
+          </p>
         </div>
       </Container>
 
@@ -479,7 +515,12 @@ export function Work() {
       title="Selected work"
       lead="Systems taken from architecture through to production."
     >
-      <div className="plate plate-live p-6 sm:p-8" data-reveal>
+      <Tilt>
+        <div className="panel bracket plate-live p-6 sm:p-8" data-reveal>
+        <p className="hud mb-4 flex items-center gap-2">
+          <span aria-hidden className="size-1.5 bg-volt" />
+          <span className="hud-on">Featured system</span>
+        </p>
         <div className="grid gap-6 sm:grid-cols-[1fr_1px_1fr] sm:gap-10">
           <div>
             <h3 className="spec-head text-xl sm:text-[1.375rem]">{featured.title}</h3>
@@ -494,15 +535,21 @@ export function Work() {
           </p>
         </div>
       </div>
+      </Tilt>
 
       <ul className="mt-10">
-        {rest.map((p) => (
+        {rest.map((p, i) => (
           <li
             key={p.slug}
             data-reveal
             className="grid gap-x-10 gap-y-2 border-t border-reticule-2 py-6 sm:grid-cols-[1fr_1.35fr]"
           >
-            <h3 className="spec-head text-[1.0625rem]">{p.title}</h3>
+            <h3 className="spec-head flex items-baseline gap-3 text-[1.0625rem]">
+              <span aria-hidden className="sec-index">
+                {String(i + 2).padStart(2, "0")}
+              </span>
+              {p.title}
+            </h3>
             <div className="min-w-0">
               <p className="max-w-[70ch] text-[0.9375rem] leading-[1.65] text-ink-2">
                 {p.summary}
@@ -623,15 +670,25 @@ export function Expertise() {
 export function Experience() {
   return (
     <Section id="experience" title="Experience">
-      <ol>
+      {/* The spine fills as the list is scrolled and each role's node lights
+          as it passes the reading line. The revision-history list underneath
+          is unchanged — this makes the passage of time visible while you are
+          moving through it, and carries no information of its own. */}
+      <ol className="timeline relative pl-8">
+        <TimelineSpine />
         {roles.map((r, i) => (
           <li
             key={r.title}
             data-reveal
-            className={`grid gap-x-10 gap-y-4 sm:grid-cols-[10.5rem_1fr] ${
+            className={`relative grid gap-x-10 gap-y-4 sm:grid-cols-[10.5rem_1fr] ${
               i > 0 ? "mt-10 border-t border-reticule-2 pt-10 sm:mt-12 sm:pt-12" : ""
             }`}
           >
+            <span
+              aria-hidden
+              className="timeline-node"
+              style={{ top: i > 0 ? "2.85rem" : "0.35rem" }}
+            />
             <div className="flex flex-wrap items-center gap-3 sm:block">
               <p className="spec-datum whitespace-nowrap text-ink-3">
                 {r.start} — {r.end}
@@ -750,10 +807,14 @@ export function Contact() {
           Contact
         </h2>
         <hr className="rule-ink" />
-        <div className="mt-8 grid gap-10 sm:grid-cols-[1.3fr_1fr] sm:gap-14">
+        <div className="callout bracket mt-8 grid gap-10 sm:grid-cols-[1.3fr_1fr] sm:gap-14">
           <div>
+            <p className="hud mb-4 flex items-center gap-2" data-reveal>
+              <span aria-hidden className="size-1.5 bg-volt" />
+              <span className="hud-on">{site.availability}</span>
+            </p>
             <p
-              className="spec-head max-w-[26ch] text-[1.5rem] sm:text-[1.875rem]"
+              className="spec-head max-w-[26ch] text-[1.75rem] sm:text-[2.25rem]"
               data-reveal
             >
               If you are hiring for AI leadership, I would like to hear from you.
@@ -774,7 +835,7 @@ export function Contact() {
             </div>
           </div>
 
-          <dl className="plate-sunken h-fit p-5" data-reveal>
+          <dl className="panel h-fit p-5" data-reveal>
             {[
               ["Email", site.email, `mailto:${site.email}`],
               ["LinkedIn", "shreenivas-joshi", site.linkedin],

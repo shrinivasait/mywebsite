@@ -20,7 +20,7 @@ export function ThemeToggle() {
   const dark = useSyncExternalStore(
     subscribe,
     isDark,
-    () => false, // server render: assume light, corrected on hydration
+    () => true, // server render: the console is the default world
   );
 
   const toggle = useCallback(() => {

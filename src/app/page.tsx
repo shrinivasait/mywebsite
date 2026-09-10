@@ -1,5 +1,7 @@
+import { AmbientCode } from "@/components/AmbientCode";
 import { AskMe } from "@/components/AskMe";
 import { Header } from "@/components/Header";
+import { ScrollProgress } from "@/components/Kinetic";
 import { Reveal } from "@/components/Reveal";
 import {
   About,
@@ -50,6 +52,11 @@ export default function Page() {
       >
         Skip to content
       </a>
+      {/* The screen spill, behind everything, and the read-position hairline
+          above everything. Both are decoration with a job: the first says the
+          page is running, the second says how much of it is left. */}
+      <AmbientCode />
+      <ScrollProgress />
       <Header />
       {/* No container here: every sheet owns its own container, so the measure
           is stated once per section rather than inherited from a wrapper. */}

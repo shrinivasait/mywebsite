@@ -835,3 +835,61 @@ Checked on the built page at the close of this pass:
 Next.js rebuild. It is present in the code and shipped in this pass, re-skinned
 as the application-notes register. Removing a working function is the user's
 call, not a redesign's, so it was preserved. This is reported, not repaired.
+
+---
+
+## The kinetic layer
+
+The datasheet is still the document. What sits on top of it now is one added
+material: **a screen**.
+
+The brief was "dynamic, fully animated, fun to see — code playing." The way to
+answer that without throwing away a working reference document was to add a
+single honest object rather than a coat of effects: this page is a printed
+document about building software, with a live terminal set into it. Everything
+that moves answers to that terminal, so the page reads as one idea rather than
+as eight tricks.
+
+### The screen is dark in both themes
+
+`--term-bg` and the syntax palette are declared once and are not flipped by
+`.dark`. A screen is a screen under any light; a terminal that turns into a
+white editor in the light theme reads as a styled div, not as a machine.
+
+### What moves, and what job it has
+
+| Thing | Where | The job it does |
+| --- | --- | --- |
+| `CodeTerminal` | Hero, right column | Types a real pipeline, runs it, prints the measured figures, wipes, next file. The only decoration on the page that is also evidence — its console prints the same numbers the characteristics table states. |
+| `AmbientCode` | Fixed, behind everything | The screen's spill: sparse falling glyphs plus a pointer-tracked light. Alpha caps at `--ambient-alpha` (0.10 light / 0.16 dark) so it never competes with prose. |
+| `Scramble` | Section heads only | Type resolving out of noise — a character being *written* rather than read. Used on eight heads and nowhere else, or it stops meaning anything. |
+| `Ticker` | Characteristics values | Digits roll and settle. Non-digits (`₹`, `→`, `–`, units) never move, so `650–800` and `6 → 10` survive intact. |
+| `Marquee` | Full-bleed, under the hero | The stack, running. The one band that crosses the whole sheet. Pauses on hover. |
+| `Magnetic` | The two hero actions | A ≤4px lean toward the pointer. A hint that the control is live, capped low enough that it never moves a target away from a cursor aimed at it. |
+| `ScrollProgress` | Fixed hairline, top | Read position. Complements the sheet counter in the running head: the counter says *where*, the hairline says *how much left*. |
+| `.plate-live` | Featured work, résumé, identity plates | The only block hover in the system: the edge takes the second ink and a beam runs the top. No lift, no scale — the sheet does not levitate. |
+
+### The three rules every one of them keeps
+
+1. **Nothing animates behind running prose at readable contrast.** The spill is
+   capped in alpha; the terminal is a bounded region, not a backdrop.
+2. **Everything stops under `prefers-reduced-motion: reduce`.** The terminal
+   renders the first file complete with its run already printed, the spill
+   never starts its rAF loop, and the scramble, ticker, marquee and magnetic
+   lean all no-op. This is checked at the source, not only in CSS.
+3. **Nothing moves a target by more than 4px.** Magnetic is the only thing that
+   moves an interactive element at all.
+
+Plus the ones the rest of the document already had: the terminal and the spill
+are `aria-hidden` (the terminal carries an `sr-only` line saying what it is),
+the marquee is `aria-hidden` because the same names are set as a real list in
+Technical depth, and `@media print` drops the spill, the progress hairline and
+the marquee entirely.
+
+### Performance
+
+The terminal is one rAF loop and two integers of state; a frame slices arrays,
+it does not re-layout. The spill is one canvas at capped DPR that halts on
+`visibilitychange` and re-reads its colours from a `MutationObserver` on the
+theme class rather than sampling `getComputedStyle` every frame. Scroll
+progress writes a transform through a ref, so scrolling never re-renders React.

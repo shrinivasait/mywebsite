@@ -11,7 +11,8 @@ import {
   site,
   skills,
 } from "@/lib/content";
-import { HeroArtifact } from "./HeroArtifact";
+import { CodeTerminal } from "./CodeTerminal";
+import { Magnetic, Marquee, Scramble, Ticker } from "./Kinetic";
 import { Year } from "./Year";
 
 /* ── Shared shells ───────────────────────────────────────────────────────────
@@ -56,7 +57,7 @@ function Section({
           data-reveal
           className="flex flex-col gap-1.5 pb-2.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10"
         >
-          <h2 className="spec-section shrink-0">{title}</h2>
+          <Scramble as="h2" className="spec-section shrink-0" text={title} />
           {lead && <p className="spec-datum max-w-md text-ink-3 sm:text-right">{lead}</p>}
         </div>
         <hr className="rule-ink" />
@@ -176,14 +177,18 @@ export function PartHeader() {
             </div>
 
             <div className="mt-8 flex flex-wrap items-center gap-2" data-set>
-              <a href={`mailto:${site.email}`} className="key key-primary">
-                <MailIcon />
-                Get in touch
-              </a>
-              <a href={site.resume} download className="key key-secondary">
-                <DownloadIcon />
-                Download résumé
-              </a>
+              <Magnetic>
+                <a href={`mailto:${site.email}`} className="key key-primary">
+                  <MailIcon />
+                  Get in touch
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a href={site.resume} download className="key key-secondary">
+                  <DownloadIcon />
+                  Download résumé
+                </a>
+              </Magnetic>
               <a
                 href={site.linkedin}
                 target="_blank"
@@ -206,11 +211,11 @@ export function PartHeader() {
                 surface; a line under it either states something the drawing
                 already says or, worse, claims the object is something it is
                 not. The identity strip below carries the real information. */}
-            <div className="reticule-field relative h-64 w-full border border-reticule-2 sm:h-[24rem]">
-              <HeroArtifact />
+            <div className="h-[22rem] w-full sm:h-[27rem]">
+              <CodeTerminal />
             </div>
 
-            <div className="plate flex items-center gap-3.5 p-3.5">
+            <div className="plate plate-live flex items-center gap-3.5 p-3.5">
               <Image
                 src="/profile.jpg"
                 alt={`${site.name}, ${site.role}`}
@@ -239,6 +244,13 @@ export function PartHeader() {
           </div>
         </div>
       </Container>
+
+      {/* The stack, running. Full-bleed on purpose: it is the one band that
+          crosses the whole sheet, which is what makes it read as a ticker
+          rather than as another list inside the measure. It pauses on hover
+          so an item can actually be read, and it is aria-hidden because the
+          same names are set as a proper list in Technical depth below. */}
+      <Marquee items={skills.flatMap((g) => g.items)} />
     </section>
   );
 }
@@ -284,7 +296,7 @@ export function Characteristics() {
                 </th>
                 <td className="spec-datum text-ink-3">{c.symbol ?? "—"}</td>
                 <td className="spec-value whitespace-nowrap text-right text-[1.0625rem]">
-                  {c.value}
+                  <Ticker value={c.value} />
                 </td>
                 <td className="spec-datum text-ink-3">{c.unit}</td>
                 <td className="tbl-cond spec-datum text-ink-3">{c.conditions}</td>
@@ -467,7 +479,7 @@ export function Work() {
       title="Selected work"
       lead="Systems taken from architecture through to production."
     >
-      <div className="plate p-6 sm:p-8" data-reveal>
+      <div className="plate plate-live p-6 sm:p-8" data-reveal>
         <div className="grid gap-6 sm:grid-cols-[1fr_1px_1fr] sm:gap-10">
           <div>
             <h3 className="spec-head text-xl sm:text-[1.375rem]">{featured.title}</h3>
@@ -684,7 +696,7 @@ export function About() {
 
         {/* The résumé, given a plate of its own: it is the deliverable a
             hiring team actually forwards. */}
-        <div data-reveal className="plate flex flex-col p-6">
+        <div data-reveal className="plate plate-live flex flex-col p-6">
           <h3 className="spec-head text-[1.0625rem]">Full résumé</h3>
           <p className="mt-2.5 text-[0.875rem] leading-[1.6] text-ink-2">
             Every role, project and figure on this page, in one page of PDF — the version to

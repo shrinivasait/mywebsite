@@ -634,3 +634,395 @@ a {
     background: #ffffff;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   THE KINETIC LAYER
+
+   The datasheet above is intact: the measure, the two inks, the rules and the
+   tables are unchanged, and they are still what carries the evidence. What is
+   added here is a second material laid over it — a screen.
+
+   The idea is one object, honestly stated: this page is a document about
+   building software, printed on stock, with a live terminal set into it. So
+   the terminal is the one region that is always dark, in both themes, because
+   a screen is a screen under any light. Everything the kinetic layer adds
+   answers to it: the falling glyphs behind the sheet are the screen spill,
+   the second ink is the screen phosphor, and the type resolves out of noise
+   the way a character does when it is being written rather than read.
+
+   Every moving thing in here obeys three rules:
+     1. nothing animates behind running prose at readable contrast;
+     2. everything stops under `prefers-reduced-motion: reduce`;
+     3. nothing moves a target a pointer is trying to hit by more than 4px.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* The screen. One set of values, used in both themes. */
+  --term-bg: #0a0f12;
+  --term-bar: #0f1519;
+  --term-edge: #1d272d;
+  --term-gutter: #3d4a52;
+
+  /* Syntax. Four hues at most, all pulled toward the page cyan so the screen
+     belongs to this document rather than importing another editor theme. */
+  --code-txt: #cdd8dd;
+  --code-key: #5fd0f5;
+  --code-fn: #9be08a;
+  --code-str: #f0c98a;
+  --code-num: #e79ad4;
+  --code-com: #5c6a72;
+  --code-punc: #8b9aa2;
+  --code-ok: #7fdc7f;
+  --code-warn: #f0c98a;
+
+  /* The spill. What the ambient canvas paints with, per theme. */
+  --ambient-ink: #046a90;
+  --ambient-hot: #14171b;
+  --ambient-alpha: 0.10;
+}
+
+.dark {
+  --term-bg: #080c0e;
+  --term-bar: #0c1215;
+  --ambient-ink: #4fb9de;
+  --ambient-hot: #a9f0ff;
+  --ambient-alpha: 0.16;
+}
+
+@theme inline {
+  --color-code-txt: var(--code-txt);
+  --color-code-key: var(--code-key);
+  --color-code-fn: var(--code-fn);
+  --color-code-str: var(--code-str);
+  --color-code-num: var(--code-num);
+  --color-code-com: var(--code-com);
+  --color-code-punc: var(--code-punc);
+}
+
+/* ── The spill ──────────────────────────────────────────────────────────── */
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+/* Content sits above the canvas without any of it needing a z-index of its
+   own: one stacking context on the three roots that hold content. */
+body > header,
+body > main,
+body > footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Scroll progress ────────────────────────────────────────────────────── */
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  height: 2px;
+  background: var(--trace-bright);
+  transform: scaleX(0);
+  transform-origin: left center;
+  box-shadow: 0 0 12px var(--trace-glow);
+  pointer-events: none;
+}
+
+/* ── The terminal ───────────────────────────────────────────────────────────
+   A screen set into the sheet: hard-edged like everything else here, no
+   radius, but lit from inside. Its console keeps a fixed height so a run that
+   prints four lines does not resize the hero while it is printing them.
+   ─────────────────────────────────────────────────────────────────────────── */
+.term {
+  display: flex;
+  flex-direction: column;
+  background: var(--term-bg);
+  border: 1px solid var(--term-edge);
+  box-shadow:
+    0 0 0 1px rgb(4 106 144 / 0.12),
+    0 18px 50px -24px rgb(4 15 20 / 0.55);
+  overflow: hidden;
+  transition: opacity 0.35s var(--ease-set);
+}
+.term.is-wiping {
+  opacity: 0.35;
+}
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--term-bar);
+  border-bottom: 1px solid var(--term-edge);
+}
+.term-lamps {
+  display: flex;
+  gap: 5px;
+}
+.term-lamps i {
+  width: 7px;
+  height: 7px;
+  background: var(--term-gutter);
+}
+.term-lamps i:first-child {
+  background: var(--trace-bright);
+}
+.term-tabs {
+  display: flex;
+  gap: 0.25rem;
+  min-width: 0;
+  overflow: hidden;
+}
+.term-tab {
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.5rem;
+  color: var(--term-gutter);
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition:
+    color 0.3s var(--ease-set),
+    border-color 0.3s var(--ease-set);
+}
+.term-tab.is-on {
+  color: var(--code-txt);
+  border-color: var(--term-edge);
+  background: rgb(255 255 255 / 0.03);
+}
+
+.term-body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0.75rem 0.25rem 0.75rem 0;
+}
+.term-code {
+  margin: 0;
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  white-space: pre;
+}
+.term-line {
+  display: flex;
+  gap: 0.75rem;
+}
+.term-gutter {
+  flex: none;
+  width: 2.25rem;
+  text-align: right;
+  color: var(--term-gutter);
+  user-select: none;
+}
+.term-text {
+  min-width: 0;
+  color: var(--code-txt);
+}
+.term-caret {
+  display: inline-block;
+  width: 0.5em;
+  height: 1.05em;
+  margin-bottom: -0.2em;
+  background: var(--trace-bright);
+  box-shadow: 0 0 8px var(--trace-glow);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .term-caret {
+    animation: caret 1s steps(1, end) infinite;
+  }
+}
+@keyframes caret {
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0.15;
+  }
+}
+
+.term-out {
+  border-top: 1px solid var(--term-edge);
+  background: rgb(0 0 0 / 0.35);
+  padding: 0.5rem 0.75rem 0.625rem;
+}
+.term-out-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--term-gutter);
+}
+.term-out-file {
+  margin-left: auto;
+}
+.term-run {
+  width: 6px;
+  height: 6px;
+  background: var(--code-warn);
+}
+.term-run.is-done {
+  background: var(--code-ok);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .term-run {
+    animation: pulse 0.9s var(--ease-set) infinite;
+  }
+  .term-run.is-done {
+    animation: none;
+  }
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.term-log {
+  margin-top: 0.4rem;
+  min-height: 5.25rem;
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  line-height: 1.55;
+}
+.term-log-line {
+  display: flex;
+  gap: 0.5rem;
+  color: var(--code-punc);
+  animation: log-in 0.24s var(--ease-plot) both;
+}
+.term-log-mark {
+  color: var(--term-gutter);
+}
+.term-log-line.is-ok {
+  color: var(--code-ok);
+}
+.term-log-line.is-warn {
+  color: var(--code-warn);
+}
+.term-log-line.is-metric {
+  color: var(--code-key);
+}
+@keyframes log-in {
+  from {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+}
+
+/* ── Marquee ────────────────────────────────────────────────────────────── */
+.marquee {
+  overflow: hidden;
+  border-block: 1px solid var(--reticule-2);
+  background: var(--stock-plate);
+  padding-block: 0.625rem;
+  /* Feathered at both ends so items enter and leave rather than being cut. */
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-track {
+    animation: marquee 46s linear infinite;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-inline: 1.25rem;
+  font-family: var(--font-chivo-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.marquee-sep {
+  color: var(--trace);
+  font-style: normal;
+}
+
+/* ── Magnetic controls ──────────────────────────────────────────────────── */
+.magnetic {
+  display: inline-flex;
+}
+.magnetic > * {
+  transition: transform 0.25s var(--ease-plot);
+}
+
+/* ── A live plate ───────────────────────────────────────────────────────────
+   The one hover this world allows on a block: the plate edge takes the second
+   ink and a thin beam runs along its top. No lift, no scale, no shadow — the
+   sheet does not levitate, the trace lights up.
+   ─────────────────────────────────────────────────────────────────────────── */
+.plate-live {
+  position: relative;
+  transition:
+    border-color 0.25s var(--ease-set),
+    background-color 0.25s var(--ease-set);
+}
+.plate-live::after {
+  content: "";
+  position: absolute;
+  inset: -1px -1px auto -1px;
+  height: 2px;
+  background: var(--trace-bright);
+  box-shadow: 0 0 10px var(--trace-glow);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s var(--ease-plot);
+}
+.plate-live:focus-within::after {
+  transform: none;
+}
+@media (hover: hover) {
+  .plate-live:hover {
+    border-color: var(--trace);
+  }
+  .plate-live:hover::after {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .term.is-wiping {
+    opacity: 1;
+  }
+  .term-log-line,
+  .marquee-track {
+    animation: none;
+  }
+  .plate-live::after {
+    transition: none;
+  }
+}
+
+@media print {
+  .ambient,
+  .progress,
+  .marquee {
+    display: none !important;
+  }
+  .term {
+    box-shadow: none;
+  }
+}

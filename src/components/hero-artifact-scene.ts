@@ -65,39 +65,12 @@ import {
   lossAt,
   lossNorm,
 } from "./loss-surface";
-
-type Vars = {
-  face: string;
-  face2: string;
-  face3: string;
-  rampLow: string;
-  rampMid: string;
-  rampHigh: string;
-  edge: string;
-  mark: string;
-  key: number;
-};
+import { readVars } from "./scene-vars";
 
 /** What the scene reports to its host for the live readout. */
 export type Sample = { loss: number; step: number; steps: number; trapped: boolean };
 
 export type SceneHandle = { destroy: () => void };
-
-const readVars = (): Vars => {
-  const s = getComputedStyle(document.documentElement);
-  const v = (n: string, fallback: string) => s.getPropertyValue(n).trim() || fallback;
-  return {
-    face: v("--scene-face", "#eceeed"),
-    face2: v("--scene-face-2", "#f7f8f7"),
-    face3: v("--scene-face-3", "#d8dcdb"),
-    rampLow: v("--scene-ramp-low", "#6ea6b9"),
-    rampMid: v("--scene-ramp-mid", "#bcd4da"),
-    rampHigh: v("--scene-ramp-high", "#f4f7f6"),
-    edge: v("--scene-edge", "#14171b"),
-    mark: v("--scene-mark", "#046a90"),
-    key: parseFloat(v("--scene-key", "1.15")),
-  };
-};
 
 /* ── Geometry constants ──────────────────────────────────────────────────────
    SEG is the surface's tessellation; GRID_EVERY is how many of those divisions

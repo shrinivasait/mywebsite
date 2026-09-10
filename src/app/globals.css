@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* The theme is a class on <html> (set pre-paint in layout.tsx), not the OS
+   preference, so `dark:` must follow that class rather than the default
+   prefers-color-scheme media query. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ───────────────────────────────────────────────────────────────────────────
    THE DATASHEET
 
@@ -54,6 +59,7 @@
   --trace: #046a90; /* 5.6:1 on stock */
   --trace-bright: #0a93c4; /* 3.3:1 — graphics and large type only */
   --trace-wash: rgb(4 106 144 / 0.07);
+  --trace-glow: rgb(4 106 144 / 0.4); /* the switch's neon, on paper: short falloff, no bloom */
   --trace-fg: #ffffff;
   --ring: #046a90;
 
@@ -105,6 +111,7 @@
   --trace: #4fb9de; /* 8.1:1 */
   --trace-bright: #67c9ea;
   --trace-wash: rgb(79 185 222 / 0.1);
+  --trace-glow: rgb(79 185 222 / 0.55); /* the negative can carry a hotter neon */
   --trace-fg: #05242e;
   --ring: #4fb9de;
 

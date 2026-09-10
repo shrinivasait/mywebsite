@@ -12,8 +12,9 @@ import {
   site,
   skills,
 } from "@/lib/content";
+import { CircuitPackets } from "./Circuit";
 import { CodeTerminal } from "./CodeTerminal";
-import { MegaName, StatusRail, Tilt, TimelineSpine, Uptime } from "./Hud";
+import { MegaName, Parallax, StatusRail, Tilt, TimelineSpine, Uptime, Words } from "./Hud";
 import { Magnetic, Marquee, Scramble, Ticker } from "./Kinetic";
 import { Year } from "./Year";
 
@@ -73,7 +74,7 @@ function Section({
         {/* One pass of light runs the rule as the head arrives. */}
         {/* A div, not an <hr>: the scan is a pseudo-element and `hr` is not
             a reliable host for one. `role="separator"` keeps the semantics. */}
-        <div role="separator" className="rule-ink rule-scan" data-reveal />
+        <div role="separator" className="rule-ink rule-scan" data-wipe />
         <div className="mt-7 sm:mt-9">{children}</div>
       </Container>
     </section>
@@ -178,9 +179,16 @@ export function PartHeader() {
             the person. One glyph at a time, and it splits into its two ink
             channels under the pointer — a registration error, which is the
             print world's own version of a glitch. */}
-        <div className="mt-6 sm:mt-8" data-set>
-          <MegaName text={site.name} />
-        </div>
+        {/* The name and the screen leave at different rates: the name is
+            the near plane, the screen sits fractionally further back. Both
+            shallow — past about fifteen per cent parallax stops saying "this
+            surface is closer" and starts saying "this text is not attached
+            to anything". */}
+        <Parallax depth={0.06} className="mt-6 sm:mt-8">
+          <div data-set>
+            <MegaName text={site.name} />
+          </div>
+        </Parallax>
 
         {/* `grid-cols-1` and not the implicit single track: the terminal sets its
             code in `white-space: pre`, so an auto track sizes to the longest
@@ -265,9 +273,11 @@ export function PartHeader() {
               thing in the viewport that moves, and the numbers it prints are
               the ones the characteristics table states below. */}
           <div className="order-1 min-w-0 sm:order-none sm:col-span-7" data-set>
-            <div className="h-[24rem] w-full sm:h-[28rem]">
-              <CodeTerminal />
-            </div>
+            <Parallax depth={-0.04}>
+              <div className="h-[24rem] w-full sm:h-[28rem]">
+                <CodeTerminal />
+              </div>
+            </Parallax>
           </div>
         </div>
 
@@ -287,6 +297,12 @@ export function PartHeader() {
           so an item can actually be read, and it is aria-hidden because the
           same names are set as a proper list in Technical depth below. */}
       <Marquee items={skills.flatMap((g) => g.items)} />
+      {/* The problem domains, running the other way. Counter-motion is what
+          makes two bands read as a machine rather than as one strip sliding
+          past twice. */}
+      <div className="marquee-back">
+        <Marquee items={expertise.flatMap((e) => e.tags)} />
+      </div>
     </section>
   );
 }
@@ -324,7 +340,7 @@ export function Characteristics() {
               <th scope="col">Conditions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody data-rows>
             {characteristics.map((c) => (
               <tr key={c.parameter}>
                 <th scope="row" className="text-left text-[0.875rem] font-normal text-ink">
@@ -387,7 +403,7 @@ export function BlockDiagram() {
     >
       {/* Plain stock, not the reticule: a block diagram is drawn on a plate,
           and the graph grid is reserved for the measurement surface above. */}
-      <div className="tbl-scroll plate" data-reveal>
+      <div className="tbl-scroll plate" data-rise>
         <svg
           viewBox={`0 0 ${4 * W + 3 * GAP + 48} 250`}
           className="h-auto w-full min-w-[52rem]"
@@ -419,9 +435,14 @@ export function BlockDiagram() {
                   width={W}
                   height={H}
                   strokeWidth={last ? 2 : 1.5}
+                  /* Each stage takes the signal a beat after the one before
+                     it. The last stage is already drawn in the trace — it is
+                     the output, and it stays lit. */
+                  className={last ? undefined : "circuit-stage"}
                   style={{
                     fill: "var(--stock-plate)",
                     stroke: last ? "var(--trace)" : "var(--ink)",
+                    ["--d" as string]: `${i * 1.5}s`,
                   }}
                 />
                 <text x={x + 14} y={Y + 27} fontSize="14" style={LABEL}>
@@ -444,6 +465,30 @@ export function BlockDiagram() {
               </g>
             );
           })}
+
+          {/* The signal. Its legs are built from the same constants the
+              drawing is built from, so editing the layout moves the packets
+              with it — the geometry is never restated.
+
+              Drawn before the feedback group and after the stages, which in
+              SVG paint order means over the connectors but under the
+              evaluation block. A packet therefore disappears into that block
+              and comes out the other side, which is what the diagram is
+              claiming happens. Painted last, it slid across the block's own
+              label and read as a stray dot on the text. */}
+          {(() => {
+            const xArch = 24 + 2 * (W + GAP);
+            const xProd = 24 + 3 * (W + GAP);
+            const yBus = 186;
+            const forward = blockStages.slice(0, -1).map((_, i) => {
+              const x = 24 + i * (W + GAP);
+              return `M ${x + W} ${Y + H / 2} H ${x + W + GAP - 2}`;
+            });
+            const feedback =
+              `M ${xProd + W / 2} ${Y + H} V ${yBus} ` +
+              `H ${xArch + W / 2} V ${Y + H + 2}`;
+            return <CircuitPackets forward={forward} feedback={feedback} />;
+          })()}
 
           {/* The feedback path: down from the production systems, back along
               the sheet, and up into the reference architecture. */}
@@ -489,6 +534,7 @@ export function BlockDiagram() {
               </g>
             );
           })()}
+
         </svg>
       </div>
     </Section>
@@ -516,7 +562,7 @@ export function Work() {
       lead="Systems taken from architecture through to production."
     >
       <Tilt>
-        <div className="panel bracket plate-live p-6 sm:p-8" data-reveal>
+        <div className="panel bracket plate-live p-6 sm:p-8" data-rise>
         <p className="hud mb-4 flex items-center gap-2">
           <span aria-hidden className="size-1.5 bg-volt" />
           <span className="hud-on">Featured system</span>
@@ -541,7 +587,7 @@ export function Work() {
         {rest.map((p, i) => (
           <li
             key={p.slug}
-            data-reveal
+            data-slide
             className="grid gap-x-10 gap-y-2 border-t border-reticule-2 py-6 sm:grid-cols-[1fr_1.35fr]"
           >
             <h3 className="spec-head flex items-baseline gap-3 text-[1.0625rem]">
@@ -582,7 +628,7 @@ export function Leadership() {
         {leadership.map((pillar, i) => (
           <li
             key={pillar.title}
-            data-reveal
+            data-slide
             className={`grid gap-x-10 gap-y-2.5 py-6 sm:grid-cols-[1fr_1.35fr] ${
               i > 0 ? "border-t border-reticule-2" : "pt-0"
             }`}
@@ -614,7 +660,7 @@ export function Expertise() {
         {expertise.map((area, i) => (
           <li
             key={area.title}
-            data-reveal
+            data-slide
             className={`grid gap-x-10 gap-y-2 py-6 sm:grid-cols-[1fr_1.35fr] ${
               i > 0 ? "border-t border-reticule-2" : "pt-0"
             }`}
@@ -643,7 +689,7 @@ export function Expertise() {
                 <th scope="col">Tools</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody data-rows>
               {skills.map((g) => (
                 <tr key={g.title}>
                   <th scope="row" className="text-left text-[0.875rem] font-normal text-ink">
@@ -679,7 +725,7 @@ export function Experience() {
         {roles.map((r, i) => (
           <li
             key={r.title}
-            data-reveal
+            data-slide
             className={`relative grid gap-x-10 gap-y-4 sm:grid-cols-[10.5rem_1fr] ${
               i > 0 ? "mt-10 border-t border-reticule-2 pt-10 sm:mt-12 sm:pt-12" : ""
             }`}
@@ -753,7 +799,7 @@ export function About() {
 
         {/* The résumé, given a plate of its own: it is the deliverable a
             hiring team actually forwards. */}
-        <div data-reveal className="plate plate-live flex flex-col p-6">
+        <div data-rise className="plate plate-live flex flex-col p-6">
           <h3 className="spec-head text-[1.0625rem]">Full résumé</h3>
           <p className="mt-2.5 text-[0.875rem] leading-[1.6] text-ink-2">
             Every role, project and figure on this page, in one page of PDF — the version to
@@ -803,21 +849,21 @@ export function Contact() {
   return (
     <section id="contact" className="scroll-mt-20">
       <Container className="pt-16 sm:pt-24">
-        <h2 className="spec-section pb-2.5" data-reveal>
-          Contact
-        </h2>
-        <hr className="rule-ink" />
+        <div className="flex items-baseline gap-3 pb-2.5" data-reveal>
+          <span aria-hidden className="sec-index">
+            {String(sheets.findIndex((sh) => sh.id === "contact") + 1).padStart(2, "0")}
+          </span>
+          <Scramble as="h2" className="spec-section" text="Contact" />
+        </div>
+        <div role="separator" className="rule-ink rule-scan" data-wipe />
         <div className="callout bracket mt-8 grid gap-10 sm:grid-cols-[1.3fr_1fr] sm:gap-14">
           <div>
             <p className="hud mb-4 flex items-center gap-2" data-reveal>
               <span aria-hidden className="size-1.5 bg-volt" />
               <span className="hud-on">{site.availability}</span>
             </p>
-            <p
-              className="spec-head max-w-[26ch] text-[1.75rem] sm:text-[2.25rem]"
-              data-reveal
-            >
-              If you are hiring for AI leadership, I would like to hear from you.
+            <p className="spec-head max-w-[26ch] text-[1.75rem] sm:text-[2.25rem]">
+              <Words text="If you are hiring for AI leadership, I would like to hear from you." />
             </p>
             <p className="measure mt-4 text-[0.9375rem] leading-[1.65] text-ink-2" data-reveal>
               Equally happy to talk about building GenAI systems that hold up in production —
@@ -835,7 +881,7 @@ export function Contact() {
             </div>
           </div>
 
-          <dl className="panel h-fit p-5" data-reveal>
+          <dl className="panel h-fit p-5" data-rise>
             {[
               ["Email", site.email, `mailto:${site.email}`],
               ["LinkedIn", "shreenivas-joshi", site.linkedin],

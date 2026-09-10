@@ -286,3 +286,78 @@ export function Uptime() {
     </span>
   );
 }
+
+/* ── Words ──────────────────────────────────────────────────────────────────
+   A sentence split into words so it can land one at a time. The split is
+   done in the markup, not by script, so the text is complete in the HTML and
+   a screen reader gets one continuous string rather than a stack of spans —
+   the wrapper carries the sentence as its accessible name and the pieces are
+   hidden from the tree.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+export function Words({ text, className = "" }: { text: string; className?: string }) {
+  const words = text.split(" ");
+  return (
+    <span className={className} data-words aria-label={text}>
+      {words.map((w, i) => (
+        <span key={i} aria-hidden className="word">
+          {w}
+          {i < words.length - 1 ? " " : ""}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+/* ── Parallax ───────────────────────────────────────────────────────────────
+   Two planes leaving at different rates. `depth` is a fraction of the scroll
+   distance, so 0.12 means the element lags the page by twelve per cent.
+
+   Kept deliberately shallow. Parallax on a document is a way of saying "this
+   surface is closer than that one"; past about fifteen per cent it starts
+   saying "this text is not attached to anything", which is a different and
+   much worse sentence.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+export function Parallax({
+  children,
+  depth = 0.1,
+  className = "",
+}: {
+  children: React.ReactNode;
+  depth?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let raf = 0;
+    const write = () => {
+      raf = 0;
+      // Only while the hero is anywhere near the viewport: past that the
+      // element is off screen and the transform is wasted work.
+      const y = window.scrollY;
+      if (y > window.innerHeight * 1.4) return;
+      el.style.transform = `translate3d(0, ${(y * depth).toFixed(1)}px, 0)`;
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(write);
+    };
+    write();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [depth]);
+
+  return (
+    <div ref={ref} className={`parallax ${className}`}>
+      {children}
+    </div>
+  );
+}

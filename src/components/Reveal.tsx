@@ -10,21 +10,31 @@ import { useEffect } from "react";
  * `[data-set]` / `[data-plot]` — the front page's authored arrival. Staggered by
  * document order at 90ms, exactly as before.
  *
- * `[data-reveal]` — everything below the fold, added when the user asked for
- * the page to feel alive as it is scrolled. Its stagger is computed *within a
- * parent*, capped at six steps, so a nine-card grid does not hand its last
- * card a half-second delay and so the cadence does not drift as sections are
- * added above it. Each element fires once and is then unobserved.
+ * Everything below the fold — `[data-reveal]`, and the four entrances added
+ * with the motion vocabulary (`[data-rise]`, `[data-wipe]`, `[data-rows]`,
+ * `[data-slide]`, `[data-words]`) — shares one observer and one stagger,
+ * computed *within a parent* and capped at six steps, so a nine-card grid
+ * does not hand its last card a half-second delay and the cadence does not
+ * drift as sections are added above it.
  *
- * Both hidden start states live behind `.js` in globals.css, so with scripting
- * off nothing is hidden.
+ * `[data-rows]` and `[data-words]` stagger their own children instead: the
+ * script writes a `--i` per row or per word once, on first sight, and the
+ * stylesheet turns that into a transition delay. Doing it here rather than in
+ * the markup keeps the cadence in one place and keeps a table of nine rows
+ * from carrying nine hand-written delay attributes.
+ *
+ * Every hidden start state lives behind `.js` in globals.css, so with
+ * scripting off nothing is hidden.
  */
+
+const BELOW = "[data-reveal], [data-rise], [data-wipe], [data-rows], [data-slide], [data-words]";
+
 export function Reveal() {
   useEffect(() => {
     const hero = Array.from(
       document.querySelectorAll<HTMLElement>("[data-set], [data-plot]"),
     );
-    const below = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    const below = Array.from(document.querySelectorAll<HTMLElement>(BELOW));
     /* These selectors and the hidden start states in globals.css are one
        contract expressed in two files. When the population was renamed in the
        CSS and not here, every element stayed at opacity 0 and the whole front
@@ -38,6 +48,21 @@ export function Reveal() {
     }
 
     if (!hero.length && !below.length) return;
+
+    // Index the children of the two entrances that stagger internally. Done
+    // once, up front, rather than at reveal time: writing a style on nine
+    // rows while they are transitioning in is the kind of thing that lands
+    // mid-frame and shows.
+    for (const el of below) {
+      const kids =
+        el.hasAttribute("data-rows")
+          ? el.querySelectorAll<HTMLElement>(":scope > tr, :scope > li")
+          : el.hasAttribute("data-words")
+            ? el.querySelectorAll<HTMLElement>(".word")
+            : null;
+      if (!kids) continue;
+      kids.forEach((kid, n) => kid.style.setProperty("--i", String(Math.min(n, 14))));
+    }
 
     const show = (el: HTMLElement) => el.classList.add("is-in");
 

@@ -953,3 +953,87 @@ is `transform: none !important`, and the timeline spine renders full. Print
 drops the field, the reticle, the boot, both chips and the spine. Nothing moves
 an interactive target by more than 4px. The page has no horizontal scroll at
 390px, 768px or 1440px.
+
+---
+
+## The motion vocabulary
+
+Until this pass the page had **one** entrance — opacity and six pixels — doing
+every job below the fold. That is why the sections felt flat next to the hero:
+nine different kinds of content were all arriving in exactly the same way.
+
+It is a vocabulary now. Five entrances, each matched to what the thing being
+revealed actually *is*:
+
+| Attribute | Motion | Used for |
+| --- | --- | --- |
+| `data-reveal` | opacity + 6px | the quiet default — prose, captions |
+| `data-rise` | 18px + a 1.5% scale | blocks that arrive: panels, plates, the diagram |
+| `data-wipe` | `clip-path` left to right | things that are *drawn*: every section rule |
+| `data-rows` | per-child stagger at 45ms | tables and lists that populate |
+| `data-slide` | 14px from the margin | the ruled registers — work, leadership, depth, experience |
+| `data-words` | per-word at 42ms | one sentence on the page: the contact address |
+
+The rule that stops it becoming a circus: **one entrance per block, chosen by
+content type, never two competing inside the same region.** Every one of them
+is a transform and an opacity, so none can cost a reflow.
+
+`data-rows` and `data-words` stagger their own children. The reveal script
+writes a `--i` on each row or word once, up front, and the stylesheet turns
+that into a `transition-delay` — the cadence lives in one place instead of in
+nine hand-written delay attributes that drift the moment a row is added.
+
+### The circuit
+
+The block diagram claims four stages are one circuit. A circuit with nothing
+moving in it is a claim you have to take on trust, so a packet now runs the
+three forward connectors and closes the feedback loop, and each stage takes
+the signal a beat after the one before it.
+
+It is SMIL (`animateMotion` along the real path geometry), not CSS keyframes,
+because the feedback route is an L with two corners — expressing that as
+translate keyframes means restating the geometry in the stylesheet, where it
+goes stale silently the first time the drawing is edited. SMIL takes the path
+itself, and the legs are built from the same constants the boxes are.
+
+SMIL cannot be reached from a media query, so the reduced-motion check is made
+in React (`useSyncExternalStore` over the query, so it also responds if the
+setting changes mid-visit) and the packets are simply not rendered.
+
+The packets paint **after** the stages and **before** the feedback group. In
+SVG paint order that puts them over the connectors but under the evaluation
+block, so a packet disappears into that block and comes out the other side —
+which is what the diagram says happens. Painted last, it slid across the
+block's own label and read as a stray dot on the text.
+
+### Everything else that moves now
+
+Two tickers running opposite ways (toolchain out, problem domains back —
+counter-motion is what makes two bands read as a machine rather than one strip
+passing twice); the hero's name and screen leaving at different rates
+(±6% and 4%, shallow on purpose); the nav's trace rule growing under each
+label; prose links drawing their underline instead of thickening it; and the
+keys filling from the left on hover.
+
+### The bug that cost the most
+
+`.key { position: relative }` — added to host an absolutely-positioned sweep —
+**silently broke every fixed-position control on the page.** This stylesheet is
+unlayered; Tailwind's utilities live in `@layer utilities`; unlayered CSS beats
+layered CSS regardless of source order. So that one declaration overrode
+`fixed` on the Ask-me button and moved it out of its corner.
+
+The sweep is a `background-image` with an animating `background-size` now, and
+it claims no positioning at all.
+
+**The general rule this leaves behind:** anything appended to this file that
+sets `position`, `display`, `overflow` or another property Tailwind also ships
+as a utility will beat that utility everywhere the class appears. Give such
+rules a bespoke class name, or find a way to want the property less.
+
+### Verified
+
+Chrome, 1440 / 768 / 390: no horizontal scroll, no console or page errors,
+nothing stuck at `opacity: 0` after reveal. Under
+`prefers-reduced-motion: reduce`: **zero** running animations, zero hidden
+elements, no boot overlay, no reticle.

@@ -1743,3 +1743,309 @@ body > footer {
     display: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   THE MOTION VOCABULARY
+
+   Up to here the page had one entrance (opacity and six pixels) doing every
+   job. That is why the sections below the fold felt flat next to the hero:
+   nine different kinds of content were arriving in exactly the same way.
+
+   This is a vocabulary instead — five entrances, each matched to what the
+   thing being revealed actually is:
+
+     data-reveal   the quiet default. Prose, captions, anything you read.
+     data-rise     a block that arrives. Cards, panels, plates.
+     data-wipe     something drawn left to right. Rules, bars, headings.
+     data-rows     a table or list that populates row by row.
+     data-words    a sentence that lands word by word. One per page.
+
+   The rule that keeps it from becoming a circus: **one entrance per section,
+   chosen by content type, never two competing inside the same block.** And
+   every one of them is still a transform and an opacity — no layout property
+   is ever animated, so none of this can cost a reflow.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.js [data-rise] {
+  opacity: 0;
+  transform: translateY(18px) scale(0.985);
+}
+.js [data-rise].is-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.5s var(--ease-plot),
+    transform 0.8s var(--ease-plot);
+}
+
+/* Drawn, not faded: the block appears as a wipe from the left, the way a
+   plotter lays down a filled region. */
+.js [data-wipe] {
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+}
+.js [data-wipe].is-in {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  transition:
+    opacity 0.2s linear,
+    clip-path 0.85s var(--ease-plot);
+}
+
+/* A populating table. `--i` is written per row by the reveal script, so the
+   cadence is in one place and does not need a delay attribute per <tr>. */
+.js [data-rows] tr,
+.js [data-rows] > li {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.js [data-rows].is-in tr,
+.js [data-rows].is-in > li {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.4s var(--ease-plot),
+    transform 0.5s var(--ease-plot);
+  transition-delay: calc(var(--i, 0) * 45ms);
+}
+
+/* A sentence arriving word by word. Reserved for the one statement on the
+   page that is an actual address to the reader. */
+.word {
+  display: inline-block;
+}
+.js [data-words] .word {
+  opacity: 0;
+  transform: translateY(0.35em);
+}
+.js [data-words].is-in .word {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.45s var(--ease-plot),
+    transform 0.6s var(--ease-plot);
+  transition-delay: calc(var(--i, 0) * 42ms);
+}
+
+/* A row that slides in from the margin — used down the ruled registers, where
+   the content is a list of records rather than a grid of cards. */
+.js [data-slide] {
+  opacity: 0;
+  transform: translateX(-14px);
+}
+.js [data-slide].is-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.45s var(--ease-plot),
+    transform 0.65s var(--ease-plot);
+}
+
+/* ── Controls that answer ───────────────────────────────────────────────────
+   A key fills from the left on hover instead of swapping a background colour.
+   The sweep is a pseudo-element under the label, so the text never moves and
+   the transition is one transform.
+   ─────────────────────────────────────────────────────────────────────────── */
+/* The sweep is a background-image whose width animates — NOT an absolutely
+   positioned pseudo-element.
+
+   The pseudo-element version needed `position: relative` on `.key`, and this
+   stylesheet is unlayered while Tailwind's utilities live in
+   `@layer utilities`; unlayered wins regardless of source order, so that one
+   declaration silently overrode `fixed` on every `.key` that was also a
+   fixed-position control. The Ask-me button jumped from the corner it lives
+   in to wherever it happened to sit in the flow. A background does the same
+   job and claims no positioning at all. */
+@media (hover: hover) {
+  .key {
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 0% 100%;
+    transition:
+      background-color 0.15s var(--ease-set),
+      background-size 0.35s var(--ease-plot),
+      border-color 0.15s var(--ease-set),
+      box-shadow 0.15s var(--ease-set),
+      color 0.15s var(--ease-set),
+      transform 0.1s var(--ease-set);
+  }
+  .key-secondary {
+    background-image: linear-gradient(var(--trace-wash), var(--trace-wash));
+  }
+  .key-quiet {
+    background-image: linear-gradient(var(--stock-sunken), var(--stock-sunken));
+  }
+  .key-primary {
+    background-image: linear-gradient(
+      color-mix(in oklab, var(--trace) 74%, #fff),
+      color-mix(in oklab, var(--trace) 74%, #fff)
+    );
+  }
+  .key:hover {
+    background-size: 100% 100%;
+  }
+}
+
+/* A link in prose: the underline draws rather than thickens. */
+@media (hover: hover) {
+  .link {
+    background-image: linear-gradient(var(--trace), var(--trace));
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    text-decoration-color: color-mix(in oklab, var(--trace) 40%, transparent);
+    transition:
+      background-size 0.35s var(--ease-plot),
+      text-decoration-color 0.2s var(--ease-set);
+  }
+  .link:hover {
+    background-size: 100% 1px;
+    text-decoration-color: transparent;
+  }
+}
+
+/* ── The running head ───────────────────────────────────────────────────────
+   Nav links get an underline that grows from the centre, and the active
+   section carries a persistent one. Small, but it is the part of the page a
+   visitor touches most.
+   ─────────────────────────────────────────────────────────────────────────── */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: var(--trace);
+  transform: scaleX(0);
+  transition: transform 0.28s var(--ease-plot);
+}
+@media (hover: hover) {
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+}
+.nav-link[aria-current="true"]::after {
+  transform: scaleX(1);
+}
+
+/* ── The circuit ────────────────────────────────────────────────────────────
+   Signal running through the block diagram. The stages light in order, then
+   the packets run the connectors and the feedback loop closes.
+
+   This is the one animation on the page that repeats forever below the fold,
+   and it earns it: the drawing is a claim that these four stages are one
+   circuit, and a circuit with nothing moving in it is a claim you have to
+   take on trust.
+   ─────────────────────────────────────────────────────────────────────────── */
+.circuit-stage {
+  animation: stage-live 6s var(--ease-set) infinite;
+  animation-delay: var(--d, 0s);
+}
+@keyframes stage-live {
+  0%,
+  8%,
+  100% {
+    stroke: var(--ink);
+  }
+  2%,
+  5% {
+    stroke: var(--trace);
+  }
+}
+.circuit-packet {
+  fill: var(--trace);
+}
+.circuit-glow {
+  filter: drop-shadow(0 0 4px var(--trace-glow));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .circuit-stage {
+    animation: none;
+  }
+}
+
+/* ── The second ticker ──────────────────────────────────────────────────────
+   Two bands, running opposite ways: the toolchain out and the problem domains
+   back. Counter-motion is what makes a ticker read as a machine rather than
+   as one strip sliding past.
+   ─────────────────────────────────────────────────────────────────────────── */
+.marquee + .marquee {
+  border-top: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-back .marquee-track {
+    animation-direction: reverse;
+    animation-duration: 58s;
+  }
+}
+.marquee-back .marquee-item {
+  color: var(--ink-3);
+}
+.marquee-back .marquee-sep {
+  color: var(--volt);
+}
+
+/* ── Parallax ───────────────────────────────────────────────────────────────
+   The hero's two halves leave at different rates as the page scrolls. The
+   script writes a single translate on each; the depth is small on purpose —
+   enough to feel like two planes, not enough to detach the name from the
+   line it belongs to.
+   ─────────────────────────────────────────────────────────────────────────── */
+.parallax {
+  will-change: transform;
+}
+
+/* ── A section index that counts up ─────────────────────────────────────── */
+.sec-index {
+  transition: color 0.3s var(--ease-set);
+}
+.rule-scan.is-in ~ * .sec-index,
+.sec-index.is-lit {
+  color: var(--volt);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-rise],
+  .js [data-rise].is-in,
+  .js [data-wipe],
+  .js [data-wipe].is-in,
+  .js [data-slide],
+  .js [data-slide].is-in,
+  .js [data-rows] tr,
+  .js [data-rows] > li,
+  .js [data-rows].is-in tr,
+  .js [data-rows].is-in > li,
+  .js [data-words] .word,
+  .js [data-words].is-in .word {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+  .parallax {
+    transform: none !important;
+  }
+}
+
+@media print {
+  .js [data-rise],
+  .js [data-rise].is-in,
+  .js [data-wipe],
+  .js [data-wipe].is-in,
+  .js [data-slide],
+  .js [data-slide].is-in,
+  .js [data-rows] tr,
+  .js [data-rows] > li,
+  .js [data-rows].is-in tr,
+  .js [data-rows].is-in > li,
+  .js [data-words] .word,
+  .js [data-words].is-in .word {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}

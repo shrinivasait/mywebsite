@@ -138,9 +138,13 @@ export function Header() {
               key={n.href}
               href={n.href}
               aria-current={active === n.href ? "true" : undefined}
-              /* The current section is marked by a well, never by a coloured
-                 underline — the second ink stays on the primary action. */
-              className={`px-2.5 py-1.5 text-[0.8125rem] transition-colors duration-150 ${
+              /* A well plus a trace rule that grows under the label. The
+                 datasheet world kept the second ink off navigation entirely;
+                 the console world spends it on structure — the brackets, the
+                 section indices, the timeline spine — and this belongs to
+                 that family. The rule is drawn, not faded, so hovering the
+                 nav feels like the rest of the page. */
+              className={`nav-link px-2.5 py-1.5 text-[0.8125rem] transition-colors duration-150 ${
                 active === n.href
                   ? "bg-stock-sunken text-ink"
                   : "text-ink-2 hover:bg-stock-sunken hover:text-ink"

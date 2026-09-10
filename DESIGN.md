@@ -1122,3 +1122,64 @@ Chrome at 1440 / 768 / 390, scrolling the full page: no horizontal scroll, no
 console or page errors, **zero** elements left at `opacity: 0`, zero rules
 left clipped. Under `prefers-reduced-motion: reduce`: zero running animations
 and zero hidden elements.
+
+---
+
+## The first viewport, settled
+
+### The loss surface is back, and the uptime clock is gone
+
+Two changes to what the hero says.
+
+**Out: the uptime counter.** It was the one genuinely live number on the page,
+and it was also the least useful thing a hiring team could read — how long a
+browser tab has been open. The availability statement takes the slot: same
+volt signal in the same position, an actual fact.
+
+**In: the loss surface.** Four optimisers descending a field with one deep
+global basin and a shallower trap in the near corner, with a readout that
+names, at every step, which of the two the leading run is in.
+
+It is the right object for the first viewport because it is the only one on
+the page that states the actual job: getting a model to a good optimum is not
+the same as getting it to *an* optimum, and the difference is the work. The
+trapped fourth runner is the whole point — a figure where every run succeeds
+would be decoration.
+
+The machinery was never deleted, only unused: `HeroArtifact` mounts WebGL from
+a dynamic import fired by an observer, over a server-rendered contour map of
+the same field. No scripting or no GPU gets the flat drawing, and the two
+cannot disagree — both read `loss-surface.ts`.
+
+### The code streamer moved rather than went
+
+`CodeTerminal` now sits in **Technical depth**, under the prose it illustrates.
+
+In the hero it was competing with the loss surface for the same job — *some­
+thing technical is happening here* — and the surface makes the better first
+claim. In Technical depth it is doing something the prose above it cannot:
+showing the shape of the three systems that section describes, in the language
+they were written in. It also means the first viewport now carries one moving
+object instead of two, which the hero needed.
+
+### The shape of the page's animation, after all of this
+
+| Where | What moves | Why it is there |
+| --- | --- | --- |
+| Hero | The loss surface, four runners, live loss readout | The job: a good optimum is not the same as an optimum |
+| Featured work | The latency budget, spent in real time | The hardest claim on the page, shown running |
+| Block diagram | Signal through the circuit | A circuit with nothing in it is a claim on trust |
+| Technical depth | The code streamer | The three pipelines, in their own language |
+| Everywhere | The entrance vocabulary, the field, the reticle | Structure and life, never information |
+
+The rule that holds across all five: **the four large animations each carry
+something the surrounding prose cannot, and the small ones carry nothing at
+all.** Anything in between — an animation that looks like it means something
+and does not — is the failure mode this page keeps avoiding.
+
+### Verified
+
+Chrome at 1440 / 768 / 390, full-page scroll: no horizontal scroll, no console
+or page errors, zero elements stuck at `opacity: 0`. WebGL scene confirmed
+live (`data-artifact="live"`, readout reporting `global min`). Under
+`prefers-reduced-motion: reduce`: zero running animations.

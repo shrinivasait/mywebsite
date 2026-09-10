@@ -264,32 +264,6 @@ export function TimelineSpine() {
   );
 }
 
-/* ── Uptime ─────────────────────────────────────────────────────────────────
-   How long this tab has been open, in the running head. It is the one number
-   on the page that is genuinely live, and it is honest about being trivial.
-   ─────────────────────────────────────────────────────────────────────────── */
-
-export function Uptime() {
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const t0 = performance.now();
-    const id = window.setInterval(() => {
-      const s = Math.floor((performance.now() - t0) / 1000);
-      el.textContent = `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
-    }, 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  return (
-    <span ref={ref} suppressHydrationWarning>
-      00:00
-    </span>
-  );
-}
-
 /* ── Words ──────────────────────────────────────────────────────────────────
    A sentence split into words so it can land one at a time. The split is
    done in the markup, not by script, so the text is complete in the HTML and

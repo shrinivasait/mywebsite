@@ -14,7 +14,8 @@ import {
 } from "@/lib/content";
 import { CircuitPackets } from "./Circuit";
 import { CodeTerminal } from "./CodeTerminal";
-import { MegaName, Parallax, StatusRail, Tilt, TimelineSpine, Uptime, Words } from "./Hud";
+import { HeroArtifact } from "./HeroArtifact";
+import { MegaName, Parallax, StatusRail, Tilt, TimelineSpine, Words } from "./Hud";
 import { Magnetic, Marquee, Scramble, Ticker } from "./Kinetic";
 import { LatencyBudget } from "./LatencyBudget";
 import { Year } from "./Year";
@@ -173,11 +174,17 @@ export function PartHeader() {
             /
           </span>
           <span className="hud">{site.location}</span>
-          <span className="hud ml-auto flex items-center gap-2">
-            <span aria-hidden className="size-1.5 bg-volt" />
-            <span className="hud-on">uptime</span>
-            <Uptime />
-          </span>
+          {/* The uptime clock is gone. It was the one genuinely live number
+              on the page and it was also the least useful thing a hiring
+              team could read here — how long a browser tab has been open.
+              The availability statement takes the slot instead: same volt
+              signal, an actual fact. */}
+          {site.available && (
+            <span className="hud ml-auto flex items-center gap-2">
+              <span aria-hidden className="size-1.5 bg-volt" />
+              <span className="hud-on">{site.availability}</span>
+            </span>
+          )}
         </div>
 
         {/* The name, at the size a title block is set at when the document is
@@ -277,10 +284,22 @@ export function PartHeader() {
           {/* The screen, given the wider half of the spread. It is the first
               thing in the viewport that moves, and the numbers it prints are
               the ones the characteristics table states below. */}
+          {/* The loss surface: four optimisers descending a field with one
+              deep global basin and a shallower trap in the near corner, and
+              a readout that says at each step which of the two the leading
+              run is in. It is the right object for the first viewport
+              because it is the only one that states the actual job — that
+              getting a model to a good optimum is not the same as getting it
+              to *an* optimum, and that the difference is the work.
+
+              WebGL behind a dynamic import fired from an observer, over a
+              server-rendered contour map of the same field. A visitor with
+              no scripting or no GPU gets the flat drawing, and the two
+              cannot disagree: both read `loss-surface.ts`. */}
           <div className="order-1 min-w-0 sm:order-none sm:col-span-7" data-set>
             <Parallax depth={-0.04}>
-              <div className="h-[24rem] w-full sm:h-[28rem]">
-                <CodeTerminal />
+              <div className="panel bracket reticule-field relative h-[22rem] w-full sm:h-[28rem]">
+                <HeroArtifact />
               </div>
             </Parallax>
           </div>
@@ -689,6 +708,22 @@ export function Expertise() {
           </li>
         ))}
       </ul>
+
+      {/* The code streamer, moved out of the first viewport and down to the
+          section it actually belongs to. In the hero it was competing with
+          the loss surface for the same job — "something technical is
+          happening here" — and the surface makes the better first claim.
+          Here it is doing something the prose above cannot: showing the
+          shape of the three systems the section describes, in the language
+          they were written in. */}
+      <figure className="mt-12" data-rise>
+        <figcaption className="hud mb-3">
+          Retrieval, agents and voice — the pipelines above, as they are written
+        </figcaption>
+        <div className="h-[22rem] w-full sm:h-[26rem]">
+          <CodeTerminal />
+        </div>
+      </figure>
 
       {/* The toolchain as a reference table, not a wall of chips. */}
       <div className="mt-12" data-reveal>

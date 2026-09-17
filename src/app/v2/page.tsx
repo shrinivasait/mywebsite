@@ -1,49 +1,61 @@
-import Image from "next/image";
 import {
   expertise,
   leadership,
+  projects,
   railFigures,
   roles,
   site,
   skills,
 } from "@/lib/content";
-import { Copy, Head, Reveal, Tracks } from "./_components/Chrome";
-import { Pipeline } from "./_components/Pipeline";
-import { Trace } from "./_components/Trace";
+import { Copy, CriticalPath, Head, Reveal } from "./_components/Chrome";
+import { stackOrder } from "./_components/die";
+import { Floorplan } from "./_components/Floorplan";
 import { BUDGET_MS, CEILING_MS } from "./_components/turn";
 
 /**
- * The sleeve.
+ * The die.
  *
- * Same person, same résumé, a different object. The primary route argues the
- * case as a printed specification. This one presents it as a record: a square
- * cover with a duotone plate, a track listing for the systems, personnel
- * credits for the organisation, session dates for the seats, and liner notes
- * for the depth.
+ * Same person, same résumé, a third object — and the first two are the reason
+ * for this one. A dark console read as generic because every AI tool ships
+ * that look; a record sleeve read as basic because its whole grammar is
+ * restraint. This page answers the brief it was actually given: dense,
+ * layered, technical, and alive at the top.
  *
- * The conceit is doing work rather than dressing the page. Leading eighteen
- * engineers *is* a personnel credit. A production system with a latency budget
- * *is* a track with a runtime. And the one rule the route keeps from its
- * predecessor: nothing moves that is not also explained — the band plays a
- * designed budget, and the caption says exactly that.
+ * The conceit is load-bearing rather than decorative. An architect's job is
+ * floorplanning — deciding which blocks exist, how they connect, and which
+ * path is critical — so the work is laid out as macros on one die, the
+ * organisation is drawn on the same silicon as the technical surface because
+ * that pairing is the argument, the latency budget is the critical path with
+ * real charge running it, the skills are a metal stack in cross-section, and
+ * the contact details are a pinout.
+ *
+ * The rule kept from every version of this route: nothing moves that is not
+ * also explained, and every figure is from the résumé.
  */
 
-/** The one hard figure each track is listed with. All of it is already stated in `detail`. */
-const TRACK_FACTS: Record<string, string> = {
-  "voice-negotiator": "650–800 ms",
-  "rag-sales-assistant": "LangChain · FAISS",
-  medicalgpt: "pretrain → SFT",
-  "virtual-trial-room": "diffusion try-on",
-};
+/** Which layer of the stack each skill group is printed on. */
+const LAYERS: { id: string; tier: "metal" | "poly" | "implant" }[] = [
+  { id: "M6", tier: "metal" },
+  { id: "M5", tier: "metal" },
+  { id: "M4", tier: "metal" },
+  { id: "M3", tier: "metal" },
+  { id: "M2", tier: "metal" },
+  { id: "M1", tier: "metal" },
+  { id: "POLY", tier: "poly" },
+  { id: "DIFF", tier: "implant" },
+];
 
-export default function Sleeve() {
+export default function Die() {
   const [first, ...rest] = site.name.split(" ");
+  const layers = stackOrder
+    .map((title, i) => ({ ...LAYERS[i], group: skills.find((g) => g.title === title) }))
+    .filter((l) => l.group);
 
   return (
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:bg-[#12100e] focus:px-4 focus:py-2 focus:text-sm focus:text-[#e9e5dc]"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:bg-[#57e0d4] focus:px-4 focus:py-2 focus:text-sm focus:text-[#03181b]"
       >
         Skip to content
       </a>
@@ -51,200 +63,196 @@ export default function Sleeve() {
       <Head />
 
       <main id="main">
-        {/* ── Front cover ───────────────────────────────────────────────── */}
-        <section className="bn-cover">
-          {/* The sleeve is trimmed at the sheet edge rather than matted inside
-              a column, so it runs the full width of the window. */}
-          <div className="bn-sleeve bn-bleed">
-            <div className="bn-sleeve-type">
-              <p className="bn-stereo">
-                <span className="bn-caps">{site.availability}</span>
-              </p>
+        {/* ── The die ───────────────────────────────────────────────────── */}
+        <section className="d-hero">
+          <div className="d-id">
+            <p className="d-live">
+              <i aria-hidden />
+              <span className="d-mono">{site.availability}</span>
+            </p>
 
-              <h1 className="bn-shout bn-name">
-                {first}
-                <em>{rest.join(" ")}</em>
-              </h1>
+            <h1 className="d-name">
+              {first}
+              <em>{rest.join(" ")}</em>
+            </h1>
+            <p className="d-role">{site.role}</p>
 
-              <p className="bn-caps bn-role">{site.role}</p>
+            <p className="d-claim">{site.tagline}</p>
+            <p className="d-intro">{site.intro}</p>
 
-              <div className="bn-cat">
-                <span className="bn-caps">{site.location}</span>
-                <span className="bn-caps">Five years · AI &amp; deep learning</span>
-              </div>
-
-              <div className="bn-cover-acts">
-                <a className="bn-press bn-press--plate" href={`mailto:${site.email}`}>
-                  Start a conversation
-                </a>
-                <a className="bn-press bn-press--bone" href={site.resume}>
-                  Résumé
-                </a>
-              </div>
-            </div>
-
-            <div className="bn-portrait">
-              <Image
-                src="/profile.jpg"
-                alt={`${site.name}, ${site.role}`}
-                width={860}
-                height={996}
-                priority
-                sizes="(min-width: 900px) 46vw, 100vw"
-              />
+            <div className="d-acts">
+              <a className="d-key d-key--live" href={`mailto:${site.email}`}>
+                Start a conversation
+              </a>
+              <a className="d-key" href={site.resume}>
+                Résumé
+              </a>
             </div>
           </div>
 
-          <div className="bn-shell">
-          <div className="bn-lede">
-            <h2>{site.tagline}</h2>
-            <p className="bn-prose">{site.intro}</p>
-          </div>
-
-          <div className="bn-figs" style={{ marginTop: 40 }}>
-            {railFigures.map((f) => (
-              <div key={f.label}>
-                <b>
-                  {f.value}
-                  <i>{f.unit}</i>
-                </b>
-                <small>{f.label}</small>
-              </div>
-            ))}
-          </div>
-          </div>
+          <Floorplan />
         </section>
 
-        {/* ── Work ──────────────────────────────────────────────────────── */}
-        <section id="systems" className="bn-shell bn-side">
-          <div className="bn-side-head">
-            <h2 className="bn-shout">Selected work</h2>
-            <p className="bn-caps">Four systems in production</p>
-          </div>
-          <hr className="bn-rule bn-rule--thick" />
-          <p className="bn-prose bn-side-sub">
-            Open a title for what it is and how it was built. Every one of these shipped; none of
-            them are demos.
-          </p>
-          <div className="bn-in">
-            <Tracks facts={TRACK_FACTS} />
-          </div>
-        </section>
+        <div className="d-strip">
+          {railFigures.map((f) => (
+            <div key={f.label}>
+              <b>
+                {f.value}
+                <i>{f.unit}</i>
+              </b>
+              <small>{f.label}</small>
+            </div>
+          ))}
+        </div>
 
-        {/* ── The featured track ────────────────────────────────────────── */}
-        <section id="turn" className="bn-shell bn-side">
-          <div className="bn-side-head">
-            <h2 className="bn-shout">Where the {BUDGET_MS} milliseconds go</h2>
-            <p className="bn-caps">The featured track</p>
+        {/* ── Critical path ─────────────────────────────────────────────── */}
+        <section id="path" className="d-shell d-sec">
+          <div className="d-sec-head">
+            <h2 className="d-h">The critical path</h2>
+            <p className="d-mono">
+              {BUDGET_MS} of {CEILING_MS} ms
+            </p>
           </div>
-          <hr className="bn-rule bn-rule--thick" />
-          <p className="bn-prose bn-side-sub">
-            Real-time voice is the hardest claim on this page, so it is the one the page opens up.
+          <hr className="d-rule" />
+          <p className="d-prose d-sec-sub">
+            Real-time voice is the hardest claim on this page, so it is the one the page opens.
             Six services, one clock, and a ceiling at {CEILING_MS} ms — above that a conversation
-            stops feeling like a conversation.
+            stops feeling like a conversation. Pick a leg for what it does and the decision that
+            keeps it inside its slice.
           </p>
-
-          <div className="bn-in">
-            <Pipeline />
+          <div className="d-in">
+            <CriticalPath />
           </div>
-
-          <p className="bn-note" style={{ margin: "14px 0 46px", maxWidth: "72ch" }}>
-            The band plays the designed budget, not a live probe: each segment is as wide as its
-            share of the clock, and every fourth take runs long because a tail always exists and
-            drawing it is more honest than a page that hides it.
-          </p>
-
-          <div className="bn-in">
-            <Trace />
-          </div>
-
-          <p className="bn-prose" style={{ marginTop: 34 }}>
+          <p className="d-prose" style={{ marginTop: 26 }}>
             Nothing here is fast because a fast model was chosen. Each hop was given a ceiling
             first and then built to fit, work was moved off the critical path wherever it could
             start early, and the two hops nobody controls — the caller&rsquo;s pause and the
-            carrier — were reserved before any service got to spend.
+            carrier — were reserved before any service got to spend. The charge crossing the die
+            above runs this same budget; it is a design, not a live probe.
           </p>
         </section>
 
-        {/* ── Personnel ─────────────────────────────────────────────────── */}
-        <section id="personnel" className="bn-shell bn-side">
-          <div className="bn-side-head">
-            <h2 className="bn-shout">Personnel</h2>
-            <p className="bn-caps">The part that is not code</p>
+        {/* ── Work ──────────────────────────────────────────────────────── */}
+        <section id="blocks" className="d-shell d-sec">
+          <div className="d-sec-head">
+            <h2 className="d-h">Selected work</h2>
+            <p className="d-mono">Four systems in production</p>
           </div>
-          <hr className="bn-rule bn-rule--thick" />
-          <p className="bn-prose bn-side-sub">
-            An architecture is only as durable as the organisation running it. Four things I own
-            besides the systems, each tied to the one fact that stands behind it.
+          <hr className="d-rule" />
+          <p className="d-prose d-sec-sub">
+            Each one shipped, with the interfaces it actually runs on listed underneath.
           </p>
-          <div className="bn-personnel bn-in">
-            {leadership.map((pillar) => (
-              <article key={pillar.title} className="bn-credit">
-                <div className="bn-credit-lead">
-                  <h3>{pillar.title}</h3>
-                  <span className="bn-credit-dots" aria-hidden />
-                  <span className="bn-credit-proof">{pillar.proof}</span>
+          <div className="d-blocks d-in">
+            {projects.map((p, i) => (
+              <article key={p.slug} className="d-block">
+                <div className="d-block-top">
+                  <h3>{p.title}</h3>
+                  <span className="d-block-ref">U{String(i + 1).padStart(2, "0")}</span>
                 </div>
-                <p>{pillar.detail}</p>
+                <p>{p.summary}</p>
+                <p className="d-block-detail">{p.detail}</p>
+                <div className="d-pins">
+                  {p.stack.map((s, n) => (
+                    <div key={s}>
+                      <span>{n + 1}</span>
+                      <span>{s}</span>
+                    </div>
+                  ))}
+                </div>
               </article>
             ))}
           </div>
         </section>
 
-        {/* ── Liner notes ───────────────────────────────────────────────── */}
-        <section id="notes" className="bn-shell bn-side">
-          <div className="bn-side-head">
-            <h2 className="bn-shout">Liner notes</h2>
-            <p className="bn-caps">Six areas, to depth</p>
+        {/* ── Organisation ──────────────────────────────────────────────── */}
+        <section id="org" className="d-shell d-sec">
+          <div className="d-sec-head">
+            <h2 className="d-h">The blocks that are not code</h2>
+            <p className="d-mono">Implant layer</p>
           </div>
-          <hr className="bn-rule bn-rule--thick" />
-          <p className="bn-prose bn-side-sub">
-            What I can be interviewed on to depth, each with the production evidence behind it
-            rather than a claim of familiarity.
+          <hr className="d-rule" />
+          <p className="d-prose d-sec-sub">
+            An architecture is only as durable as the organisation running it. Four things I own
+            besides the systems, each tied to the one fact that stands behind it.
           </p>
-
-          <div className="bn-liner bn-in">
-            <div className="bn-liner-cols">
-              {expertise.map((e) => (
-                <section key={e.title}>
-                  <h3>{e.title}</h3>
-                  <p>{e.detail}</p>
-                  <p className="bn-note">{e.tags.join(" · ")}</p>
-                </section>
-              ))}
-            </div>
-
-            <dl className="bn-instr">
-              {skills.map((group) => (
-                <div key={group.title} className="bn-instr-row">
-                  <dt>{group.title}</dt>
-                  <dd>{group.items.join(" · ")}</dd>
-                </div>
-              ))}
-            </dl>
+          <div className="d-org d-in">
+            {leadership.map((pillar) => (
+              <article key={pillar.title}>
+                <h3>{pillar.title}</h3>
+                <p>{pillar.detail}</p>
+                <p className="d-org-proof">{pillar.proof}</p>
+              </article>
+            ))}
           </div>
         </section>
 
-        {/* ── Sessions ──────────────────────────────────────────────────── */}
-        <section id="sessions" className="bn-shell bn-side">
-          <div className="bn-side-head">
-            <h2 className="bn-shout">Sessions</h2>
-            <p className="bn-caps">Three seats, five years</p>
+        {/* ── Depth ─────────────────────────────────────────────────────── */}
+        <section id="stack" className="d-shell d-sec">
+          <div className="d-sec-head">
+            <h2 className="d-h">Depth, layer by layer</h2>
+            <p className="d-mono">Six areas · full stack</p>
           </div>
-          <hr className="bn-rule bn-rule--thick" />
-          <div className="bn-sessions bn-in" style={{ marginTop: 34 }}>
-            {roles.map((role) => (
-              <article key={role.org} className="bn-session">
-                <div className="bn-session-when">
-                  {role.current ? <span className="bn-session-live">Current seat</span> : null}
-                  <span className="bn-session-date">
+          <hr className="d-rule" />
+          <p className="d-prose d-sec-sub">
+            What I can be interviewed on to depth, each with the production evidence behind it
+            rather than a claim of familiarity — then the whole surface underneath, read as a
+            cross-section: coarse routing at the top, fine structure at the bottom.
+          </p>
+
+          <div className="d-blocks d-blocks--three d-in" style={{ marginBottom: 26 }}>
+            {expertise.map((e) => (
+              <article key={e.title} className="d-block">
+                <div className="d-block-top">
+                  <h3>{e.title}</h3>
+                </div>
+                <p>{e.detail}</p>
+                <div className="d-pins">
+                  {e.tags.map((t, n) => (
+                    <div key={t}>
+                      <span>{n + 1}</span>
+                      <span>{t}</span>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="d-stack d-in">
+            {layers.map((l) => (
+              <div key={l.id} className="d-layer" data-tier={l.tier}>
+                <span className="d-layer-id">
+                  <b aria-hidden />
+                  {l.id}
+                </span>
+                <span className="d-layer-name">{l.group!.title}</span>
+                <span className="d-layer-items">{l.group!.items.join("  ·  ")}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── Experience ────────────────────────────────────────────────── */}
+        <section id="revs" className="d-shell d-sec">
+          <div className="d-sec-head">
+            <h2 className="d-h">Revisions</h2>
+            <p className="d-mono">Three seats · five years</p>
+          </div>
+          <hr className="d-rule" />
+          <div className="d-revs d-in" style={{ marginTop: 26 }}>
+            {roles.map((role, i) => (
+              <article key={role.org} className="d-rev">
+                <div className="d-rev-meta">
+                  {role.current ? <span className="d-rev-live">Current seat</span> : null}
+                  <span className="d-rev-when">
                     {role.start} — {role.end}
                   </span>
-                  <span className="bn-session-org">{role.orgShort ?? role.org}</span>
+                  <span className="d-rev-org">{role.orgShort ?? role.org}</span>
+                  <span className="d-mono">rev {roles.length - i}.0</span>
                 </div>
                 <div>
                   <h3>{role.title}</h3>
-                  <p className="bn-session-scope">{role.scope}</p>
+                  <p className="d-rev-scope">{role.scope}</p>
                   <ul>
                     {role.points.map((point) => (
                       <li key={point}>{point}</li>
@@ -257,9 +265,9 @@ export default function Sleeve() {
         </section>
       </main>
 
-      {/* ── Back cover ──────────────────────────────────────────────────── */}
-      <footer id="contact" className="bn-back">
-        <div className="bn-shell bn-back-in">
+      {/* ── Pinout ──────────────────────────────────────────────────────── */}
+      <footer id="contact" className="d-out">
+        <div className="d-shell d-out-in">
           <div>
             <h2>
               Open to leadership
@@ -270,51 +278,65 @@ export default function Sleeve() {
               If you are putting an AI function on the map — or you have one and it is not
               shipping — that is the conversation I want. Email is fastest.
             </p>
-            <div className="bn-back-acts">
-              <a className="bn-press bn-press--plate" href={`mailto:${site.email}`}>
+            <div className="d-acts">
+              <a className="d-key d-key--live" href={`mailto:${site.email}`}>
                 Email {first}
               </a>
-              <a className="bn-press bn-press--bone" href={site.resume}>
+              <a className="d-key" href={site.resume}>
                 Download résumé
               </a>
             </div>
           </div>
 
-          <div className="bn-back-rows">
-            <div className="bn-back-row">
+          <div className="d-pinout">
+            <div className="d-pin">
+              <span className="n">01</span>
               <span className="k">Email</span>
               <a className="v" href={`mailto:${site.email}`}>
                 {site.email}
               </a>
               <Copy value={site.email} label="email" />
             </div>
-            <div className="bn-back-row">
+            <div className="d-pin">
+              <span className="n">02</span>
               <span className="k">LinkedIn</span>
               <a className="v" href={site.linkedin} rel="noopener noreferrer" target="_blank">
                 /in/shreenivas-joshi
               </a>
               <span />
             </div>
-            <div className="bn-back-row">
-              <span className="k">Based</span>
+            <div className="d-pin">
+              <span className="n">03</span>
+              <span className="k">Résumé</span>
+              <a className="v" href={site.resume}>
+                Shreenivas_Joshi_Resume.pdf
+              </a>
+              <span />
+            </div>
+            <div className="d-pin">
+              <span className="n">04</span>
+              <span className="k">Located</span>
               <span className="v">{site.location}</span>
               <span />
             </div>
-            <div className="bn-back-row">
+            <div className="d-pin">
+              <span className="n">05</span>
               <span className="k">Status</span>
-              <span className="v">{site.availability}</span>
+              <span className="v" style={{ color: "var(--d-via-ink)" }}>
+                {site.availability}
+              </span>
               <span />
             </div>
           </div>
         </div>
 
-        <div className="bn-shell bn-colophon">
+        <div className="d-shell d-colophon">
           <p>
             {site.name} · {site.role}
           </p>
           <p>
-            Every figure on this page is taken from the résumé. The band plays a designed latency
-            budget, not live traffic.
+            Every figure on this page is taken from the résumé. The charge crossing the die runs
+            a designed latency budget, not live traffic.
           </p>
         </div>
       </footer>

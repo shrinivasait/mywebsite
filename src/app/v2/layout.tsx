@@ -1,30 +1,34 @@
 import type { Metadata } from "next";
-import { Archivo } from "next/font/google";
+import { Bricolage_Grotesque, Martian_Mono } from "next/font/google";
 import { site } from "@/lib/content";
 import "./runtime.css";
 
 /**
- * One family, loaded with its width axis open.
+ * Two faces chosen as instruments rather than as defaults.
  *
- * A sleeve of this era mixes widths rather than faces — the shop set a shouted
- * line in condensed wood type and the credits in something wider, because that
- * is what was in the case. Driving `wdth` gives that range from a single file,
- * so the whole display system costs one font.
+ * Bricolage Grotesque is a variable grotesque with real character in its
+ * joints — it sets a die label at 10px and a headline at 56px out of one file.
+ * Martian Mono is a technical mono drawn for interfaces, and it carries every
+ * measured value, every layer id and every pin on this route.
  */
-const bill = Archivo({
-  variable: "--font-bill",
+const die = Bricolage_Grotesque({
+  variable: "--font-die",
   subsets: ["latin"],
-  axes: ["wdth"],
+  display: "swap",
+});
+
+const probe = Martian_Mono({
+  variable: "--font-probe",
+  subsets: ["latin"],
+  weight: ["400", "700"],
   display: "swap",
 });
 
 /**
- * A second surface for the same record: the sleeve.
+ * A second surface for the same record: the die.
  *
- * It shares the root layout's mono face for credits and nothing else —
- * `runtime.css` redefines every token on `.bn`, so the theme class on <html>
- * has no effect in here. A record sleeve has a front and a back, not a dark
- * mode.
+ * Every token is redefined on `.die`, so the theme class on <html> has no
+ * effect in here — a photomicrograph does not have a light mode.
  *
  * Kept out of the index on purpose: two pages carrying one résumé under one
  * domain is duplicate content, and the primary route should be the one that
@@ -36,6 +40,6 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function SleeveLayout({ children }: LayoutProps<"/v2">) {
-  return <div className={`bn ${bill.variable}`}>{children}</div>;
+export default function DieLayout({ children }: LayoutProps<"/v2">) {
+  return <div className={`die ${die.variable} ${probe.variable}`}>{children}</div>;
 }

@@ -1,455 +1,344 @@
 /* ───────────────────────────────────────────────────────────────────────────
-   THE SLEEVE
+   THE DIE
 
-   A jazz record sleeve and its gatefold, scoped entirely to `.bn`.
+   The page is a silicon die under a microscope, scoped entirely to `.die`.
 
-   The primary route is a printed component datasheet — cool spec stock, one
-   black ink, one process cyan, every value stating its test condition. This is
-   a different object entirely: uncoated sleeve board, one duotone plate, and
-   type set the way Reid Miles set it at Blue Note — a few words at enormous
-   size, crushed tight into one corner, with the rest of the surface left
-   confidently empty.
+   Two worlds preceded this one on this route and both were replaced rather
+   than refined. The first was a dark observability console with a neon signal
+   — the single most over-represented look in AI tooling. The second was a
+   record sleeve: better, but quiet by nature, and quiet read as basic. What
+   the brief actually asks for is dense, layered and alive.
 
-   The conceit earns its place rather than decorating: leading eighteen
-   engineers *is* personnel credits, a production system *is* a track with a
-   listed runtime, and a job *is* a recording session with dates. Nothing has to
-   be decoded — every section still says plainly what it is.
-
-   Every token is redefined on `.bn`, so the theme class on <html> has no say in
-   here. A record sleeve does not have a dark mode; it has a front and a back.
+   So the palette is a real die shot rather than a dark theme with an accent:
+   a teal-black substrate, aluminium metal, polysilicon gold and a magenta
+   implant, used as *layers* with a legend rather than as decoration. The
+   organisation blocks are drawn on the same die as the technical ones on
+   purpose — that pairing is the argument the whole page is making.
    ─────────────────────────────────────────────────────────────────────────── */
 
-.bn {
-  /* ── Board. Uncoated sleeve card: neutral, slightly greyed, never cream.
-     Cream board plus a high-contrast serif is a look this page is not. */
-  --bn-board: #e9e5dc;
-  --bn-board-3: #d3cdc0;
+.die {
+  /* ── Substrate. Three depths: the wafer, a lit well, a recessed trench. */
+  --d-sub: #04141a;
+  --d-sub-2: #0a2129;
+  --d-sub-3: #020c10;
+  --d-sub-4: #071b22;
 
-  /* ── Ink. One black in three measured weights, all on board. */
-  --bn-ink: #12100e;    /* 15.9:1 */
-  --bn-ink-2: #45403a;  /* 7.6:1 — prose */
-  --bn-ink-3: #6b6459;  /* 4.7:1 — credits, units, captions */
+  /* ── Metal. The aluminium interconnect carries every word. */
+  --d-metal: #dfe8e6;   /* 14.6:1 on substrate */
+  --d-metal-2: #9cb2b4; /* 7.4:1 — prose */
+  --d-metal-3: #6e888c; /* 4.6:1 — labels, units, captions */
+  --d-metal-4: #22383f; /* structure: rules, channel walls, seal ring */
 
-  /* ── The plate. One saturated colour, the way a two-colour sleeve runs.
-     `--bn-plate` is the full-chroma ink for graphics and large type only;
-     `--bn-plate-ink` is the darker mix that is allowed to carry small text. */
-  --bn-plate: #d5411f;      /* 4.1:1 on board — large type and marks */
-  --bn-plate-ink: #b3330f;  /* 6.1:1 on board — small text, links */
-  --bn-plate-lift: #f0764e;  /* 6.6:1 on the sleeve — plate-coloured small text there */
+  /* ── Polysilicon. Gold, the layer under the metal: block edges, the live
+     rule under a section, section marks. Two values, because the full-chroma
+     gold is a graphics ink and only the lighter mix carries small text. */
+  --d-poly: #f0a938;
+  --d-poly-ink: #f5bd63;
+  --d-poly-wash: rgb(240 169 56 / 0.12);
 
-  /* ── The sleeve itself: the dark object sitting on the board. */
-  --bn-sleeve: #15120f;
-  --bn-bone: #f4efe4;      /* 15.2:1 on sleeve */
-  --bn-bone-2: #b8afa0;    /* 7.3:1 on sleeve */
-  --bn-bone-3: #8d8578;    /* 4.6:1 on sleeve */
+  /* ── Implant. Magenta marks the organisation half of the die, and cost. */
+  --d-implant: #ff4f86;
+  --d-implant-ink: #ff7ba4;
 
-  --bn-rule: #bdb6a7;
-  --bn-rule-2: #9d9587;
+  /* ── Via. The cyan of a contact cut: the critical path, and anything live. */
+  --d-via: #57e0d4;
+  --d-via-ink: #7ceadf;
 
-  --bn-ease: cubic-bezier(0.19, 1, 0.22, 1);
-  --bn-mono: var(--font-chivo-mono), ui-monospace, monospace;
-  --bn-bill: var(--font-bill), var(--font-archivo), system-ui, sans-serif;
+  --d-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --d-mono: var(--font-probe), ui-monospace, monospace;
+  --d-face: var(--font-die), system-ui, sans-serif;
 
-  background: var(--bn-board);
-  color: var(--bn-ink);
-  font-family: var(--bn-bill);
+  background: var(--d-sub-3);
+  color: var(--d-metal);
+  font-family: var(--d-face);
   min-height: 100dvh;
-  /* Board tooth. One fine dot at low contrast — an uncoated stock has a
-     surface, and a flat fill is the one thing a printed board never is. */
-  background-image: radial-gradient(rgb(18 16 14 / 0.05) 0.5px, transparent 0.5px);
-  background-size: 3px 3px;
-  scrollbar-color: var(--bn-rule-2) var(--bn-board);
-  /* Nothing here is meant to scroll sideways; this is the backstop that keeps
-     one long unbreakable string from widening the sheet. */
   overflow-x: clip;
+  scrollbar-color: var(--d-metal-4) var(--d-sub-3);
+  /* Wafer tooth: a fine orthogonal lattice at the limit of visibility, which
+     is what a substrate looks like before anything is printed on it. */
+  background-image:
+    linear-gradient(rgb(223 232 230 / 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(223 232 230 / 0.028) 1px, transparent 1px);
+  background-size: 7px 7px, 7px 7px;
 }
 
-/* The app's global first-paint flicker (`.js main { animation: power-on }` in
-   globals.css) dips the opacity of the whole content root. It belongs to the
-   datasheet, which is built around it; here it washed every surface below the
-   running head toward the board colour. This route has its own arrival. */
-.bn main { animation: none; }
+.die ::selection { background: var(--d-via); color: var(--d-sub-3); }
+.die { caret-color: var(--d-via); accent-color: var(--d-via); }
+.die :focus-visible { outline: 2px solid var(--d-via); outline-offset: 2px; }
+/* The app-wide first-paint dip in globals.css belongs to the datasheet's main;
+   in here it washes every surface toward the substrate. */
+.die main { animation: none; }
 
-/* Browser surfaces are part of the sleeve too. */
-.bn ::selection { background: var(--bn-plate); color: var(--bn-board); }
-.bn { caret-color: var(--bn-plate-ink); accent-color: var(--bn-plate-ink); }
-.bn :focus-visible { outline: 2px solid var(--bn-plate-ink); outline-offset: 3px; }
+/* ── Type ────────────────────────────────────────────────────────────────── */
 
-/* ── Type roles ──────────────────────────────────────────────────────────────
-   One family, driven hard across its width axis. Wood type on a bill mixes
-   widths because the shop owned what it owned; here condensed carries the
-   shouted lines and expanded carries the tracked-out caps, so scale and width
-   do the work that a second face would otherwise be hired for.
-   ─────────────────────────────────────────────────────────────────────────── */
+.d-shell { max-width: 1760px; margin: 0 auto; padding-inline: clamp(18px, 2.6vw, 52px); }
 
-.bn-shout {
-  font-family: var(--bn-bill);
-  font-variation-settings: "wdth" 80;
+.d-mono {
+  font-family: var(--d-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--d-metal-3);
+  margin: 0;
+}
+
+.d-prose { margin: 0; color: var(--d-metal-2); font-size: 0.9375rem; line-height: 1.72; max-width: 70ch; }
+
+.d-h {
+  font-family: var(--d-face);
   font-weight: 700;
-  line-height: 0.83;
-  letter-spacing: -0.035em;
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  margin: 0;
   text-transform: uppercase;
-  margin: 0;
 }
 
-.bn-caps {
-  font-family: var(--bn-bill);
-  font-variation-settings: "wdth" 112;
-  font-weight: 600;
-  font-size: 0.6875rem;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  margin: 0;
+.d-rule { border: 0; border-top: 1px solid var(--d-metal-4); margin: 0; }
+
+/* ── Controls ────────────────────────────────────────────────────────────── */
+
+.d-key {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: var(--d-mono); font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 12px 18px; border: 1px solid var(--d-metal-4); background: transparent; color: var(--d-metal);
+  text-decoration: none; cursor: pointer;
+  transition: border-color 0.25s var(--d-ease), color 0.25s var(--d-ease), background 0.25s var(--d-ease);
 }
-
-.bn-note {
-  font-family: var(--bn-mono);
-  font-size: 0.75rem;
-  line-height: 1.6;
-  letter-spacing: 0.01em;
-  color: var(--bn-ink-3);
-  margin: 0;
-}
-
-.bn-prose { font-size: 1rem; line-height: 1.68; color: var(--bn-ink-2); margin: 0; max-width: 68ch; }
-
-.bn-shell { max-width: 1720px; margin: 0 auto; padding: 0 clamp(20px, 3.2vw, 64px); }
-
-.bn-rule { border: 0; border-top: 1px solid var(--bn-ink); margin: 0; }
-.bn-rule--thick { border-top-width: 3px; }
-
-/* ── Press ──────────────────────────────────────────────────────────────────
-   Buttons are struck labels, not pills. The primary is the plate colour laid
-   solid; the secondary is ink ruled on board.
-   ─────────────────────────────────────────────────────────────────────────── */
-
-.bn-press {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--bn-bill); font-variation-settings: "wdth" 108;
-  font-weight: 600; font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase;
-  padding: 13px 20px; border: 1px solid var(--bn-ink); background: transparent;
-  color: var(--bn-ink); cursor: pointer; text-decoration: none;
-  transition: background 0.35s var(--bn-ease), color 0.35s var(--bn-ease), border-color 0.35s var(--bn-ease);
-}
-.bn-press:hover { background: var(--bn-ink); color: var(--bn-board); }
-/* A filled control carries 12px text, so it is struck in the darker mix of
-   the plate: 4.9:1 rather than the full-chroma ink's 3.6:1. The vivid plate is
-   for large type and marks only, and the two values exist so that rule cannot
-   be broken by accident. */
-.bn-press--plate { background: var(--bn-plate-ink); border-color: var(--bn-plate-ink); color: var(--bn-board); }
-.bn-press--plate:hover { background: var(--bn-ink); border-color: var(--bn-ink); color: var(--bn-board); }
-.bn-press--bone { border-color: var(--bn-bone-3); color: var(--bn-bone); }
-.bn-press--bone:hover { background: var(--bn-bone); border-color: var(--bn-bone); color: var(--bn-sleeve); }
+.d-key:hover { border-color: var(--d-via); color: var(--d-via-ink); background: rgb(87 224 212 / 0.08); }
+.d-key--live { background: var(--d-via); border-color: var(--d-via); color: #03181b; font-weight: 600; }
+.d-key--live:hover { background: var(--d-via-ink); border-color: var(--d-via-ink); color: #03181b; }
 
 /* ── Running head ────────────────────────────────────────────────────────── */
 
-.bn-head { position: sticky; top: 0; z-index: 40; background: var(--bn-board); border-bottom: 1px solid var(--bn-ink); }
-.bn-head-in { display: flex; align-items: center; gap: 22px; height: 56px; }
-.bn-head-id { font-variation-settings: "wdth" 88; font-weight: 700; font-size: 0.9375rem; letter-spacing: 0.02em; text-transform: uppercase; }
-.bn-head-nav { display: none; gap: 22px; margin-left: auto; }
-@media (min-width: 900px) { .bn-head-nav { display: flex; } }
-.bn-head-nav a {
-  font-family: var(--bn-bill); font-variation-settings: "wdth" 110; font-weight: 600;
-  font-size: 0.625rem; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--bn-ink-3); text-decoration: none; padding: 4px 0;
-  border-bottom: 2px solid transparent; transition: color 0.25s, border-color 0.25s;
+.d-head { position: sticky; top: 0; z-index: 40; background: rgb(2 12 16 / 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--d-metal-4); }
+.d-head-in { display: flex; align-items: center; gap: 18px; height: 54px; }
+.d-head-id { font-weight: 700; font-size: 0.875rem; letter-spacing: 0.02em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.d-head-id em { font-style: normal; color: var(--d-metal-3); font-weight: 400; }
+.d-head-nav { display: none; gap: 18px; margin-left: auto; }
+@media (min-width: 940px) { .d-head-nav { display: flex; } }
+.d-head-nav a {
+  font-family: var(--d-mono); font-size: 0.625rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--d-metal-3); text-decoration: none; padding: 3px 0; border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
 }
-.bn-head-nav a:hover { color: var(--bn-ink); }
-.bn-head-nav a[data-live="1"] { color: var(--bn-ink); border-bottom-color: var(--bn-plate); }
-.bn-head-cta { margin-left: auto; padding: 9px 15px; white-space: nowrap; }
-@media (max-width: 559px) {
-  /* Tracked-out caps are the widest thing on the sleeve: at 0.26em a
-     thirty-four character status line is wider than a phone, and one
-     unbreakable line is enough to widen the whole document. */
-  .bn-caps { font-size: 0.625rem; letter-spacing: 0.14em; }
-  .bn-stereo { padding: 5px 8px; }
-  .bn-cover-acts .bn-press { flex: 1 1 auto; justify-content: center; }
-  .bn-head-in { gap: 12px; }
-  .bn-head-id { font-size: 0.8125rem; letter-spacing: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .bn-head-cta { padding: 9px 11px; font-size: 0.6875rem; letter-spacing: 0.1em; }
-  .bn-press { font-size: 0.6875rem; letter-spacing: 0.12em; padding: 12px 15px; }
+.d-head-nav a:hover { color: var(--d-metal); }
+.d-head-nav a[data-live="1"] { color: var(--d-metal); border-bottom-color: var(--d-poly); }
+.d-head-cta { margin-left: auto; padding: 8px 13px; white-space: nowrap; }
+@media (min-width: 940px) { .d-head-cta { margin-left: 10px; } }
+
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+
+.d-hero { display: grid; gap: 0; border-bottom: 1px solid var(--d-metal-4); }
+@media (min-width: 1100px) { .d-hero { grid-template-columns: minmax(340px, 29%) minmax(0, 1fr); } }
+
+.d-id {
+  padding: clamp(28px, 3vw, 46px) clamp(18px, 2.6vw, 44px);
+  border-bottom: 1px solid var(--d-metal-4);
+  display: flex; flex-direction: column; justify-content: center;
+  min-width: 0;
 }
-@media (min-width: 900px) { .bn-head-cta { margin-left: 8px; } }
+@media (min-width: 1100px) { .d-id { border-bottom: 0; border-right: 1px solid var(--d-metal-4); } }
 
-/* ── The front cover ─────────────────────────────────────────────────────────
-   The gatefold, opened: two squares side by side, which is the proportion the
-   object is recognised by. One square holds the duotone portrait bled to three
-   edges, the other holds the type crushed into its bottom-left corner with the
-   rest left confidently empty. A single square at container width would be a
-   hero taller than the viewport, which is a worse reading of the same object.
-   ─────────────────────────────────────────────────────────────────────────── */
+.d-live { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; border: 1px solid var(--d-metal-4); padding: 5px 9px; }
+.d-live i { width: 5px; height: 5px; background: var(--d-via); display: block; animation: d-blink 2.6s var(--d-ease) infinite; }
+@keyframes d-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 
-.bn-cover { padding-top: 0; }
-.bn-bleed { width: 100%; }
-.bn-sleeve {
-  position: relative;
-  background: var(--bn-sleeve);
-  color: var(--bn-bone);
-  display: grid;
+.d-name {
+  margin: 20px 0 0;
+  font-weight: 700;
+  font-size: clamp(2.25rem, 4.2vw, 3.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
 }
-@media (min-width: 900px) {
-  .bn-sleeve { aspect-ratio: 2.1 / 1; grid-template-columns: 1fr 1fr; }
+.d-name em { font-style: normal; display: block; color: var(--d-poly); }
+.d-role { margin: 14px 0 0; font-family: var(--d-mono); font-size: 0.6875rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--d-metal-2); }
+.d-claim { margin: 22px 0 0; font-size: clamp(1rem, 1.2vw, 1.1875rem); line-height: 1.5; color: var(--d-metal); max-width: 34ch; font-weight: 600; letter-spacing: -0.018em; }
+.d-intro { margin: 16px 0 0; color: var(--d-metal-2); font-size: 0.875rem; line-height: 1.7; max-width: 48ch; }
+.d-acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+
+/* The die panel itself. */
+.d-die { margin: 0; display: flex; flex-direction: column; background: var(--d-sub-3); min-width: 0; }
+.d-die-bar, .d-die-foot { padding: 10px clamp(14px, 1.6vw, 20px); }
+.d-die-bar { display: flex; gap: 14px; border-bottom: 1px solid var(--d-metal-4); }
+.d-push { margin-left: auto; }
+.d-die-stage { position: relative; height: clamp(320px, 42vw, 520px); }
+.d-die-stage canvas { display: block; width: 100%; height: 100%; }
+
+.d-macros { list-style: none; margin: 0; padding: 0; }
+.d-macros li { position: absolute; }
+.d-macros a {
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; gap: 1px;
+  width: 100%; height: 100%; padding: 8px; text-decoration: none; color: var(--d-metal);
+  transition: background 0.25s var(--d-ease);
 }
-@media (min-width: 1280px) {
-  .bn-sleeve { aspect-ratio: auto; min-height: clamp(460px, 30vw, 560px); grid-template-columns: 1.04fr 0.96fr; }
+.d-macros a:hover, .d-macros a[data-lit="1"] { background: rgb(240 169 56 / 0.07); }
+.d-macro-label, .d-macro-datum { background: var(--d-sub-3); padding: 2px 5px; }
+.d-macro-label { font-family: var(--d-mono); font-size: 0.625rem; letter-spacing: 0.16em; font-weight: 700; }
+.d-macros a[data-kind="org"] .d-macro-label { color: var(--d-implant-ink); }
+.d-macro-datum { font-family: var(--d-mono); font-size: 0.5625rem; letter-spacing: 0.06em; color: var(--d-metal-3); }
+@media (max-width: 720px) { .d-macro-datum { display: none; } }
+
+.d-die-foot { border-top: 1px solid var(--d-metal-4); display: grid; gap: 10px; }
+@media (min-width: 900px) { .d-die-foot { grid-template-columns: auto minmax(0, 1fr); gap: 24px; align-items: start; } }
+.d-readout { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.d-readout .k { font-family: var(--d-mono); font-size: 0.5625rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--d-metal-3); }
+.d-readout .v { font-family: var(--d-mono); font-size: 0.75rem; font-variant-numeric: tabular-nums; color: var(--d-via-ink); margin-right: 8px; }
+.d-readout .v[data-over="1"] { color: var(--d-implant-ink); }
+.d-inspect { margin: 0; font-size: 0.8125rem; line-height: 1.66; color: var(--d-metal-2); max-width: 88ch; }
+.d-inspect b { color: var(--d-metal); font-weight: 600; }
+
+/* ── The figure strip under the die ──────────────────────────────────────── */
+
+.d-strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid var(--d-metal-4); }
+@media (min-width: 760px) { .d-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.d-strip div { padding: 18px clamp(18px, 2.6vw, 44px); border-right: 1px solid var(--d-metal-4); }
+.d-strip div:last-child { border-right: 0; }
+@media (max-width: 759px) {
+  .d-strip div:nth-child(2n) { border-right: 0; }
+  .d-strip div:nth-child(-n + 2) { border-bottom: 1px solid var(--d-metal-4); }
 }
-
-.bn-sleeve > * { min-width: 0; }
-.bn-sleeve-type { display: flex; flex-direction: column; justify-content: center; padding: 34px 22px; min-width: 0; }
-@media (min-width: 900px) { .bn-sleeve-type { padding: 46px 40px; } }
-/* Bled to the window edge, the type needs a real margin to sit inside, or the
-   name reads as having fallen off the sheet. */
-@media (min-width: 1280px) { .bn-sleeve-type { padding: 56px clamp(48px, 4.4vw, 96px); } }
-
-.bn-stereo { display: inline-flex; align-items: center; gap: 10px; align-self: flex-start; border: 1px solid var(--bn-bone-3); padding: 5px 10px; color: var(--bn-bone-2); }
-.bn-stereo .bn-caps { font-size: 0.5625rem; color: inherit; }
-
-.bn-name {
-  margin-top: 30px;
-  font-size: clamp(2.75rem, 12.5vw, 4.25rem);
-  color: var(--bn-bone);
-}
-/* The plate strikes one word. A second pass of colour on a sleeve is always
-   spent on the thing the record is named after. */
-.bn-name em { font-style: normal; color: var(--bn-plate); display: block; }
-
-@media (min-width: 900px) { .bn-name { font-size: clamp(2.75rem, 5.4vw, 4.5rem); } }
-
-.bn-role { margin-top: 26px; color: var(--bn-bone-2); }
-.bn-cat { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px 22px; color: var(--bn-bone-3); }
-.bn-cover-acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
-
-.bn-portrait { position: relative; background: var(--bn-plate-ink); isolation: isolate; overflow: hidden; }
-/* Stacked, the plate is a band across the sleeve rather than a full page of
-   face: on a phone the reader should reach the claim without scrolling past a
-   portrait taller than the screen. */
-@media (max-width: 899px) { .bn-portrait { aspect-ratio: 5 / 4; } }
-/* Side by side, the photograph fills whatever height the type block asks for
-   rather than setting it: left to contribute its own 860×996, it was making
-   the cover a thousand pixels tall and hollowing out the panel beside it. */
-@media (min-width: 900px) {
-  .bn-portrait img { position: absolute; inset: 0; }
-}
-/* Duotone: the photograph keeps its luminance and the plate supplies every
-   hue — one pass of colour over one pass of black, which is how the sleeve was
-   printed. Done with a filter chain rather than a blend mode on purpose: a
-   blended layer joins the page's own compositing group, and on at least one
-   engine that laid a wash of plate colour over every section below the cover. */
-.bn-portrait img {
-  width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%;
-  filter: grayscale(1) contrast(1.22) brightness(0.8) sepia(1) saturate(2.3) hue-rotate(-38deg);
-}
-
-.bn-lede { padding: 44px 0 0; display: grid; gap: 26px; align-items: start; }
-@media (min-width: 900px) { .bn-lede { grid-template-columns: 1.1fr 0.9fr; gap: clamp(40px, 6vw, 110px); } }
-.bn-lede h2 { font-size: clamp(1.5rem, 3vw, 2.75rem); font-variation-settings: "wdth" 92; font-weight: 700; letter-spacing: -0.025em; line-height: 1.08; margin: 0; }
-
-/* ── Figures ─────────────────────────────────────────────────────────────────
-   Not a stat strip: four figures set as a run of type on one ruled line, the
-   way a sleeve lists the pressing details.
-   ─────────────────────────────────────────────────────────────────────────── */
-
-.bn-figs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--bn-ink); }
-@media (min-width: 720px) { .bn-figs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-.bn-figs div { padding: 16px 18px; border-right: 1px solid var(--bn-rule); }
-.bn-figs div:first-child { padding-left: 0; }
-.bn-figs div:last-child { border-right: 0; padding-right: 0; }
-.bn-figs b {
-  display: block; font-family: var(--bn-bill); font-variation-settings: "wdth" 86;
-  font-weight: 700; font-size: 2.125rem; line-height: 1; letter-spacing: -0.03em;
-  font-variant-numeric: tabular-nums;
-}
-.bn-figs b i { font-style: normal; font-size: 0.8125rem; letter-spacing: 0; margin-left: 5px; color: var(--bn-ink-3); font-variation-settings: "wdth" 100; font-weight: 400; }
-.bn-figs small { display: block; margin-top: 8px; font-size: 0.75rem; line-height: 1.4; color: var(--bn-ink-3); max-width: 22ch; }
+.d-strip b { display: block; font-family: var(--d-mono); font-size: 1.625rem; font-weight: 400; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--d-metal); }
+.d-strip b i { font-style: normal; font-size: 0.6875rem; color: var(--d-metal-3); margin-left: 4px; letter-spacing: 0.06em; }
+.d-strip small { display: block; margin-top: 6px; font-size: 0.6875rem; line-height: 1.4; color: var(--d-metal-3); }
 
 /* ── Sections ────────────────────────────────────────────────────────────── */
 
-.bn-side { padding-top: 84px; }
-.bn-side-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding-bottom: 14px; }
-.bn-side-head h2 { font-size: clamp(1.75rem, 4vw, 3rem); font-variation-settings: "wdth" 84; font-weight: 700; line-height: 0.92; letter-spacing: -0.035em; text-transform: uppercase; margin: 0; }
-.bn-side-head .bn-caps { color: var(--bn-ink-3); padding-bottom: 6px; white-space: nowrap; }
-.bn-side-sub { padding: 16px 0 34px; }
+.d-sec { padding-block: clamp(56px, 6vw, 92px) 0; }
+.d-sec-head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; padding-bottom: 12px; }
+.d-sec-head .d-mono { margin-left: auto; }
+.d-sec-sub { padding-block: 16px 30px; }
 
-/* ── Track listing ───────────────────────────────────────────────────────────
-   The systems. A listing, not a card grid: number, title, instrumentation,
-   and the one hard figure, ruled between. Open a track for its liner note.
-   ─────────────────────────────────────────────────────────────────────────── */
+/* ── Macro detail: the work, as block specifications ─────────────────────── */
 
-.bn-tracks { border-top: 1px solid var(--bn-ink); }
-.bn-track { border-bottom: 1px solid var(--bn-rule); }
-.bn-track:last-child { border-bottom: 1px solid var(--bn-ink); }
+.d-blocks { display: grid; gap: 1px; background: var(--d-metal-4); border: 1px solid var(--d-metal-4); }
+@media (min-width: 900px) { .d-blocks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1400px) { .d-blocks { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+/* Six macros want three columns, not four: a part-empty last row shows the
+   grid's own rule colour as a slab where a block should be. */
+@media (min-width: 1400px) { .d-blocks--three { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.d-block { background: var(--d-sub); padding: 20px; display: flex; flex-direction: column; gap: 12px; transition: background 0.25s var(--d-ease); }
+.d-block:hover { background: var(--d-sub-4); }
+.d-block-top { display: flex; align-items: baseline; gap: 10px; }
+.d-block h3 { margin: 0; font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.16; }
+.d-block-ref { font-family: var(--d-mono); font-size: 0.5625rem; letter-spacing: 0.14em; color: var(--d-poly-ink); margin-left: auto; white-space: nowrap; }
+.d-block p { margin: 0; font-size: 0.875rem; line-height: 1.68; color: var(--d-metal-2); }
+.d-block .d-block-detail { color: var(--d-metal-3); font-size: 0.8125rem; }
+.d-pins { margin: auto 0 0; display: grid; gap: 0; border-top: 1px solid var(--d-metal-4); }
+.d-pins div { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 8px; padding: 5px 0; border-bottom: 1px solid rgb(34 56 63 / 0.55); }
+.d-pins div:last-child { border-bottom: 0; }
+.d-pins span { font-family: var(--d-mono); font-size: 0.625rem; letter-spacing: 0.04em; color: var(--d-metal-2); }
+.d-pins span:first-child { color: var(--d-metal-3); }
 
-.bn-track-btn {
-  display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; align-items: baseline; gap: 14px;
-  width: 100%; background: none; border: 0; padding: 20px 0; cursor: pointer; text-align: left;
-  color: inherit; transition: color 0.3s var(--bn-ease);
+/* ── Critical path ───────────────────────────────────────────────────────── */
+
+.d-path { display: grid; gap: 0; border: 1px solid var(--d-metal-4); }
+@media (min-width: 1000px) { .d-path { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); } }
+.d-legs { padding: 6px 0; }
+@media (min-width: 1000px) { .d-legs { border-right: 1px solid var(--d-metal-4); } }
+.d-leg {
+  display: grid; grid-template-columns: clamp(96px, 12vw, 190px) minmax(0, 1fr); align-items: center; gap: 12px;
+  width: 100%; background: none; border: 0; border-left: 2px solid transparent; padding: 8px 14px; cursor: pointer; text-align: left;
+  transition: background 0.2s var(--d-ease), border-color 0.2s var(--d-ease);
 }
-.bn-track-btn:hover { color: var(--bn-plate-ink); }
-.bn-track-no { font-family: var(--bn-mono); font-size: 0.6875rem; letter-spacing: 0.12em; color: var(--bn-ink-3); }
-.bn-track[data-open="1"] .bn-track-no { color: var(--bn-plate-ink); }
-.bn-track-title { font-variation-settings: "wdth" 96; font-weight: 700; font-size: clamp(1.125rem, 2.4vw, 1.625rem); letter-spacing: -0.022em; text-transform: uppercase; line-height: 1.06; }
-.bn-track-fact { font-family: var(--bn-mono); font-size: 0.75rem; color: var(--bn-ink-3); white-space: nowrap; font-variant-numeric: tabular-nums; }
-@media (max-width: 599px) { .bn-track-btn { grid-template-columns: 34px minmax(0, 1fr); } .bn-track-fact { display: none; } .bn-track-inner { padding-left: 0; } }
-
-.bn-track-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.55s var(--bn-ease); }
-.bn-track[data-open="1"] .bn-track-body { grid-template-rows: 1fr; }
-.bn-track-body > div { overflow: hidden; }
-.bn-track-inner { display: grid; gap: 18px; padding: 0 0 26px 56px; }
-@media (min-width: 820px) { .bn-track-inner { grid-template-columns: minmax(0, 1fr) 260px; gap: 40px; } }
-.bn-track-inner p { margin: 0; color: var(--bn-ink-2); font-size: 0.9375rem; line-height: 1.72; max-width: 62ch; }
-.bn-track-inst { display: flex; flex-direction: column; gap: 6px; }
-.bn-track-inst span { font-family: var(--bn-mono); font-size: 0.6875rem; letter-spacing: 0.06em; color: var(--bn-ink-3); border-top: 1px solid var(--bn-rule); padding-top: 6px; }
-
-/* ── The featured side: instruments live on a sleeve panel ───────────────── */
-
-.bn-panel { background: var(--bn-sleeve); color: var(--bn-bone); }
-.bn-panel-bar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid rgb(244 239 228 / 0.16); }
-.bn-panel-bar .bn-caps { color: var(--bn-bone-2); font-size: 0.5625rem; }
-.bn-spacer { margin-left: auto; }
-.bn-canvas-host { position: relative; height: 244px; }
-@media (min-width: 1280px) { .bn-canvas-host { height: 292px; } }
-.bn-canvas-host canvas { display: block; width: 100%; height: 100%; }
-.bn-readout { display: flex; flex-wrap: wrap; gap: 8px 26px; padding: 12px 16px; border-top: 1px solid rgb(244 239 228 / 0.16); }
-.bn-readout div { display: flex; align-items: baseline; gap: 8px; }
-.bn-readout .k { font-family: var(--bn-bill); font-variation-settings: "wdth" 110; font-weight: 600; font-size: 0.5625rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--bn-bone-3); }
-.bn-readout .v { font-family: var(--bn-mono); font-size: 0.8125rem; font-variant-numeric: tabular-nums; color: var(--bn-bone); }
-.bn-readout .v[data-over="1"] { color: var(--bn-plate-lift); }
-
-/* ── Trace ───────────────────────────────────────────────────────────────── */
-
-.bn-trace { display: grid; gap: 0; border-top: 1px solid var(--bn-ink); }
-@media (min-width: 960px) { .bn-trace { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); } }
-
-.bn-spans { border-bottom: 1px solid var(--bn-rule); }
-@media (min-width: 960px) { .bn-spans { border-right: 1px solid var(--bn-ink); border-bottom: 0; padding-right: 26px; } }
-@media (min-width: 1120px) {
-  .bn-span { grid-template-columns: 186px minmax(0, 1fr); }
-  .bn-axis { margin-left: 200px; }
+/* Narrow, a 96px column truncates every hop to three words and an ellipsis.
+   The name takes its own line instead, and the bar keeps the full width. */
+@media (max-width: 759px) {
+  .d-leg { grid-template-columns: minmax(0, 1fr); gap: 3px; }
+  .d-axis { margin-left: 14px; }
 }
-.bn-span {
-  display: grid; grid-template-columns: 124px minmax(0, 1fr); align-items: center; gap: 14px;
-  width: 100%; background: none; border: 0; border-bottom: 1px solid var(--bn-rule);
-  padding: 11px 0; cursor: pointer; text-align: left; color: inherit;
-}
-.bn-span:last-child { border-bottom: 0; }
-.bn-span-name { font-family: var(--bn-mono); font-size: 0.6875rem; letter-spacing: 0.02em; color: var(--bn-ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: color 0.25s; }
-.bn-span[aria-selected="true"] .bn-span-name { color: var(--bn-ink); }
-.bn-span-track { position: relative; height: 18px; }
-.bn-span-bar { position: absolute; top: 2px; height: 14px; background: var(--bn-board-3); transition: background 0.3s var(--bn-ease); }
-.bn-span[aria-selected="true"] .bn-span-bar { background: var(--bn-plate); }
-.bn-span:hover .bn-span-bar { background: var(--bn-ink-3); }
-.bn-span[aria-selected="true"]:hover .bn-span-bar { background: var(--bn-plate); }
-.bn-span-ms { position: absolute; top: 2px; font-family: var(--bn-mono); font-size: 0.6875rem; color: var(--bn-ink-3); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.d-leg:hover { background: rgb(223 232 230 / 0.03); }
+.d-leg[aria-selected="true"] { background: var(--d-poly-wash); border-left-color: var(--d-poly); }
+.d-leg-name { font-family: var(--d-mono); font-size: 0.625rem; letter-spacing: 0.04em; color: var(--d-metal-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.d-leg[aria-selected="true"] .d-leg-name { color: var(--d-metal); }
+.d-leg-track { position: relative; height: 15px; }
+.d-leg-bar { position: absolute; top: 3px; height: 9px; background: rgb(87 224 212 / 0.3); border-left: 2px solid var(--d-via); }
+.d-leg[aria-selected="true"] .d-leg-bar { background: var(--d-poly); border-left-color: var(--d-poly); }
+.d-leg-ms { position: absolute; top: 1px; font-family: var(--d-mono); font-size: 0.625rem; color: var(--d-metal-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.d-axis { position: relative; height: 24px; margin-left: clamp(108px, 12vw, 202px); margin-right: 14px; border-top: 1px solid var(--d-metal-4); }
+.d-axis i { position: absolute; top: 5px; font-style: normal; font-family: var(--d-mono); font-size: 0.5625rem; color: var(--d-metal-3); transform: translateX(-50%); }
+.d-axis i[data-ceil="1"] { color: var(--d-implant-ink); transform: translateX(-100%); }
 
-.bn-axis { position: relative; height: 26px; margin-left: 138px; border-top: 1px solid var(--bn-ink); }
-.bn-axis i { position: absolute; top: 6px; font-style: normal; font-family: var(--bn-mono); font-size: 0.625rem; color: var(--bn-ink-3); transform: translateX(-50%); }
-.bn-axis i[data-ceil="1"] { color: var(--bn-plate-ink); transform: translateX(-100%); }
+.d-leg-detail { padding: 20px; display: flex; flex-direction: column; gap: 12px; background: var(--d-sub); }
+.d-leg-detail h3 { margin: 0; font-size: 1rem; font-weight: 700; letter-spacing: -0.015em; text-transform: uppercase; }
+.d-leg-detail p { margin: 0; font-size: 0.875rem; line-height: 1.7; color: var(--d-metal-2); }
+.d-leg-detail p + p { color: var(--d-metal-3); font-size: 0.8125rem; }
+.d-leg-detail dl { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 14px; border-top: 1px solid var(--d-metal-4); padding-top: 12px; }
+.d-leg-detail dt { font-family: var(--d-mono); font-size: 0.5625rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--d-metal-3); padding-top: 2px; }
+.d-leg-detail dd { margin: 0; font-family: var(--d-mono); font-size: 0.75rem; color: var(--d-metal); }
 
-.bn-detail { padding: 22px 0 0; display: flex; flex-direction: column; gap: 14px; }
-@media (min-width: 960px) { .bn-detail { padding: 0 0 0 30px; } }
-.bn-detail h3 { margin: 0; font-variation-settings: "wdth" 96; font-weight: 700; font-size: 1.25rem; text-transform: uppercase; letter-spacing: -0.02em; line-height: 1.1; }
-.bn-detail p { margin: 0; font-size: 0.9375rem; line-height: 1.72; color: var(--bn-ink-2); }
-.bn-detail p + p { color: var(--bn-ink-3); font-size: 0.875rem; }
-.bn-detail dl { display: grid; grid-template-columns: auto 1fr; gap: 7px 16px; margin: 0; border-top: 1px solid var(--bn-rule); padding-top: 14px; }
-.bn-detail dt { font-family: var(--bn-bill); font-variation-settings: "wdth" 110; font-weight: 600; font-size: 0.5625rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--bn-ink-3); padding-top: 3px; }
-.bn-detail dd { margin: 0; font-family: var(--bn-mono); font-size: 0.8125rem; color: var(--bn-ink); }
+/* ── Organisation blocks ─────────────────────────────────────────────────── */
 
-/* ── Personnel ───────────────────────────────────────────────────────────────
-   Credits, with leaders. The dotted rule between a name and its instrument is
-   the oldest typographic device on a record sleeve, and it does real work
-   here: it ties a claim to the one fact that stands behind it.
-   ─────────────────────────────────────────────────────────────────────────── */
+.d-org { display: grid; gap: 1px; background: var(--d-metal-4); border: 1px solid var(--d-metal-4); }
+@media (min-width: 880px) { .d-org { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.d-org article { background: var(--d-sub); padding: 22px 22px 22px 26px; position: relative; }
+.d-org h3 { margin: 0 0 8px; font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.02em; }
+.d-org p { margin: 0; font-size: 0.875rem; line-height: 1.7; color: var(--d-metal-2); }
+.d-org .d-org-proof { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--d-metal-4); font-family: var(--d-mono); font-size: 0.6875rem; color: var(--d-implant-ink); letter-spacing: 0.02em; }
+/* An implant well: the organisation half of the die is marked, not tinted. */
+.d-org article::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 2px; background: var(--d-implant); opacity: 0.55; }
 
-.bn-personnel { border-top: 1px solid var(--bn-ink); }
-.bn-credit { padding: 24px 0; border-bottom: 1px solid var(--bn-rule); display: grid; gap: 12px; }
-@media (min-width: 880px) { .bn-credit { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(40px, 5vw, 90px); } }
-.bn-credit-lead { display: flex; align-items: baseline; gap: 10px; }
-.bn-credit-lead h3 { margin: 0; font-variation-settings: "wdth" 94; font-weight: 700; font-size: 1.125rem; text-transform: uppercase; letter-spacing: -0.015em; line-height: 1.12; }
-.bn-credit-dots { flex: 1; border-bottom: 1px dotted var(--bn-rule-2); transform: translateY(-4px); min-width: 20px; }
-.bn-credit-proof { font-family: var(--bn-mono); font-size: 0.75rem; color: var(--bn-plate-ink); white-space: nowrap; }
-@media (max-width: 879px) { .bn-credit-proof { white-space: normal; } }
-.bn-credit p { margin: 0; color: var(--bn-ink-2); font-size: 0.9375rem; line-height: 1.72; }
+/* ── The metal stack ─────────────────────────────────────────────────────── */
 
-/* ── Liner notes ─────────────────────────────────────────────────────────── */
+.d-stack { border: 1px solid var(--d-metal-4); }
+.d-layer { display: grid; gap: 4px 18px; padding: 13px clamp(14px, 1.6vw, 22px); border-bottom: 1px solid var(--d-metal-4); align-items: baseline; transition: background 0.22s var(--d-ease); }
+.d-layer:last-child { border-bottom: 0; }
+.d-layer:hover { background: var(--d-sub-4); }
+@media (min-width: 820px) { .d-layer { grid-template-columns: 78px 210px minmax(0, 1fr); } }
+.d-layer-id { font-family: var(--d-mono); font-size: 0.625rem; letter-spacing: 0.12em; color: var(--d-metal-3); display: flex; align-items: center; gap: 8px; }
+.d-layer-id b { display: block; width: 14px; height: 3px; background: var(--d-metal-3); }
+.d-layer[data-tier="metal"] .d-layer-id b { background: var(--d-metal); }
+.d-layer[data-tier="poly"] .d-layer-id b { background: var(--d-poly); }
+.d-layer[data-tier="implant"] .d-layer-id b { background: var(--d-implant); }
+.d-layer-name { font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.012em; }
+.d-layer-items { font-family: var(--d-mono); font-size: 0.6875rem; line-height: 1.8; color: var(--d-metal-2); letter-spacing: 0.01em; }
 
-.bn-liner { border-top: 1px solid var(--bn-ink); padding-top: 28px; }
-.bn-liner-cols { columns: 1; column-gap: 44px; }
-@media (min-width: 820px) { .bn-liner-cols { columns: 2; } }
-@media (min-width: 1400px) { .bn-liner-cols { columns: 3; column-gap: 56px; } }
-.bn-liner-cols section { break-inside: avoid; margin-bottom: 26px; }
-.bn-liner-cols h3 { margin: 0 0 7px; font-variation-settings: "wdth" 96; font-weight: 700; font-size: 1.0625rem; text-transform: uppercase; letter-spacing: -0.015em; }
-.bn-liner-cols p { margin: 0; color: var(--bn-ink-2); font-size: 0.9375rem; line-height: 1.7; }
-.bn-liner-cols .bn-note { margin-top: 8px; }
+/* ── Tape-outs ───────────────────────────────────────────────────────────── */
 
-/* The instrumentation run: skills as one continuous credited line. */
-.bn-instr { border-top: 1px solid var(--bn-ink); padding-top: 22px; margin-top: 12px; display: grid; gap: 14px; }
-.bn-instr-row { display: grid; gap: 4px 20px; }
-@media (min-width: 720px) { .bn-instr-row { grid-template-columns: 210px minmax(0, 1fr); align-items: baseline; } }
-.bn-instr-row dt { font-family: var(--bn-bill); font-variation-settings: "wdth" 110; font-weight: 600; font-size: 0.625rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--bn-ink-3); }
-.bn-instr-row dd { margin: 0; font-size: 0.9375rem; line-height: 1.6; color: var(--bn-ink-2); overflow-wrap: anywhere; }
-.bn-instr-row dd b { font-weight: 400; color: var(--bn-ink); }
+.d-revs { border-top: 1px solid var(--d-metal-4); }
+.d-rev { display: grid; gap: 16px; padding-block: 26px; border-bottom: 1px solid var(--d-metal-4); }
+@media (min-width: 900px) { .d-rev { grid-template-columns: 250px minmax(0, 1fr); gap: clamp(30px, 4vw, 70px); } }
+.d-rev-meta { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.d-rev-when { font-family: var(--d-mono); font-size: 0.6875rem; color: var(--d-metal-3); letter-spacing: 0.04em; }
+.d-rev-org { font-size: 0.8125rem; color: var(--d-metal-2); }
+.d-rev-live { display: inline-flex; align-items: center; gap: 7px; background: var(--d-via); color: #03181b; padding: 2px 8px; font-family: var(--d-mono); font-size: 0.5625rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; }
+.d-rev h3 { margin: 0 0 3px; font-size: clamp(1.125rem, 1.8vw, 1.5rem); font-weight: 700; letter-spacing: -0.028em; text-transform: uppercase; }
+.d-rev-scope { margin: 0 0 14px; font-family: var(--d-mono); font-size: 0.6875rem; color: var(--d-poly-ink); }
+.d-rev ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+@media (min-width: 1300px) { .d-rev ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 40px; } }
+.d-rev li { position: relative; padding-left: 18px; font-size: 0.875rem; line-height: 1.68; color: var(--d-metal-2); }
+.d-rev li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 8px; height: 1px; background: var(--d-poly); }
 
-/* ── Sessions ────────────────────────────────────────────────────────────── */
+/* ── Pinout ──────────────────────────────────────────────────────────────── */
 
-.bn-sessions { border-top: 1px solid var(--bn-ink); }
-.bn-session { padding: 30px 0; border-bottom: 1px solid var(--bn-rule); display: grid; gap: 18px; }
-@media (min-width: 880px) { .bn-session { grid-template-columns: 250px minmax(0, 1fr); gap: clamp(44px, 5vw, 96px); } }
-@media (min-width: 1400px) { .bn-session ul { columns: 2; column-gap: 56px; } .bn-session li { break-inside: avoid; margin-bottom: 10px; } }
-.bn-session-when { display: flex; flex-direction: column; gap: 9px; align-items: flex-start; }
-.bn-session-date { font-family: var(--bn-mono); font-size: 0.75rem; color: var(--bn-ink-3); letter-spacing: 0.03em; }
-.bn-session-org { font-variation-settings: "wdth" 104; font-weight: 600; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bn-ink); }
-.bn-session-live { display: inline-flex; align-items: center; gap: 8px; background: var(--bn-plate-ink); color: var(--bn-bone); padding: 3px 9px; font-family: var(--bn-bill); font-variation-settings: "wdth" 110; font-weight: 600; font-size: 0.5625rem; letter-spacing: 0.2em; text-transform: uppercase; }
-.bn-session h3 { margin: 0 0 4px; font-variation-settings: "wdth" 90; font-weight: 700; font-size: clamp(1.375rem, 3vw, 1.875rem); text-transform: uppercase; letter-spacing: -0.028em; line-height: 1; }
-.bn-session-scope { margin: 0 0 16px; font-family: var(--bn-mono); font-size: 0.75rem; color: var(--bn-ink-3); }
-.bn-session ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-.bn-session li { position: relative; padding-left: 22px; color: var(--bn-ink-2); font-size: 0.9375rem; line-height: 1.68; }
-.bn-session li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 10px; height: 1px; background: var(--bn-plate); }
+.d-out { margin-top: clamp(56px, 6vw, 92px); border-top: 1px solid var(--d-metal-4); background: var(--d-sub); }
+.d-out-in { display: grid; gap: 30px; padding-block: clamp(40px, 4vw, 64px); }
+@media (min-width: 960px) { .d-out-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(40px, 6vw, 110px); align-items: start; } }
+.d-out h2 { margin: 0 0 14px; font-size: clamp(1.75rem, 3.6vw, 3rem); font-weight: 700; line-height: 0.96; letter-spacing: -0.04em; text-transform: uppercase; }
+.d-out h2 em { font-style: normal; color: var(--d-via); }
+.d-out p { margin: 0; color: var(--d-metal-2); font-size: 0.9375rem; line-height: 1.7; max-width: 44ch; }
+.d-pinout { border: 1px solid var(--d-metal-4); }
+.d-pin { display: grid; grid-template-columns: 34px 92px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--d-metal-4); }
+.d-pin:last-child { border-bottom: 0; }
+.d-pin .n { font-family: var(--d-mono); font-size: 0.625rem; color: var(--d-metal-3); }
+.d-pin .k { font-family: var(--d-mono); font-size: 0.5625rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--d-metal-3); }
+.d-pin .v { font-family: var(--d-mono); font-size: 0.75rem; color: var(--d-metal); overflow-wrap: anywhere; text-decoration: none; }
+.d-pin a.v { border-bottom: 1px solid rgb(87 224 212 / 0.4); }
+.d-pin a.v:hover { color: var(--d-via-ink); border-bottom-color: var(--d-via); }
+.d-copy { background: none; border: 0; padding: 0; cursor: pointer; font-family: var(--d-mono); font-size: 0.5625rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--d-metal-3); transition: color 0.2s; }
+.d-copy:hover { color: var(--d-via-ink); }
 
-/* ── Back cover ──────────────────────────────────────────────────────────── */
+.d-colophon { display: flex; flex-wrap: wrap; gap: 10px 28px; padding-block: 18px 34px; border-top: 1px solid var(--d-metal-4); }
+.d-colophon p { margin: 0; font-family: var(--d-mono); font-size: 0.5625rem; letter-spacing: 0.1em; color: var(--d-metal-3); line-height: 1.7; }
+.d-colophon p:last-child { margin-left: auto; max-width: 62ch; letter-spacing: 0.02em; }
 
-.bn-back { margin-top: 84px; background: var(--bn-sleeve); color: var(--bn-bone); }
-.bn-back-in { display: grid; gap: 34px; padding-block: 54px 46px; }
-@media (min-width: 900px) { .bn-back-in { grid-template-columns: 1.1fr 0.9fr; gap: clamp(56px, 7vw, 130px); align-items: start; } }
-.bn-back h2 { margin: 0 0 18px; font-size: clamp(2rem, 5vw, 3.5rem); font-variation-settings: "wdth" 82; font-weight: 700; line-height: 0.9; letter-spacing: -0.035em; text-transform: uppercase; }
-.bn-back h2 em { font-style: normal; color: var(--bn-plate); }
-.bn-back p { margin: 0; color: var(--bn-bone-2); font-size: 1rem; line-height: 1.7; max-width: 46ch; }
-.bn-back-acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
-.bn-back-rows { display: grid; }
-.bn-back-row { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; gap: 14px; align-items: baseline; padding: 13px 0; border-bottom: 1px solid rgb(244 239 228 / 0.16); }
-.bn-back-row:first-child { border-top: 1px solid rgb(244 239 228 / 0.16); }
-.bn-back-row .k { font-family: var(--bn-bill); font-variation-settings: "wdth" 110; font-weight: 600; font-size: 0.5625rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--bn-bone-3); }
-.bn-back-row .v { font-family: var(--bn-mono); font-size: 0.8125rem; color: var(--bn-bone); overflow-wrap: anywhere; }
-.bn-back-row a.v { text-decoration: none; border-bottom: 1px solid rgb(244 239 228 / 0.3); }
-.bn-back-row a.v:hover { color: var(--bn-plate-lift); border-bottom-color: var(--bn-plate-lift); }
-.bn-copy { background: none; border: 0; padding: 0; cursor: pointer; font-family: var(--bn-bill); font-variation-settings: "wdth" 110; font-weight: 600; font-size: 0.5625rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--bn-bone-3); transition: color 0.25s; }
-.bn-copy:hover { color: var(--bn-plate-lift); }
+/* ── Motion ──────────────────────────────────────────────────────────────── */
 
-.bn-colophon { display: flex; flex-wrap: wrap; gap: 14px 30px; padding-block: 22px 40px; }
-.bn-colophon p { margin: 0; font-family: var(--bn-mono); font-size: 0.6875rem; color: var(--bn-bone-3); line-height: 1.6; }
-.bn-colophon p:last-child { margin-left: auto; max-width: 52ch; }
-
-/* ── Motion ──────────────────────────────────────────────────────────────────
-   One authored moment on the page: the plate strikes. Lines of the cover rise
-   into place and the coloured word arrives a beat behind them, the way a
-   second pass of ink lands after the black. Everything else only settles.
-   ─────────────────────────────────────────────────────────────────────────── */
-
-@keyframes bn-rise { from { transform: translateY(0.16em); } to { transform: none; } }
-/* The second pass of ink landing: the black line settles first and the struck
-   word arrives a beat behind it, which is the order the sleeve was printed in.
-   The word carries the plate colour in the stylesheet, not in the animation —
-   the page's one colour moment is never left waiting on a frame. */
-.js .bn-name { animation: bn-rise 1.1s var(--bn-ease) both; }
-.js .bn-name em { animation: bn-rise 1s var(--bn-ease) 0.32s both; }
-.js .bn-role, .js .bn-cat, .js .bn-cover-acts { animation: bn-rise 0.9s var(--bn-ease) 0.2s both; }
-
-/* Entrance is gated on `.js` for the same reason: with scripting off the
-   observer never runs, and a section that fades in would simply never arrive. */
-.js .bn-in { transform: translateY(14px); transition: transform 0.8s var(--bn-ease); }
-.js .bn-in[data-seen="1"] { transform: none; }
+.js .d-in { transform: translateY(10px); transition: transform 0.7s var(--d-ease); }
+.js .d-in[data-seen="1"] { transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .bn *, .bn *::before, .bn *::after { animation: none !important; transition-duration: 0.001ms !important; }
-  .js .bn-in { transform: none; }
-  .bn-name em { animation: none; }
+  .die *, .die *::before, .die *::after { animation: none !important; transition-duration: 0.001ms !important; }
+  .js .d-in { transform: none; }
 }

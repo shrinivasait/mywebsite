@@ -111,6 +111,9 @@ export default function Cine() {
           </div>
         </section>
 
+        {/* The sheet: everything after the opening travels as one surface,
+            drawn up over the shot that stays pinned behind it. */}
+        <div className="cn-after">
         {/* ── Figures: the second screen ────────────────────────────────── */}
         <section className="cn-shell cn-screen">
           <div className="cn-screen-head cn-in">
@@ -342,6 +345,7 @@ export default function Cine() {
             </div>
           </div>
         </section>
+        </div>
       </main>
 
       {/* ── Closing ─────────────────────────────────────────────────────── */}

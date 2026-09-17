@@ -54,7 +54,6 @@
   color: var(--cn-white);
   font-family: var(--cn-face);
   min-height: 100dvh;
-  overflow-x: clip;
   scrollbar-color: #2a2e3a var(--cn-black);
   font-feature-settings: "tnum" 0;
 }
@@ -101,7 +100,10 @@
     linear-gradient(0deg, rgb(0 0 0 / 1) 2%, rgb(0 0 0 / 0) 30%);
 }
 
-.cn main, .cn > footer, .cn > header { position: relative; z-index: 2; }
+/* The head is deliberately left out: it sets its own `position: sticky`, and
+   this rule — `.cn > header` — outranks `.cn-head` on specificity, so naming
+   it here was quietly making the running head scroll away with the page. */
+.cn main, .cn > footer { position: relative; z-index: 2; }
 
 /* Anchored sections land below the running head rather than under it. Scoped
    by `:has()` so it never reaches the primary site.
@@ -183,17 +185,37 @@ html:has(.cn) { scroll-padding-top: 74px; }
 
 /* ── Opening shot ────────────────────────────────────────────────────────── */
 
-/* The opening is the first screen and nothing else: nothing from the section
-   below may peek into it, so the first scroll reveals the figures rather than
-   finishing the hero. `svh` rather than `vh` so a mobile browser's collapsing
-   toolbar cannot cut the cue off the bottom. */
-.cn-hero { position: relative; height: calc(100svh - 74px); min-height: 520px; display: flex; }
+/* The opening is the first screen and nothing else, and it does not scroll
+   away: it stays pinned under the running head while the rest of the document
+   is pulled up over it, like a sheet drawn over a held shot. `svh` rather than
+   `vh` so a mobile browser's collapsing toolbar cannot cut the cue off the
+   bottom. */
+.cn-hero {
+  position: sticky; top: 74px; z-index: 0;
+  height: calc(100svh - 74px); min-height: 520px; display: flex;
+}
+
+/* The sheet. It carries the page's own ground so the pinned shot disappears
+   behind it rather than showing through, and a lifted top edge — a radius, a
+   hairline of light and a long shadow — so the arrival reads as one surface
+   passing over another rather than as content scrolling. */
+.cn-after {
+  position: relative; z-index: 2;
+  background: var(--cn-black);
+  border-radius: clamp(14px, 1.8vw, 26px) clamp(14px, 1.8vw, 26px) 0 0;
+  box-shadow: 0 -30px 70px -20px rgb(0 0 0 / 0.95), 0 -1px 0 0 rgb(246 247 250 / 0.08);
+}
 .cn-hero-in {
   position: relative; z-index: 2; flex: 1;
   display: flex; flex-direction: column; justify-content: center;
   padding-block: clamp(40px, 6vw, 90px) clamp(30px, 4vw, 60px);
 }
-.js .cn-hero-in { transform: translate3d(0, calc(var(--p, 0) * -7vh), 0); opacity: calc(1 - var(--p, 0) * 0.72); will-change: transform, opacity; }
+.js .cn-hero-in {
+  transform: translate3d(0, calc(var(--p, 0) * -5vh), 0) scale(calc(1 - var(--p, 0) * 0.055));
+  opacity: calc(1 - var(--p, 0) * 0.85);
+  filter: blur(calc(var(--p, 0) * 5px));
+  will-change: transform, opacity, filter;
+}
 .cn-hero-status { display: inline-flex; align-items: center; gap: 10px; align-self: flex-start; padding: 8px 16px 8px 12px; border: 1px solid var(--cn-hair); border-radius: 999px; background: rgb(246 247 250 / 0.03); backdrop-filter: blur(8px); }
 .cn-hero-status i { width: 6px; height: 6px; border-radius: 50%; background: var(--cn-lit); box-shadow: 0 0 12px 2px rgb(143 176 255 / 0.7); animation: cn-live 3s var(--cn-ease) infinite; }
 @keyframes cn-live { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
@@ -251,7 +273,7 @@ html:has(.cn) { scroll-padding-top: 74px; }
   min-height: min(calc(100svh - 74px), 620px);
   display: flex; flex-direction: column; justify-content: flex-start;
   gap: clamp(20px, 2.4vw, 34px);
-  padding-block: clamp(34px, 6vh, 72px) clamp(40px, 5vw, 76px);
+  padding-block: clamp(44px, 7vh, 88px) clamp(40px, 5vw, 76px);
 }
 .cn-screen-head { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; }
 .cn-screen-head p + p { margin-left: auto; }

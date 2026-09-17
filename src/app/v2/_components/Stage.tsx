@@ -42,24 +42,19 @@ export function Stage() {
 
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    /** How far the opening itself has been scrolled away, 0–1. */
-    const progress = () => {
-      const host = hostRef.current;
-      if (!host) return 0;
-      const r = host.getBoundingClientRect();
-      const span = Math.max(1, r.height);
-      return Math.min(1, Math.max(0, -r.top / span));
-    };
+    /**
+     * How far the opening has been covered, 0–1.
+     *
+     * Read from the scroll rather than from the element's own rectangle: the
+     * opening is pinned, so its rectangle stops moving the moment the sheet
+     * starts climbing over it.
+     */
+    const heroHeight = () =>
+      Math.max(1, hostRef.current?.parentElement?.offsetHeight ?? window.innerHeight);
+    const progress = () => Math.min(1, Math.max(0, window.scrollY / heroHeight()));
 
-    /** The loop sleeps as soon as the opening is off screen. */
-    let onScreen = true;
-    const seen = new IntersectionObserver(
-      (entries) => {
-        onScreen = entries[0]?.isIntersecting ?? true;
-      },
-      { threshold: 0 },
-    );
-    if (hostRef.current) seen.observe(hostRef.current);
+    /** The loop sleeps once the sheet has covered the shot entirely. */
+    const covered = () => window.scrollY > heroHeight() * 1.05;
 
     const onLost = (e: Event) => {
       e.preventDefault();
@@ -85,7 +80,7 @@ export function Stage() {
         const loop = (now: number) => {
           const dt = Math.min((now - prev) / 1000, 0.05);
           prev = now;
-          if (onScreen) {
+          if (!covered()) {
             const beat = ((now % BEAT_MS) / BEAT_MS) as number;
             handle?.update(progress(), beat, dt);
           }
@@ -103,7 +98,6 @@ export function Stage() {
 
     return () => {
       cancelled = true;
-      seen.disconnect();
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
       canvas.removeEventListener("webglcontextlost", onLost);

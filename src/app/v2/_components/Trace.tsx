@@ -4,100 +4,83 @@ import { useState } from "react";
 import { BUDGET_MS, CEILING_MS, offsets, sideEffects, stages } from "./turn";
 
 /**
- * The same turn, opened up.
+ * The same turn, broken out hop by hop — the arrangement behind the take.
  *
- * The hero shows that the budget holds. This shows why, one hop at a time:
- * pick a span and the panel states what that hop is doing and the engineering
- * decision that keeps it inside its slice. It is the trace view an engineer
- * already knows how to read, written so a non-engineer can read it too.
+ * The band above shows that the budget holds. This shows why: pick a hop and
+ * the note beside it states what that hop is doing and the decision that keeps
+ * it inside its slice. Written so a non-engineer can read it and an engineer
+ * cannot fault it.
  */
 
 const SCALE = 100 / CEILING_MS; // ms → % of the track
 
 export function Trace() {
   const [active, setActive] = useState(3); // the reasoning hop: the expensive one
-  const stage = stages[active];
+  const hop = stages[active];
 
   return (
-    <div className="rt-trace">
-      <div className="rt-inst">
-        <div className="rt-inst-bar">
-          <span className="rt-mono">trace · one turn, six spans</span>
-          <span className="rt-mono rt-spacer">
-            {BUDGET_MS} / {CEILING_MS} ms
-          </span>
-        </div>
-
-        <div className="rt-spans" role="tablist" aria-label="Spans in one spoken turn">
-          {stages.map((s, i) => {
-            const left = offsets[i] * SCALE;
-            const width = s.ms * SCALE;
-            return (
-              <button
-                key={s.id}
-                type="button"
-                role="tab"
-                id={`rt-tab-${s.id}`}
-                aria-selected={i === active}
-                aria-controls="rt-span-detail"
-                className="rt-span"
-                onClick={() => setActive(i)}
-                onMouseEnter={() => setActive(i)}
-              >
-                <span className="rt-span-name">{s.name}</span>
-                <span className="rt-span-track">
-                  <span
-                    className="rt-span-bar"
-                    data-kind={s.kind}
-                    style={{ left: `${left}%`, width: `${width}%` }}
-                  />
-                  <span className="rt-span-ms" style={{ left: `calc(${left + width}% + 8px)` }}>
-                    {s.ms}
-                  </span>
+    <div className="bn-trace">
+      <div className="bn-spans" role="tablist" aria-label="Hops in one spoken turn">
+        {stages.map((s, i) => {
+          const left = offsets[i] * SCALE;
+          const width = s.ms * SCALE;
+          return (
+            <button
+              key={s.id}
+              type="button"
+              role="tab"
+              id={`bn-tab-${s.id}`}
+              aria-selected={i === active}
+              aria-controls="bn-hop-detail"
+              className="bn-span"
+              onClick={() => setActive(i)}
+              onMouseEnter={() => setActive(i)}
+              onFocus={() => setActive(i)}
+            >
+              <span className="bn-span-name">{s.name}</span>
+              <span className="bn-span-track">
+                <span
+                  className="bn-span-bar"
+                  style={{ left: `${left}%`, width: `${width}%` }}
+                />
+                <span className="bn-span-ms" style={{ left: `calc(${left + width}% + 8px)` }}>
+                  {s.ms}
                 </span>
-              </button>
-            );
-          })}
-        </div>
+              </span>
+            </button>
+          );
+        })}
 
-        <div className="rt-axis" aria-hidden>
+        <div className="bn-axis" aria-hidden>
           {[0, 200, 400, 600].map((ms) => (
             <i key={ms} style={{ left: `${ms * SCALE}%` }}>
               {ms}
             </i>
           ))}
           <i data-ceil="1" style={{ left: "100%" }}>
-            {CEILING_MS}
+            {CEILING_MS} trim
           </i>
-        </div>
-
-        <div className="rt-readout">
-          <div>
-            <span className="k">tool calls</span>
-            <span className="v">{sideEffects.join("  ·  ")}</span>
-          </div>
         </div>
       </div>
 
       <aside
-        className="rt-panel rt-detail"
-        id="rt-span-detail"
+        className="bn-detail"
+        id="bn-hop-detail"
         role="tabpanel"
-        aria-labelledby={`rt-tab-${stage.id}`}
+        aria-labelledby={`bn-tab-${hop.id}`}
       >
-        <span className="rt-mono">
-          span {active + 1} / {stages.length}
-        </span>
-        <h3>{stage.name}</h3>
-        <p>{stage.what}</p>
-        <p style={{ color: "var(--rt-fg-3)" }}>{stage.lever}</p>
+        <h3>{hop.name}</h3>
+        <p>{hop.what}</p>
+        <p>{hop.lever}</p>
         <dl>
           <dt>budget</dt>
-          <dd>{stage.ms} ms</dd>
+          <dd>{hop.ms} ms</dd>
           <dt>share</dt>
-          <dd>{Math.round((stage.ms / BUDGET_MS) * 100)}% of the turn</dd>
+          <dd>{Math.round((hop.ms / BUDGET_MS) * 100)}% of the turn</dd>
           <dt>method</dt>
-          <dd>{stage.technique}</dd>
+          <dd>{hop.technique}</dd>
+          <dt>tools</dt>
+          <dd>{sideEffects.join("  ")}</dd>
         </dl>
       </aside>
     </div>

@@ -71,7 +71,7 @@
    values — so a visitor who never gets the object still gets a stage.
    ─────────────────────────────────────────────────────────────────────────── */
 
-.cn-stage { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.cn-stage { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 .cn-stage::before {
   content: "";
   position: absolute;
@@ -84,18 +84,16 @@
 }
 .cn-stage[data-live="1"]::before { opacity: 0.55; }
 .cn-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* A scrim on the reading side, and a hard fade into the black the rest of the
+   page is set on, so the opening resolves into the document rather than being
+   cut off at an edge. */
 .cn-stage::after {
   content: "";
   position: absolute;
   inset: 0;
-  /* `--veil` is written by the scroll loop: the shot is clear at the top of
-     the page and progressively dimmed below it, so the object stays a room
-     rather than becoming a distraction behind the reading. */
   background:
-    linear-gradient(90deg, rgb(0 0 0 / 0.86) 0%, rgb(0 0 0 / 0.55) 34%, rgb(0 0 0 / 0) 62%),
-    linear-gradient(0deg, rgb(0 0 0 / 0.9) 0%, rgb(0 0 0 / 0) 34%),
-    rgb(0 0 0 / var(--veil, 0));
-  transition: background 0.3s linear;
+    linear-gradient(90deg, rgb(0 0 0 / 0.88) 0%, rgb(0 0 0 / 0.5) 36%, rgb(0 0 0 / 0) 64%),
+    linear-gradient(0deg, rgb(0 0 0 / 1) 2%, rgb(0 0 0 / 0) 34%);
 }
 
 .cn main, .cn > footer, .cn > header { position: relative; z-index: 2; }
@@ -172,15 +170,28 @@
 
 /* A first frame, not a first screen: capped so that on a very tall window the
    opening does not become a field of black with a headline floating in it. */
-.cn-hero { min-height: min(calc(100svh - 74px), 880px); display: flex; flex-direction: column; justify-content: center; padding-block: clamp(40px, 6vw, 90px) clamp(30px, 4vw, 60px); }
+.cn-hero { position: relative; min-height: min(calc(100svh - 74px), 880px); display: flex; }
+.cn-hero-in { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; justify-content: center; padding-block: clamp(40px, 6vw, 90px) clamp(30px, 4vw, 60px); }
 .cn-hero-status { display: inline-flex; align-items: center; gap: 10px; align-self: flex-start; padding: 8px 16px 8px 12px; border: 1px solid var(--cn-hair); border-radius: 999px; background: rgb(246 247 250 / 0.03); backdrop-filter: blur(8px); }
 .cn-hero-status i { width: 6px; height: 6px; border-radius: 50%; background: var(--cn-lit); box-shadow: 0 0 12px 2px rgb(143 176 255 / 0.7); animation: cn-live 3s var(--cn-ease) infinite; }
 @keyframes cn-live { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
 .cn-hero-status span { font-size: 0.75rem; letter-spacing: 0.02em; color: var(--cn-grey); }
 
-.cn-hero h1 { margin: clamp(22px, 3vw, 40px) 0 0; max-width: 13ch; }
-@media (min-width: 1100px) { .cn-hero > *:not(.cn-hero-foot) { max-width: 60%; } }
-.cn-hero .cn-lede { margin-top: clamp(20px, 2.4vw, 34px); }
+.cn-hero h1 { margin: clamp(20px, 2.6vw, 34px) 0 0; max-width: 11ch; }
+/* His name, then what he is: the role is set as a rule of its own under the
+   name rather than as a line of the headline, because this is a person's site
+   and the name is the thing being announced. */
+.cn-role {
+  margin: 18px 0 0; font-size: clamp(0.9375rem, 1.15vw, 1.125rem); font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--cn-lit);
+}
+@media (min-width: 1100px) {
+  .cn-hero-in > *:not(.cn-hero-foot) { max-width: 56%; }
+  /* The role is one line at this size: it is a title, and a title that wraps
+     reads as a sentence that ran out of room. */
+  .cn-hero-in .cn-role { max-width: none; }
+}
+.cn-hero .cn-lede { margin-top: clamp(20px, 2.4vw, 32px); max-width: 52ch; }
 .cn-hero-acts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(26px, 3vw, 44px); }
 .cn-hero-foot { display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-top: auto; padding-top: clamp(34px, 5vw, 70px); }
 .cn-scroll { display: flex; align-items: center; gap: 10px; font-size: 0.6875rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cn-grey-2); }
@@ -314,20 +325,24 @@
 .cn-role li { position: relative; padding-left: 22px; font-size: 0.9375rem; line-height: 1.72; color: var(--cn-grey); }
 .cn-role li::before { content: ""; position: absolute; left: 0; top: 0.68em; width: 10px; height: 1px; background: var(--cn-lit-deep); }
 
-/* ── The portrait shot ───────────────────────────────────────────────────── */
+/* ── The portrait ────────────────────────────────────────────────────────────
+   Shown whole, at the frame it was taken in, rather than cropped to a band:
+   the plate carries the photograph's own 860 × 996 and nothing is cut off.
+   ─────────────────────────────────────────────────────────────────────────── */
 
-.cn-shot { position: relative; min-height: clamp(460px, 74vh, 860px); display: flex; align-items: flex-end; overflow: hidden; border-block: 1px solid var(--cn-hair-2); }
-.cn-shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 72% 18%; filter: contrast(1.08) saturate(0.85) brightness(0.9); }
-@media (min-width: 900px) { .cn-shot img { object-position: 78% 22%; } }
-.cn-shot::after {
-  content: ""; position: absolute; inset: 0;
-  background:
-    linear-gradient(90deg, rgb(0 0 0 / 0.94) 6%, rgb(0 0 0 / 0.62) 46%, rgb(0 0 0 / 0.12) 82%),
-    linear-gradient(0deg, rgb(0 0 0 / 0.85), transparent 46%);
+.cn-portrait { display: grid; gap: clamp(28px, 4vw, 72px); align-items: center; }
+@media (min-width: 1000px) { .cn-portrait { grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr); } }
+.cn-portrait-plate {
+  margin: 0; position: relative; aspect-ratio: 860 / 996; max-height: 760px;
+  background: var(--cn-ink-2); border: 1px solid var(--cn-hair-2); box-shadow: var(--cn-lift), var(--cn-edge);
+  overflow: hidden;
 }
-.cn-shot-copy { position: relative; z-index: 2; padding-block: clamp(40px, 6vw, 96px); max-width: 60ch; }
-.cn-shot-copy h2 { margin: 20px 0 22px; }
-.cn-shot-copy p { color: var(--cn-grey); }
+.cn-portrait-plate img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; filter: contrast(1.05) saturate(0.9); }
+.cn-portrait-copy h2 { margin: 20px 0 22px; }
+.cn-card { margin: clamp(26px, 3vw, 40px) 0 0; display: grid; border-top: 1px solid var(--cn-hair-2); }
+.cn-card div { display: flex; justify-content: space-between; gap: 20px; padding-block: 14px; border-bottom: 1px solid var(--cn-hair-2); }
+.cn-card dt { font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cn-grey-2); }
+.cn-card dd { margin: 0; font-size: 0.9375rem; color: var(--cn-white); text-align: right; }
 
 /* ── Closing ─────────────────────────────────────────────────────────────── */
 

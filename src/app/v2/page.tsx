@@ -60,25 +60,27 @@ export default function Cine() {
         Skip to content
       </a>
 
-      <Stage />
       <Head />
 
       <main id="main">
         {/* ── Opening shot ──────────────────────────────────────────────── */}
-        <section id="top" className="cn-shell cn-hero">
-          <p className="cn-hero-status">
-            <i aria-hidden />
-            <span>{site.availability}</span>
-          </p>
+        <section id="top" className="cn-hero">
+          <Stage />
 
-          <h1 className="cn-display">
-            Production AI systems. <em>And the teams that keep them running.</em>
-          </h1>
+          <div className="cn-shell cn-hero-in">
+            <p className="cn-hero-status">
+              <i aria-hidden />
+              <span>{site.availability}</span>
+            </p>
 
-          <p className="cn-lede">
-            {site.name}, {site.role}. Five years across AI and deep learning, from computer
-            vision for geospatial defence to enterprise GenAI.
-          </p>
+            <h1 className="cn-display">{site.name}</h1>
+            <p className="cn-role">{site.role}</p>
+
+            <p className="cn-lede">
+              {site.tagline} Five years across AI and deep learning, from computer vision for
+              geospatial defence to enterprise GenAI — leading an 18-engineer team today, and
+              before that building an AI function from zero.
+            </p>
 
           <div className="cn-hero-acts">
             <a className="cn-btn cn-btn--light" href={`mailto:${site.email}`}>
@@ -89,11 +91,12 @@ export default function Cine() {
             </a>
           </div>
 
-          <div className="cn-hero-foot">
-            <span className="cn-scroll">
-              <i aria-hidden />
-              Scroll
-            </span>
+            <div className="cn-hero-foot">
+              <span className="cn-scroll">
+                <i aria-hidden />
+                Scroll
+              </span>
+            </div>
           </div>
         </section>
 
@@ -283,26 +286,47 @@ export default function Cine() {
           </div>
         </section>
 
-        {/* ── The shot ──────────────────────────────────────────────────── */}
-        <section className="cn-shot">
-          <Image
-            src="/profile.jpg"
-            alt={`${site.name}, ${site.role}`}
-            width={860}
-            height={996}
-            sizes="100vw"
-          />
-          <div className="cn-shell cn-shot-copy">
-            <p className="cn-label">{site.location}</p>
-            <h2 className="cn-h2">
-              I lead the work <em>and do it</em>
-            </h2>
-            <p className="cn-body">
-              Five years across AI and deep learning, from computer vision for geospatial defence
-              to enterprise GenAI. I define the reference architecture rather than review it, I
-              hire and grow the engineers who build on it, and I have written the strategy that
-              paid for both.
-            </p>
+        {/* ── The portrait ──────────────────────────────────────────────── */}
+        <section className="cn-shell cn-sec">
+          <div className="cn-portrait cn-in">
+            <figure className="cn-portrait-plate">
+              <Image
+                src="/profile.jpg"
+                alt={`${site.name}, ${site.role}`}
+                width={860}
+                height={996}
+                sizes="(min-width: 1000px) 38vw, 100vw"
+              />
+            </figure>
+
+            <div className="cn-portrait-copy">
+              <p className="cn-label">{site.location}</p>
+              <h2 className="cn-h2">
+                I lead the work <em>and do it</em>
+              </h2>
+              <p className="cn-body">
+                Five years across AI and deep learning, from computer vision for geospatial
+                defence to enterprise GenAI. I define the reference architecture rather than
+                review it, I hire and grow the engineers who build on it, and I have written the
+                strategy that paid for both.
+              </p>
+              <dl className="cn-card">
+                <div>
+                  <dt>Current seat</dt>
+                  <dd>
+                    {roles[0].title}, {roles[0].orgShort ?? roles[0].org}
+                  </dd>
+                </div>
+                <div>
+                  <dt>Based</dt>
+                  <dd>{site.location}</dd>
+                </div>
+                <div>
+                  <dt>Status</dt>
+                  <dd>{site.availability}</dd>
+                </div>
+              </dl>
+            </div>
           </div>
         </section>
       </main>

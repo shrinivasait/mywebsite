@@ -5,11 +5,12 @@ import type { SceneHandle } from "./core-scene";
 import { BUDGET_MS } from "./turn";
 
 /**
- * Mounts the object behind the page.
+ * Mounts the object behind the opening.
  *
- * One fixed canvas for the whole document rather than a scene per section:
- * that is what makes the page feel like one continuous shot instead of a stack
- * of widgets, and it costs a single WebGL context.
+ * The canvas is absolutely positioned inside the hero rather than fixed behind
+ * the document: the object is the opening shot and nothing else. Below the
+ * fold it is neither drawn nor rendered, which keeps the reading sections on a
+ * plain black ground and stops the loop entirely once the hero leaves view.
  *
  * three.js arrives through a dynamic import fired on mount, so it is never in
  * the initial bundle. Until it lands — and permanently, if WebGL is missing or
@@ -41,12 +42,24 @@ export function Stage() {
 
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    /** Read position across the whole document, 0–1. */
+    /** How far the opening itself has been scrolled away, 0–1. */
     const progress = () => {
-      const doc = document.documentElement;
-      const span = doc.scrollHeight - window.innerHeight;
-      return span > 0 ? Math.min(1, Math.max(0, window.scrollY / span)) : 0;
+      const host = hostRef.current;
+      if (!host) return 0;
+      const r = host.getBoundingClientRect();
+      const span = Math.max(1, r.height);
+      return Math.min(1, Math.max(0, -r.top / span));
     };
+
+    /** The loop sleeps as soon as the opening is off screen. */
+    let onScreen = true;
+    const seen = new IntersectionObserver(
+      (entries) => {
+        onScreen = entries[0]?.isIntersecting ?? true;
+      },
+      { threshold: 0 },
+    );
+    if (hostRef.current) seen.observe(hostRef.current);
 
     const onLost = (e: Event) => {
       e.preventDefault();
@@ -69,27 +82,13 @@ export function Stage() {
           return;
         }
 
-        let veil = -1;
         const loop = (now: number) => {
           const dt = Math.min((now - prev) / 1000, 0.05);
           prev = now;
-          const p = progress();
-          const beat = ((now % BEAT_MS) / BEAT_MS) as number;
-          handle?.update(p, beat, dt);
-
-          // The object is the opening shot; below it, it becomes the room the
-          // page is read in. The veil deepens with read position so a lit ring
-          // can never cross a paragraph and take it with it — and it deepens
-          // faster on a narrow screen, where the object sits behind the reading
-          // column rather than beside it.
-          const narrow = window.innerWidth < 1100;
-          const want =
-            Math.round(Math.min(narrow ? 0.88 : 0.62, p * (narrow ? 3.4 : 1.5)) * 50) / 50;
-          if (want !== veil) {
-            veil = want;
-            hostRef.current?.style.setProperty("--veil", String(want));
+          if (onScreen) {
+            const beat = ((now % BEAT_MS) / BEAT_MS) as number;
+            handle?.update(progress(), beat, dt);
           }
-
           raf = requestAnimationFrame(loop);
         };
         raf = requestAnimationFrame(loop);
@@ -104,6 +103,7 @@ export function Stage() {
 
     return () => {
       cancelled = true;
+      seen.disconnect();
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
       canvas.removeEventListener("webglcontextlost", onLost);

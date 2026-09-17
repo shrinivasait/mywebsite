@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   expertise,
   leadership,
@@ -7,252 +8,270 @@ import {
   site,
   skills,
 } from "@/lib/content";
-import { Copy, CriticalPath, Head, Reveal } from "./_components/Chrome";
-import { stackOrder } from "./_components/die";
-import { Floorplan } from "./_components/Floorplan";
+import { Copy, Figure, Head, Reveal, Sequence } from "./_components/Chrome";
+import { Stage } from "./_components/Stage";
 import { BUDGET_MS, CEILING_MS } from "./_components/turn";
 
 /**
- * The die.
+ * The object.
  *
- * Same person, same résumé, a third object — and the first two are the reason
- * for this one. A dark console read as generic because every AI tool ships
- * that look; a record sleeve read as basic because its whole grammar is
- * restraint. This page answers the brief it was actually given: dense,
- * layered, technical, and alive at the top.
+ * Built to a brief that took four attempts to state plainly: cinematic rather
+ * than diagrammatic, with real imagery and 3D, more on screen, and more
+ * motion. So the page is staged like a product launch — one lit, machined
+ * object held on a fixed canvas behind the whole document and driven by scroll,
+ * true black so the object and the page share a ground, type at launch scale,
+ * and sections dense with specification rather than sparse with taste.
  *
- * The conceit is load-bearing rather than decorative. An architect's job is
- * floorplanning — deciding which blocks exist, how they connect, and which
- * path is critical — so the work is laid out as macros on one die, the
- * organisation is drawn on the same silicon as the technical surface because
- * that pairing is the argument, the latency budget is the critical path with
- * real charge running it, the skills are a metal stack in cross-section, and
- * the contact details are a pinout.
- *
- * The rule kept from every version of this route: nothing moves that is not
- * also explained, and every figure is from the résumé.
+ * Density is the substance here, not decoration: the subject is an engineer,
+ * and a spec table is the most flattering thing you can print about one whose
+ * numbers hold up. Every figure on the page is from the résumé, and the only
+ * thing that moves without being explained is the light.
  */
 
-/** Which layer of the stack each skill group is printed on. */
-const LAYERS: { id: string; tier: "metal" | "poly" | "implant" }[] = [
-  { id: "M6", tier: "metal" },
-  { id: "M5", tier: "metal" },
-  { id: "M4", tier: "metal" },
-  { id: "M3", tier: "metal" },
-  { id: "M2", tier: "metal" },
-  { id: "M1", tier: "metal" },
-  { id: "POLY", tier: "poly" },
-  { id: "DIFF", tier: "implant" },
-];
+/** The headline figure each system is listed with. All of it is stated in `detail`. */
+const HEADLINE: Record<string, { k: string; v: string }[]> = {
+  "voice-negotiator": [
+    { k: "End to end", v: "650–800 ms" },
+    { k: "Channel", v: "Live telephony" },
+  ],
+  "rag-sales-assistant": [
+    { k: "Corpus", v: "Enterprise scale" },
+    { k: "Retrieval", v: "Hybrid + rerank" },
+  ],
+  medicalgpt: [
+    { k: "Pipeline", v: "Pretrain → SFT" },
+    { k: "Ownership", v: "End to end" },
+  ],
+  "virtual-trial-room": [
+    { k: "Model", v: "Stable Diffusion" },
+    { k: "Delivered", v: "Working MVP" },
+  ],
+};
 
-export default function Die() {
-  const [first, ...rest] = site.name.split(" ");
-  const layers = stackOrder
-    .map((title, i) => ({ ...LAYERS[i], group: skills.find((g) => g.title === title) }))
-    .filter((l) => l.group);
+export default function Cine() {
+  const [first] = site.name.split(" ");
 
   return (
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:bg-[#57e0d4] focus:px-4 focus:py-2 focus:text-sm focus:text-[#03181b]"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:text-black"
       >
         Skip to content
       </a>
 
+      <Stage />
       <Head />
 
       <main id="main">
-        {/* ── The die ───────────────────────────────────────────────────── */}
-        <section className="d-hero">
-          <div className="d-id">
-            <p className="d-live">
+        {/* ── Opening shot ──────────────────────────────────────────────── */}
+        <section id="top" className="cn-shell cn-hero">
+          <p className="cn-hero-status">
+            <i aria-hidden />
+            <span>{site.availability}</span>
+          </p>
+
+          <h1 className="cn-display">
+            Production AI systems. <em>And the teams that keep them running.</em>
+          </h1>
+
+          <p className="cn-lede">
+            {site.name}, {site.role}. Five years across AI and deep learning, from computer
+            vision for geospatial defence to enterprise GenAI.
+          </p>
+
+          <div className="cn-hero-acts">
+            <a className="cn-btn cn-btn--light" href={`mailto:${site.email}`}>
+              Start a conversation
+            </a>
+            <a className="cn-btn" href={site.resume}>
+              Download résumé
+            </a>
+          </div>
+
+          <div className="cn-hero-foot">
+            <span className="cn-scroll">
               <i aria-hidden />
-              <span className="d-mono">{site.availability}</span>
-            </p>
-
-            <h1 className="d-name">
-              {first}
-              <em>{rest.join(" ")}</em>
-            </h1>
-            <p className="d-role">{site.role}</p>
-
-            <p className="d-claim">{site.tagline}</p>
-            <p className="d-intro">{site.intro}</p>
-
-            <div className="d-acts">
-              <a className="d-key d-key--live" href={`mailto:${site.email}`}>
-                Start a conversation
-              </a>
-              <a className="d-key" href={site.resume}>
-                Résumé
-              </a>
-            </div>
+              Scroll
+            </span>
           </div>
-
-          <Floorplan />
         </section>
 
-        <div className="d-strip">
-          {railFigures.map((f) => (
-            <div key={f.label}>
-              <b>
-                {f.value}
-                <i>{f.unit}</i>
-              </b>
-              <small>{f.label}</small>
-            </div>
-          ))}
-        </div>
-
-        {/* ── Critical path ─────────────────────────────────────────────── */}
-        <section id="path" className="d-shell d-sec">
-          <div className="d-sec-head">
-            <h2 className="d-h">The critical path</h2>
-            <p className="d-mono">
-              {BUDGET_MS} of {CEILING_MS} ms
-            </p>
+        {/* ── Figures ───────────────────────────────────────────────────── */}
+        <section className="cn-shell">
+          <div className="cn-figures cn-in">
+            {railFigures.map((f) => (
+              <Figure key={f.label} value={f.value} unit={f.unit} label={f.label} />
+            ))}
           </div>
-          <hr className="d-rule" />
-          <p className="d-prose d-sec-sub">
-            Real-time voice is the hardest claim on this page, so it is the one the page opens.
-            Six services, one clock, and a ceiling at {CEILING_MS} ms — above that a conversation
-            stops feeling like a conversation. Pick a leg for what it does and the decision that
-            keeps it inside its slice.
-          </p>
-          <div className="d-in">
-            <CriticalPath />
-          </div>
-          <p className="d-prose" style={{ marginTop: 26 }}>
-            Nothing here is fast because a fast model was chosen. Each hop was given a ceiling
-            first and then built to fit, work was moved off the critical path wherever it could
-            start early, and the two hops nobody controls — the caller&rsquo;s pause and the
-            carrier — were reserved before any service got to spend. The charge crossing the die
-            above runs this same budget; it is a design, not a live probe.
-          </p>
         </section>
 
-        {/* ── Work ──────────────────────────────────────────────────────── */}
-        <section id="blocks" className="d-shell d-sec">
-          <div className="d-sec-head">
-            <h2 className="d-h">Selected work</h2>
-            <p className="d-mono">Four systems in production</p>
+        {/* ── Systems ───────────────────────────────────────────────────── */}
+        <section id="systems" className="cn-shell cn-sec">
+          <div className="cn-sec-head cn-in">
+            <div>
+              <p className="cn-label">Selected work</p>
+              <h2 className="cn-h2">
+                Four systems, <em>in production</em>
+              </h2>
+            </div>
+            <p className="cn-body">
+              Each shipped and running: what it does, how it is built, and the figure it is held
+              to. No demos, and no client names that cannot be published.
+            </p>
           </div>
-          <hr className="d-rule" />
-          <p className="d-prose d-sec-sub">
-            Each one shipped, with the interfaces it actually runs on listed underneath.
-          </p>
-          <div className="d-blocks d-in">
+
+          <div className="cn-systems cn-in">
             {projects.map((p, i) => (
-              <article key={p.slug} className="d-block">
-                <div className="d-block-top">
-                  <h3>{p.title}</h3>
-                  <span className="d-block-ref">U{String(i + 1).padStart(2, "0")}</span>
+              <article key={p.slug} className="cn-system">
+                <div className="cn-system-top">
+                  <span className="cn-system-no">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="cn-system-live">In production</span>
                 </div>
+                <h3 className="cn-h3">{p.title}</h3>
                 <p>{p.summary}</p>
-                <p className="d-block-detail">{p.detail}</p>
-                <div className="d-pins">
-                  {p.stack.map((s, n) => (
-                    <div key={s}>
-                      <span>{n + 1}</span>
-                      <span>{s}</span>
-                    </div>
+                <p className="cn-system-detail">{p.detail}</p>
+                <div className="cn-chips">
+                  {p.stack.map((s) => (
+                    <span key={s} className="cn-chip">
+                      {s}
+                    </span>
                   ))}
                 </div>
+                <dl className="cn-specs">
+                  {HEADLINE[p.slug].map((row) => (
+                    <div key={row.k}>
+                      <dt>{row.k}</dt>
+                      <dd>{row.v}</dd>
+                    </div>
+                  ))}
+                </dl>
               </article>
             ))}
           </div>
         </section>
 
-        {/* ── Organisation ──────────────────────────────────────────────── */}
-        <section id="org" className="d-shell d-sec">
-          <div className="d-sec-head">
-            <h2 className="d-h">The blocks that are not code</h2>
-            <p className="d-mono">Implant layer</p>
+        {/* ── Latency ───────────────────────────────────────────────────── */}
+        <section id="latency" className="cn-shell cn-sec">
+          <div className="cn-sec-head cn-in">
+            <div>
+              <p className="cn-label">The hardest claim on this page</p>
+              <h2 className="cn-h2">
+                One spoken turn, <em>{BUDGET_MS} milliseconds</em>
+              </h2>
+            </div>
+            <p className="cn-body">
+              Six services against a single clock, with a ceiling at {CEILING_MS} ms — above that
+              a conversation stops feeling like one. Scroll carries the turn through its budget;
+              take any hop to hold it.
+            </p>
           </div>
-          <hr className="d-rule" />
-          <p className="d-prose d-sec-sub">
-            An architecture is only as durable as the organisation running it. Four things I own
-            besides the systems, each tied to the one fact that stands behind it.
+
+          <div className="cn-in">
+            <Sequence />
+          </div>
+
+          <p className="cn-small cn-in" style={{ marginTop: 24, maxWidth: "92ch" }}>
+            The track plays the designed budget rather than live traffic. Nothing here is fast
+            because a fast model was chosen: each hop was given a ceiling first and then built to
+            fit, work was moved off the critical path wherever it could start early, and the two
+            hops nobody controls — the caller&rsquo;s pause and the carrier — were reserved
+            before any service got to spend.
           </p>
-          <div className="d-org d-in">
-            {leadership.map((pillar) => (
-              <article key={pillar.title}>
-                <h3>{pillar.title}</h3>
+        </section>
+
+        {/* ── Scale ─────────────────────────────────────────────────────── */}
+        <section id="scale" className="cn-shell cn-sec">
+          <div className="cn-sec-head cn-in">
+            <div>
+              <p className="cn-label">The other half</p>
+              <h2 className="cn-h2">
+                An architecture is only as durable as <em>the organisation running it</em>
+              </h2>
+            </div>
+            <p className="cn-body">
+              Four things I own besides the systems, each tied to the one fact that stands behind
+              it. The pairing is the argument: most people are credibly one or the other.
+            </p>
+          </div>
+
+          <div className="cn-pillars cn-in">
+            {leadership.map((pillar, i) => (
+              <article key={pillar.title} className="cn-pillar">
+                <span className="cn-pillar-no">{String(i + 1).padStart(2, "0")}</span>
+                <h3 className="cn-h3">{pillar.title}</h3>
                 <p>{pillar.detail}</p>
-                <p className="d-org-proof">{pillar.proof}</p>
+                <p className="cn-pillar-proof">{pillar.proof}</p>
               </article>
             ))}
           </div>
         </section>
 
         {/* ── Depth ─────────────────────────────────────────────────────── */}
-        <section id="stack" className="d-shell d-sec">
-          <div className="d-sec-head">
-            <h2 className="d-h">Depth, layer by layer</h2>
-            <p className="d-mono">Six areas · full stack</p>
+        <section id="depth" className="cn-shell cn-sec">
+          <div className="cn-sec-head cn-in">
+            <div>
+              <p className="cn-label">Technical depth</p>
+              <h2 className="cn-h2">
+                Six areas, <em>to depth</em>
+              </h2>
+            </div>
+            <p className="cn-body">
+              Each with the production evidence behind it rather than a claim of familiarity —
+              then the full specification underneath.
+            </p>
           </div>
-          <hr className="d-rule" />
-          <p className="d-prose d-sec-sub">
-            What I can be interviewed on to depth, each with the production evidence behind it
-            rather than a claim of familiarity — then the whole surface underneath, read as a
-            cross-section: coarse routing at the top, fine structure at the bottom.
-          </p>
 
-          <div className="d-blocks d-blocks--three d-in" style={{ marginBottom: 26 }}>
+          <div className="cn-areas cn-in">
             {expertise.map((e) => (
-              <article key={e.title} className="d-block">
-                <div className="d-block-top">
-                  <h3>{e.title}</h3>
-                </div>
+              <article key={e.title} className="cn-area">
+                <h3>{e.title}</h3>
                 <p>{e.detail}</p>
-                <div className="d-pins">
-                  {e.tags.map((t, n) => (
-                    <div key={t}>
-                      <span>{n + 1}</span>
-                      <span>{t}</span>
-                    </div>
+                <div className="cn-chips">
+                  {e.tags.map((t) => (
+                    <span key={t} className="cn-chip">
+                      {t}
+                    </span>
                   ))}
                 </div>
               </article>
             ))}
           </div>
 
-          <div className="d-stack d-in">
-            {layers.map((l) => (
-              <div key={l.id} className="d-layer" data-tier={l.tier}>
-                <span className="d-layer-id">
-                  <b aria-hidden />
-                  {l.id}
-                </span>
-                <span className="d-layer-name">{l.group!.title}</span>
-                <span className="d-layer-items">{l.group!.items.join("  ·  ")}</span>
+          <dl className="cn-spec-table cn-in">
+            {skills.map((group) => (
+              <div key={group.title} className="cn-spec-row">
+                <dt>{group.title}</dt>
+                <dd>{group.items.join("   ·   ")}</dd>
               </div>
             ))}
-          </div>
+          </dl>
         </section>
 
-        {/* ── Experience ────────────────────────────────────────────────── */}
-        <section id="revs" className="d-shell d-sec">
-          <div className="d-sec-head">
-            <h2 className="d-h">Revisions</h2>
-            <p className="d-mono">Three seats · five years</p>
+        {/* ── Record ────────────────────────────────────────────────────── */}
+        <section id="record" className="cn-shell cn-sec">
+          <div className="cn-sec-head cn-in">
+            <div>
+              <p className="cn-label">Record</p>
+              <h2 className="cn-h2">
+                Three seats, <em>five years</em>
+              </h2>
+            </div>
           </div>
-          <hr className="d-rule" />
-          <div className="d-revs d-in" style={{ marginTop: 26 }}>
-            {roles.map((role, i) => (
-              <article key={role.org} className="d-rev">
-                <div className="d-rev-meta">
-                  {role.current ? <span className="d-rev-live">Current seat</span> : null}
-                  <span className="d-rev-when">
+
+          <div className="cn-roles cn-in">
+            {roles.map((role) => (
+              <article key={role.org} className="cn-role">
+                <div className="cn-role-meta">
+                  {role.current ? <span className="cn-role-now">Current seat</span> : null}
+                  <span className="cn-role-when">
                     {role.start} — {role.end}
                   </span>
-                  <span className="d-rev-org">{role.orgShort ?? role.org}</span>
-                  <span className="d-mono">rev {roles.length - i}.0</span>
+                  <span className="cn-role-org">{role.orgShort ?? role.org}</span>
                 </div>
                 <div>
-                  <h3>{role.title}</h3>
-                  <p className="d-rev-scope">{role.scope}</p>
+                  <h3 className="cn-h3">{role.title}</h3>
+                  <p className="cn-role-scope">{role.scope}</p>
                   <ul>
                     {role.points.map((point) => (
                       <li key={point}>{point}</li>
@@ -263,80 +282,106 @@ export default function Die() {
             ))}
           </div>
         </section>
+
+        {/* ── The shot ──────────────────────────────────────────────────── */}
+        <section className="cn-shot">
+          <Image
+            src="/profile.jpg"
+            alt={`${site.name}, ${site.role}`}
+            width={860}
+            height={996}
+            sizes="100vw"
+          />
+          <div className="cn-shell cn-shot-copy">
+            <p className="cn-label">{site.location}</p>
+            <h2 className="cn-h2">
+              I lead the work <em>and do it</em>
+            </h2>
+            <p className="cn-body">
+              Five years across AI and deep learning, from computer vision for geospatial defence
+              to enterprise GenAI. I define the reference architecture rather than review it, I
+              hire and grow the engineers who build on it, and I have written the strategy that
+              paid for both.
+            </p>
+          </div>
+        </section>
       </main>
 
-      {/* ── Pinout ──────────────────────────────────────────────────────── */}
-      <footer id="contact" className="d-out">
-        <div className="d-shell d-out-in">
+      {/* ── Closing ─────────────────────────────────────────────────────── */}
+      <footer id="contact" className="cn-close">
+        <div className="cn-shell cn-close-in">
           <div>
-            <h2>
-              Open to leadership
-              <br />
-              <em>positions in AI</em>
+            <p className="cn-label">{site.availability}</p>
+            <h2 className="cn-h2">
+              Let&rsquo;s build the function, <em>not just the model</em>
             </h2>
-            <p>
+            <p className="cn-lede">
               If you are putting an AI function on the map — or you have one and it is not
               shipping — that is the conversation I want. Email is fastest.
             </p>
-            <div className="d-acts">
-              <a className="d-key d-key--live" href={`mailto:${site.email}`}>
+            <div className="cn-hero-acts">
+              <a className="cn-btn cn-btn--light" href={`mailto:${site.email}`}>
                 Email {first}
               </a>
-              <a className="d-key" href={site.resume}>
-                Download résumé
+              <a
+                className="cn-btn"
+                href={site.linkedin}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                LinkedIn
               </a>
             </div>
           </div>
 
-          <div className="d-pinout">
-            <div className="d-pin">
-              <span className="n">01</span>
-              <span className="k">Email</span>
-              <a className="v" href={`mailto:${site.email}`}>
-                {site.email}
-              </a>
+          <dl className="cn-contact">
+            <div className="cn-contact-row">
+              <dt>Email</dt>
+              <dd>
+                <a className="cn-link" href={`mailto:${site.email}`}>
+                  {site.email}
+                </a>
+              </dd>
               <Copy value={site.email} label="email" />
             </div>
-            <div className="d-pin">
-              <span className="n">02</span>
-              <span className="k">LinkedIn</span>
-              <a className="v" href={site.linkedin} rel="noopener noreferrer" target="_blank">
-                /in/shreenivas-joshi
-              </a>
+            <div className="cn-contact-row">
+              <dt>LinkedIn</dt>
+              <dd>
+                <a
+                  className="cn-link"
+                  href={site.linkedin}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  /in/shreenivas-joshi
+                </a>
+              </dd>
               <span />
             </div>
-            <div className="d-pin">
-              <span className="n">03</span>
-              <span className="k">Résumé</span>
-              <a className="v" href={site.resume}>
-                Shreenivas_Joshi_Resume.pdf
-              </a>
+            <div className="cn-contact-row">
+              <dt>Résumé</dt>
+              <dd>
+                <a className="cn-link" href={site.resume}>
+                  Shreenivas_Joshi_Resume.pdf
+                </a>
+              </dd>
               <span />
             </div>
-            <div className="d-pin">
-              <span className="n">04</span>
-              <span className="k">Located</span>
-              <span className="v">{site.location}</span>
+            <div className="cn-contact-row">
+              <dt>Based</dt>
+              <dd>{site.location}</dd>
               <span />
             </div>
-            <div className="d-pin">
-              <span className="n">05</span>
-              <span className="k">Status</span>
-              <span className="v" style={{ color: "var(--d-via-ink)" }}>
-                {site.availability}
-              </span>
-              <span />
-            </div>
-          </div>
+          </dl>
         </div>
 
-        <div className="d-shell d-colophon">
+        <div className="cn-shell cn-foot">
           <p>
             {site.name} · {site.role}
           </p>
           <p>
-            Every figure on this page is taken from the résumé. The charge crossing the die runs
-            a designed latency budget, not live traffic.
+            Every figure on this page is taken from the résumé. The track plays a designed
+            latency budget, not live traffic.
           </p>
         </div>
       </footer>

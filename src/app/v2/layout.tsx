@@ -1,38 +1,29 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Martian_Mono } from "next/font/google";
+import { Schibsted_Grotesk } from "next/font/google";
 import { site } from "@/lib/content";
 import "./runtime.css";
 
 /**
- * Two faces chosen as instruments rather than as defaults.
+ * One face, variable, set from 11px labels to a 136px headline.
  *
- * Bricolage Grotesque is a variable grotesque with real character in its
- * joints — it sets a die label at 10px and a headline at 56px out of one file.
- * Martian Mono is a technical mono drawn for interfaces, and it carries every
- * measured value, every layer id and every pin on this route.
+ * Schibsted Grotesk is a contemporary neutral grotesque with slightly humanist
+ * joints — it holds up at launch scale without the mechanical coldness of the
+ * usual interface sans, and its tabular figures carry the specification tables.
+ * A second face would only dilute a page whose voice is the object.
  */
-const die = Bricolage_Grotesque({
-  variable: "--font-die",
+const cine = Schibsted_Grotesk({
+  variable: "--font-cine",
   subsets: ["latin"],
-  display: "swap",
-});
-
-const probe = Martian_Mono({
-  variable: "--font-probe",
-  subsets: ["latin"],
-  weight: ["400", "700"],
   display: "swap",
 });
 
 /**
- * A second surface for the same record: the die.
+ * A second surface for the same record.
  *
- * Every token is redefined on `.die`, so the theme class on <html> has no
- * effect in here — a photomicrograph does not have a light mode.
- *
- * Kept out of the index on purpose: two pages carrying one résumé under one
- * domain is duplicate content, and the primary route should be the one that
- * ranks. Remove `robots` here if this becomes the primary.
+ * Every token is redefined on `.cn`, so the theme class on <html> has no say
+ * in here. Kept out of the index on purpose: two pages carrying one résumé
+ * under one domain is duplicate content, and the primary route should be the
+ * one that ranks. Remove `robots` here if this becomes the primary.
  */
 export const metadata: Metadata = {
   title: `${site.name} — ${site.role}`,
@@ -40,6 +31,6 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function DieLayout({ children }: LayoutProps<"/v2">) {
-  return <div className={`die ${die.variable} ${probe.variable}`}>{children}</div>;
+export default function CineLayout({ children }: LayoutProps<"/v2">) {
+  return <div className={`cn ${cine.variable}`}>{children}</div>;
 }

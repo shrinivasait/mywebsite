@@ -188,24 +188,24 @@
   display: grid;
 }
 @media (min-width: 900px) {
-  .bn-sleeve { aspect-ratio: 2 / 1; grid-template-columns: 1fr 1fr; }
+  .bn-sleeve { aspect-ratio: 2.1 / 1; grid-template-columns: 1fr 1fr; }
 }
 @media (min-width: 1280px) {
-  .bn-sleeve { aspect-ratio: auto; min-height: clamp(520px, 38vw, 660px); grid-template-columns: 1.02fr 0.98fr; }
+  .bn-sleeve { aspect-ratio: auto; min-height: clamp(460px, 30vw, 560px); grid-template-columns: 1.04fr 0.96fr; }
 }
 
 .bn-sleeve > * { min-width: 0; }
-.bn-sleeve-type { display: flex; flex-direction: column; padding: 30px 22px 30px; min-width: 0; }
-@media (min-width: 900px) { .bn-sleeve-type { padding: 46px 40px 44px; } }
+.bn-sleeve-type { display: flex; flex-direction: column; justify-content: center; padding: 34px 22px; min-width: 0; }
+@media (min-width: 900px) { .bn-sleeve-type { padding: 46px 40px; } }
 /* Bled to the window edge, the type needs a real margin to sit inside, or the
    name reads as having fallen off the sheet. */
-@media (min-width: 1280px) { .bn-sleeve-type { padding: 60px clamp(48px, 4.4vw, 96px) 58px; } }
+@media (min-width: 1280px) { .bn-sleeve-type { padding: 56px clamp(48px, 4.4vw, 96px); } }
 
 .bn-stereo { display: inline-flex; align-items: center; gap: 10px; align-self: flex-start; border: 1px solid var(--bn-bone-3); padding: 5px 10px; color: var(--bn-bone-2); }
 .bn-stereo .bn-caps { font-size: 0.5625rem; color: inherit; }
 
 .bn-name {
-  margin-top: auto;
+  margin-top: 30px;
   font-size: clamp(2.75rem, 12.5vw, 4.25rem);
   color: var(--bn-bone);
 }
@@ -215,15 +215,21 @@
 
 @media (min-width: 900px) { .bn-name { font-size: clamp(2.75rem, 5.4vw, 4.5rem); } }
 
-.bn-role { margin-top: 34px; color: var(--bn-bone-2); }
-.bn-cat { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 8px 22px; color: var(--bn-bone-3); }
-.bn-cover-acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.bn-role { margin-top: 26px; color: var(--bn-bone-2); }
+.bn-cat { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px 22px; color: var(--bn-bone-3); }
+.bn-cover-acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
 
 .bn-portrait { position: relative; background: var(--bn-plate-ink); isolation: isolate; overflow: hidden; }
 /* Stacked, the plate is a band across the sleeve rather than a full page of
    face: on a phone the reader should reach the claim without scrolling past a
    portrait taller than the screen. */
 @media (max-width: 899px) { .bn-portrait { aspect-ratio: 5 / 4; } }
+/* Side by side, the photograph fills whatever height the type block asks for
+   rather than setting it: left to contribute its own 860×996, it was making
+   the cover a thousand pixels tall and hollowing out the panel beside it. */
+@media (min-width: 900px) {
+  .bn-portrait img { position: absolute; inset: 0; }
+}
 /* Duotone: the photograph keeps its luminance and the plate supplies every
    hue — one pass of colour over one pass of black, which is how the sleeve was
    printed. Done with a filter chain rather than a blend mode on purpose: a

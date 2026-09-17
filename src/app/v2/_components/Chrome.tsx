@@ -309,6 +309,12 @@ export function Sequence() {
             <dt>Share of turn</dt>
             <dd>{Math.round((hop.ms / BUDGET_MS) * 100)}%</dd>
           </div>
+          {hop.split ? (
+            <div>
+              <dt>Split</dt>
+              <dd>{hop.split}</dd>
+            </div>
+          ) : null}
           <div>
             <dt>Method</dt>
             <dd>{hop.technique}</dd>

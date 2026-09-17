@@ -1,25 +1,31 @@
 /**
  * One spoken turn, as a budget.
  *
- * Both instruments on this route — the pipeline canvas in the hero and the
- * trace waterfall below it — are two views of this same array, so the numbers
- * can never disagree with each other. The stage budgets sum to 750 ms, which
- * sits inside the 650–800 ms band the résumé claims for production telephony;
- * the ceiling is 800.
+ * Every instrument on this route reads this one array, so the drawing, the
+ * controls and the copy cannot disagree. The hops sum to 750 ms, inside the
+ * 650–800 ms band the résumé claims for production telephony; the ceiling
+ * is 800.
  *
  * Nothing here is measured live. It is the shape of the budget the voice
  * architecture was designed against, drawn honestly, and the page says so.
+ *
+ * Turn-taking is two decisions, not one, so it is two hops: voice activity
+ * detection asks whether there is speech at all, and endpointing asks whether
+ * this speech has finished. Retrieval and reasoning are a single hop because
+ * they overlap in practice — retrieval is started speculatively on the partial
+ * transcript, so their budgets cannot be added end to end. The pair is held to
+ * 250 ms together, and the split inside it is stated rather than implied.
  */
 
 export type Stage = {
   id: string;
-  /** Short form, for the canvas node. */
+  /** Short form, for a node or a segment label. */
   short: string;
-  /** Long form, for the trace row. */
+  /** Long form, for a trace row. */
   name: string;
   /** Budgeted milliseconds for this hop. */
   ms: number;
-  /** Compute is the signal colour; io is the cold channel; risk is coral. */
+  /** Compute is the signal colour; io is the cold channel; risk is the warning. */
   kind: "compute" | "io" | "risk";
   /** What this hop actually does, in half-technical English. */
   what: string;
@@ -27,18 +33,30 @@ export type Stage = {
   lever: string;
   /** The named technique, for the readout. */
   technique: string;
+  /** For a hop that covers two overlapping services, how the budget divides. */
+  split?: string;
 };
 
 export const stages: Stage[] = [
   {
-    id: "endpoint",
+    id: "vad",
     short: "VAD",
-    name: "endpoint · speech detect",
+    name: "vad · speech activity",
+    ms: 80,
+    kind: "risk",
+    what: "Decide whether what is arriving is speech at all, frame by frame, and open the turn the moment it is. Everything downstream is gated on this, and it also runs in reverse — it is what lets the caller cut in over a reply.",
+    lever: "A small model on short frames, running continuously rather than on request, so the turn opens on the first voiced frame instead of after a buffer has filled.",
+    technique: "frame-level voice activity detection, barge-in",
+  },
+  {
+    id: "endpoint",
+    short: "END",
+    name: "endpoint · end of turn",
     ms: 90,
     kind: "risk",
-    what: "Decide the caller has actually stopped talking, rather than paused mid-sentence. Everything downstream waits on this call, so it is the most expensive 90 ms on the chain.",
+    what: "Decide the caller has actually stopped talking, rather than paused mid-sentence. Everything after this waits on it, so it is the most expensive judgement call on the chain.",
     lever: "Endpointing is tuned aggressively and paired with barge-in: if the decision is wrong, the caller talks over the reply and the turn is cancelled and restarted rather than queued behind it.",
-    technique: "voice activity detection + barge-in",
+    technique: "adaptive endpointing, cancel-and-restart",
   },
   {
     id: "asr",
@@ -51,24 +69,15 @@ export const stages: Stage[] = [
     technique: "streaming STT, partial hypotheses",
   },
   {
-    id: "retrieve",
-    short: "RAG",
-    name: "retrieve · vector + rerank",
-    ms: 120,
-    kind: "io",
-    what: "Fetch the handful of passages the model needs to answer about this account, this contract, this price — from an index over the client's own documents.",
-    lever: "Hybrid search over a warm FAISS index with a shortlist rerank, speculatively started on the partial transcript so this hop is mostly finished by the time the final text lands.",
-    technique: "hybrid retrieval + rerank, speculative start",
-  },
-  {
-    id: "reason",
-    short: "LLM",
-    name: "reason · plan + first token",
-    ms: 210,
+    id: "context",
+    short: "RAG + LLM",
+    name: "retrieve + reason · context and plan",
+    ms: 250,
     kind: "compute",
-    what: "The model reads the transcript, the retrieved context and the negotiation state, then decides what to say and whether to call a tool. Measured to the first token, not the last.",
-    lever: "Time-to-first-token is the only figure that matters here, because synthesis starts on it. Short system prompt, cached prefix, tool schemas kept small.",
-    technique: "prefix caching, TTFT-bound generation",
+    what: "Fetch the passages the model needs about this account, this contract, this price — then read them with the transcript and the negotiation state and decide what to say and whether to call a tool. Measured to the first token, not the last.",
+    lever: "One budget for both because they overlap: retrieval is started speculatively on the partial transcript, so it is largely finished by the time the final text lands and the model is already warm. Short system prompt, cached prefix, small tool schemas.",
+    technique: "speculative hybrid retrieval, prefix caching, TTFT-bound generation",
+    split: "≈100 ms retrieval · ≈150 ms to first token",
   },
   {
     id: "tts",
@@ -95,7 +104,7 @@ export const stages: Stage[] = [
 export const CEILING_MS = 800;
 export const BUDGET_MS = stages.reduce((sum, s) => sum + s.ms, 0);
 
-/** Cumulative start offset of each stage, in ms. */
+/** Cumulative start offset of each hop, in ms. */
 export const offsets: number[] = stages.reduce<number[]>((acc, s, i) => {
   acc.push(i === 0 ? 0 : acc[i - 1] + stages[i - 1].ms);
   return acc;

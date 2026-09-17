@@ -1,36 +1,38 @@
 import type { Metadata } from "next";
-import { Bodoni_Moda, Jost } from "next/font/google";
+import { Bricolage_Grotesque, Martian_Mono } from "next/font/google";
 import { site } from "@/lib/content";
 import "./runtime.css";
 
 /**
- * Two faces, chosen for material rather than for category.
+ * Two faces chosen as instruments rather than as defaults.
  *
- * Bodoni Moda is a high-contrast didone with an optical-size axis: at display
- * sizes its hairlines go genuinely thin, which is the single most expensive
- * thing type can do on a dark ground. Jost is a geometric grotesque in the
- * Futura line — it sets the tracked-out small capitals a house uses for labels
- * without ever competing with the serif.
+ * Bricolage Grotesque is a variable grotesque with real character in its
+ * joints — it sets a die label at 10px and a headline at 56px out of one file.
+ * Martian Mono is a technical mono drawn for interfaces, and it carries every
+ * measured value, every layer id and every pin on this route.
  */
-const house = Bodoni_Moda({
-  variable: "--font-house",
+const die = Bricolage_Grotesque({
+  variable: "--font-die",
   subsets: ["latin"],
   display: "swap",
 });
 
-const grotesk = Jost({
-  variable: "--font-grotesk",
+const probe = Martian_Mono({
+  variable: "--font-probe",
   subsets: ["latin"],
+  weight: ["400", "700"],
   display: "swap",
 });
 
 /**
- * A second surface for the same record.
+ * A second surface for the same record: the die.
  *
- * Every token is redefined on `.lx`, so the theme class on <html> has no say
- * in here. Kept out of the index on purpose: two pages carrying one résumé
- * under one domain is duplicate content, and the primary route should be the
- * one that ranks. Remove `robots` here if this becomes the primary.
+ * Every token is redefined on `.die`, so the theme class on <html> has no
+ * effect in here — a photomicrograph does not have a light mode.
+ *
+ * Kept out of the index on purpose: two pages carrying one résumé under one
+ * domain is duplicate content, and the primary route should be the one that
+ * ranks. Remove `robots` here if this becomes the primary.
  */
 export const metadata: Metadata = {
   title: `${site.name} — ${site.role}`,
@@ -38,6 +40,6 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function HouseLayout({ children }: LayoutProps<"/v2">) {
-  return <div className={`lx ${house.variable} ${grotesk.variable}`}>{children}</div>;
+export default function DieLayout({ children }: LayoutProps<"/v2">) {
+  return <div className={`die ${die.variable} ${probe.variable}`}>{children}</div>;
 }

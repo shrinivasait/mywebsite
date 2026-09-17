@@ -74,7 +74,7 @@ export default function Cine() {
             </p>
 
             <h1 className="cn-display">{site.name}</h1>
-            <p className="cn-role">{site.role}</p>
+            <p className="cn-title">{site.role}</p>
 
             <p className="cn-lede">
               {site.tagline} Five years across AI and deep learning, from computer vision for

@@ -71,7 +71,11 @@
    values — so a visitor who never gets the object still gets a stage.
    ─────────────────────────────────────────────────────────────────────────── */
 
+/* The stage is offset rather than the object: wide, the canvas occupies the
+   right of the opening and the object stays centred in it, which keeps the
+   sphere a sphere. Narrow, it takes the full frame and sits behind the type. */
 .cn-stage { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+@media (min-width: 1100px) { .cn-stage { left: 34%; } }
 .cn-stage::before {
   content: "";
   position: absolute;
@@ -92,8 +96,8 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgb(0 0 0 / 0.88) 0%, rgb(0 0 0 / 0.5) 36%, rgb(0 0 0 / 0) 64%),
-    linear-gradient(0deg, rgb(0 0 0 / 1) 2%, rgb(0 0 0 / 0) 34%);
+    linear-gradient(90deg, rgb(0 0 0 / 0.95) 0%, rgb(0 0 0 / 0.45) 22%, rgb(0 0 0 / 0) 48%),
+    linear-gradient(0deg, rgb(0 0 0 / 1) 2%, rgb(0 0 0 / 0) 30%);
 }
 
 .cn main, .cn > footer, .cn > header { position: relative; z-index: 2; }
@@ -178,10 +182,14 @@
 .cn-hero-status span { font-size: 0.75rem; letter-spacing: 0.02em; color: var(--cn-grey); }
 
 .cn-hero h1 { margin: clamp(20px, 2.6vw, 34px) 0 0; max-width: 11ch; }
-/* His name, then what he is: the role is set as a rule of its own under the
-   name rather than as a line of the headline, because this is a person's site
-   and the name is the thing being announced. */
-.cn-role {
+/* His name, then what he is: the title is set on its own line under the name
+   rather than as a clause of the headline, because this is a person's site and
+   the name is the thing being announced.
+
+   Named `cn-title` and not `cn-role`: the experience rows further down own
+   `.cn-role`, and sharing the name gave this line that section's grid column
+   and its bottom border. */
+.cn-title {
   margin: 18px 0 0; font-size: clamp(0.9375rem, 1.15vw, 1.125rem); font-weight: 500;
   letter-spacing: 0.22em; text-transform: uppercase; color: var(--cn-lit);
 }
@@ -189,7 +197,7 @@
   .cn-hero-in > *:not(.cn-hero-foot) { max-width: 56%; }
   /* The role is one line at this size: it is a title, and a title that wraps
      reads as a sentence that ran out of room. */
-  .cn-hero-in .cn-role { max-width: none; }
+  .cn-hero-in .cn-title { max-width: none; }
 }
 .cn-hero .cn-lede { margin-top: clamp(20px, 2.4vw, 32px); max-width: 52ch; }
 .cn-hero-acts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(26px, 3vw, 44px); }

@@ -116,28 +116,45 @@ export function createScene(canvas: HTMLCanvasElement, still: boolean): SceneHan
       clearcoatRoughness: 0.2,
     });
 
-  // The outer ring: the heaviest part, and the one that reads as machined.
-  const outer = new THREE.Mesh(new THREE.TorusGeometry(2.55, 0.11, 32, 220), anodised(0x2a2e36, 0.16, 1));
-  outer.rotation.x = Math.PI / 2.1;
-  group.add(outer);
+  /* Three rings on one axis at even intervals — an armillary, not a planet
+     with hoops around it. Each ring is built lying in the XZ plane and then
+     turned about Y by a third of a half-turn, so the set is symmetric from any
+     angle; the earlier arrangement used arbitrary tilts on three axes and read
+     as an accident rather than as a made object. Each ring rides its own
+     pivot, which is what lets them counter-rotate without shearing the set. */
+  const ring = (radius: number, tube: number, color: number, roughness: number) => {
+    const pivot = new THREE.Group();
+    const mesh = new THREE.Mesh(
+      new THREE.TorusGeometry(radius, tube, 28, 240),
+      anodised(color, roughness, 1),
+    );
+    mesh.rotation.x = Math.PI / 2;
+    pivot.add(mesh);
+    group.add(pivot);
+    return { pivot, mesh };
+  };
 
-  // Two inner rings, counter-rotating on different axes.
-  const midA = new THREE.Mesh(new THREE.TorusGeometry(1.95, 0.055, 24, 180), anodised(0x3a4150, 0.12, 1));
-  midA.rotation.set(Math.PI / 2.6, 0.4, 0);
-  group.add(midA);
+  const outer = ring(2.5, 0.085, 0x2c313a, 0.14);
+  const midA = ring(2.08, 0.055, 0x3c4353, 0.12);
+  const midB = ring(1.72, 0.04, 0x565e6e, 0.1);
 
-  const midB = new THREE.Mesh(new THREE.TorusGeometry(1.5, 0.035, 20, 160), anodised(0x545c6c, 0.1, 1));
-  midB.rotation.set(0.7, Math.PI / 3, 0.2);
-  group.add(midB);
+  /* Each ring gets a real tilt, about X or Z. A torus is rotationally
+     symmetric about its own axis, so turning one about that axis is invisible
+     — tilting the plane is the only motion that reads, and three planes that
+     cross is what makes this an armillary rather than a planet with hoops. */
+  outer.pivot.rotation.z = 0.2;
+  midA.pivot.rotation.x = Math.PI / 2.6;
+  midB.pivot.rotation.z = Math.PI / 2.9;
+  midB.pivot.rotation.x = 0.42;
 
   // The core: a polished body with thin-film colour, not a lit blue solid.
   // Emissive is kept low on purpose — the light in it comes from what it
   // reflects, which is the difference between a jewel and a bulb.
   const coreMat = new THREE.MeshPhysicalMaterial({
-    color: 0x05070d,
+    color: 0x0b1426,
     metalness: 1,
-    roughness: 0.07,
-    envMapIntensity: 2.1,
+    roughness: 0.055,
+    envMapIntensity: 2.6,
     iridescence: 1,
     iridescenceIOR: 2.2,
     iridescenceThicknessRange: [260, 940],
@@ -227,12 +244,14 @@ export function createScene(canvas: HTMLCanvasElement, still: boolean): SceneHan
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
     renderer.setSize(w, h, false);
     camera.aspect = w / Math.max(1, h);
-    const wide = w >= 1100;
-    // Wide, the object takes the right of the frame and leaves the left to the
-    // headline. Narrow, it pulls back and centres, sitting behind the type as
-    // a lit ground rather than competing with it.
-    camera.position.z = wide ? 9.6 : 12.4;
-    stageX = wide ? 2.5 : 0;
+    // The object always sits on the camera's axis. Pushing it sideways in
+    // world space is what made the core read as a squashed oval: a sphere off
+    // the axis of a perspective frame projects as an ellipse. It is the canvas
+    // that is offset instead (see `.cn-stage` in runtime.css), so the framing
+    // is composed without ever distorting the object.
+    camera.fov = w >= 1100 ? 30 : 34;
+    camera.position.z = w >= 1100 ? 10.4 : 12.4;
+    stageX = 0;
     camera.updateProjectionMatrix();
   };
   resize();
@@ -251,10 +270,12 @@ export function createScene(canvas: HTMLCanvasElement, still: boolean): SceneHan
     group.position.x = stageX - ease * 1.6;
     group.scale.setScalar(1 - ease * 0.22);
 
-    outer.rotation.z = drift * 0.05 + ease * 0.8;
-    midA.rotation.z = -drift * 0.11 - ease * 1.6;
-    midB.rotation.x = 0.7 + drift * 0.16 + ease * 2.2;
-    midB.rotation.y = Math.PI / 3 - drift * 0.09;
+    // The rings precess: each tilted plane swings about the vertical at its
+    // own rate, so the set is never a rigid body and never a flat disc.
+    outer.pivot.rotation.y = drift * 0.07 + ease * 0.5;
+    outer.pivot.rotation.z = 0.2 + Math.sin(drift * 0.18) * 0.05;
+    midA.pivot.rotation.y = -drift * 0.13 - ease * 0.9;
+    midB.pivot.rotation.y = drift * 0.19 + ease * 1.3;
 
     // The core carries the turn: one breath per spoken turn, brightest at the
     // reasoning hop, which is where the budget actually goes.
@@ -276,7 +297,7 @@ export function createScene(canvas: HTMLCanvasElement, still: boolean): SceneHan
   const dispose = () => {
     haloTex.dispose();
     (halo.material as THREE.SpriteMaterial).dispose();
-    [outer, midA, midB, core].forEach((m) => {
+    [outer.mesh, midA.mesh, midB.mesh, core].forEach((m) => {
       m.geometry.dispose();
       (m.material as THREE.Material).dispose();
     });

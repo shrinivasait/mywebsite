@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   expertise,
   leadership,
@@ -7,55 +8,34 @@ import {
   site,
   skills,
 } from "@/lib/content";
-import { Copy, CriticalPath, Head, Reveal } from "./_components/Chrome";
-import { stackOrder } from "./_components/die";
-import { Floorplan } from "./_components/Floorplan";
+import { Copy, Head, Instrument, Reveal } from "./_components/Chrome";
 import { BUDGET_MS, CEILING_MS } from "./_components/turn";
 
 /**
- * The die.
+ * The house.
  *
- * Same person, same résumé, a third object — and the first two are the reason
- * for this one. A dark console read as generic because every AI tool ships
- * that look; a record sleeve read as basic because its whole grammar is
- * restraint. This page answers the brief it was actually given: dense,
- * layered, technical, and alive at the top.
+ * Three worlds preceded this one on this route — a console, a record sleeve
+ * and a silicon die — and all three were drawings: hairlines, small tracked
+ * labels, flat fills, no material. Clever, and cheap-looking. This one is
+ * built from the things that actually read as expensive: deep blacks with
+ * light falling across them, real elevation, one metal, a portrait treated as
+ * a plate rather than an avatar, type at a scale that has to be set, and space
+ * that is obviously paid for.
  *
- * The conceit is load-bearing rather than decorative. An architect's job is
- * floorplanning — deciding which blocks exist, how they connect, and which
- * path is critical — so the work is laid out as macros on one die, the
- * organisation is drawn on the same silicon as the technical surface because
- * that pairing is the argument, the latency budget is the critical path with
- * real charge running it, the skills are a metal stack in cross-section, and
- * the contact details are a pinout.
- *
- * The rule kept from every version of this route: nothing moves that is not
- * also explained, and every figure is from the résumé.
+ * What did not change: every figure is from the résumé, the argument is still
+ * the pairing of architect and organisation-builder, and the one moving thing
+ * on the page — the chronometer holding a spoken turn against its 800 ms
+ * ceiling — is the real budget with its own caption saying exactly that.
  */
 
-/** Which layer of the stack each skill group is printed on. */
-const LAYERS: { id: string; tier: "metal" | "poly" | "implant" }[] = [
-  { id: "M6", tier: "metal" },
-  { id: "M5", tier: "metal" },
-  { id: "M4", tier: "metal" },
-  { id: "M3", tier: "metal" },
-  { id: "M2", tier: "metal" },
-  { id: "M1", tier: "metal" },
-  { id: "POLY", tier: "poly" },
-  { id: "DIFF", tier: "implant" },
-];
-
-export default function Die() {
+export default function House() {
   const [first, ...rest] = site.name.split(" ");
-  const layers = stackOrder
-    .map((title, i) => ({ ...LAYERS[i], group: skills.find((g) => g.title === title) }))
-    .filter((l) => l.group);
 
   return (
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:bg-[#57e0d4] focus:px-4 focus:py-2 focus:text-sm focus:text-[#03181b]"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:bg-[#c9a15a] focus:px-4 focus:py-2 focus:text-sm focus:text-[#0a0a0b]"
       >
         Skip to content
       </a>
@@ -63,196 +43,227 @@ export default function Die() {
       <Head />
 
       <main id="main">
-        {/* ── The die ───────────────────────────────────────────────────── */}
-        <section className="d-hero">
-          <div className="d-id">
-            <p className="d-live">
+        {/* ── Opening ───────────────────────────────────────────────────── */}
+        <section className="lx-shell lx-open">
+          <div>
+            <p className="lx-open-status">
               <i aria-hidden />
-              <span className="d-mono">{site.availability}</span>
+              <span className="lx-eyebrow">{site.availability}</span>
             </p>
 
-            <h1 className="d-name">
-              {first}
-              <em>{rest.join(" ")}</em>
+            <h1 className="lx-display">
+              {first} <em>{rest.join(" ")}</em>
             </h1>
-            <p className="d-role">{site.role}</p>
 
-            <p className="d-claim">{site.tagline}</p>
-            <p className="d-intro">{site.intro}</p>
+            <hr className="lx-rule" />
 
-            <div className="d-acts">
-              <a className="d-key d-key--live" href={`mailto:${site.email}`}>
+            <p className="lx-lede">{site.tagline}</p>
+            <p className="lx-body" style={{ marginTop: 22, marginBottom: 34 }}>
+              {site.intro}
+            </p>
+
+            <div className="lx-acts">
+              <a className="lx-cta lx-cta--solid" href={`mailto:${site.email}`}>
                 Start a conversation
               </a>
-              <a className="d-key" href={site.resume}>
-                Résumé
+              <a className="lx-cta" href={site.resume}>
+                Download résumé
               </a>
             </div>
           </div>
 
-          <Floorplan />
+          <figure className="lx-plate" style={{ margin: 0 }}>
+            <Image
+              src="/profile.jpg"
+              alt={`${site.name}, ${site.role}`}
+              width={860}
+              height={996}
+              priority
+              sizes="(min-width: 1080px) 42vw, 100vw"
+            />
+            <figcaption>
+              <b>{site.role}</b>
+              <span>{site.location}</span>
+            </figcaption>
+          </figure>
         </section>
 
-        <div className="d-strip">
-          {railFigures.map((f) => (
-            <div key={f.label}>
-              <b>
-                {f.value}
-                <i>{f.unit}</i>
-              </b>
-              <small>{f.label}</small>
-            </div>
-          ))}
-        </div>
-
-        {/* ── Critical path ─────────────────────────────────────────────── */}
-        <section id="path" className="d-shell d-sec">
-          <div className="d-sec-head">
-            <h2 className="d-h">The critical path</h2>
-            <p className="d-mono">
-              {BUDGET_MS} of {CEILING_MS} ms
-            </p>
+        {/* ── The figures ───────────────────────────────────────────────── */}
+        <section className="lx-shell">
+          <div className="lx-figures lx-in">
+            {railFigures.map((f) => (
+              <div key={f.label} className="lx-fig">
+                <b>
+                  {f.value}
+                  <i>{f.unit}</i>
+                </b>
+                <small>{f.label}</small>
+              </div>
+            ))}
           </div>
-          <hr className="d-rule" />
-          <p className="d-prose d-sec-sub">
-            Real-time voice is the hardest claim on this page, so it is the one the page opens.
-            Six services, one clock, and a ceiling at {CEILING_MS} ms — above that a conversation
-            stops feeling like a conversation. Pick a leg for what it does and the decision that
-            keeps it inside its slice.
-          </p>
-          <div className="d-in">
-            <CriticalPath />
-          </div>
-          <p className="d-prose" style={{ marginTop: 26 }}>
-            Nothing here is fast because a fast model was chosen. Each hop was given a ceiling
-            first and then built to fit, work was moved off the critical path wherever it could
-            start early, and the two hops nobody controls — the caller&rsquo;s pause and the
-            carrier — were reserved before any service got to spend. The charge crossing the die
-            above runs this same budget; it is a design, not a live probe.
-          </p>
         </section>
 
         {/* ── Work ──────────────────────────────────────────────────────── */}
-        <section id="blocks" className="d-shell d-sec">
-          <div className="d-sec-head">
-            <h2 className="d-h">Selected work</h2>
-            <p className="d-mono">Four systems in production</p>
+        <section id="work" className="lx-shell lx-sec">
+          <div className="lx-head-block lx-in">
+            <div>
+              <p className="lx-eyebrow">Selected work</p>
+              <h2 className="lx-title" style={{ marginTop: 22 }}>
+                Four systems, <em>in production</em>
+              </h2>
+            </div>
+            <p className="lx-body">
+              Every one of these shipped to production and is described by what it does and what
+              it runs on — no demos, and no client names that cannot be published.
+            </p>
           </div>
-          <hr className="d-rule" />
-          <p className="d-prose d-sec-sub">
-            Each one shipped, with the interfaces it actually runs on listed underneath.
-          </p>
-          <div className="d-blocks d-in">
+
+          <div className="lx-works lx-in">
             {projects.map((p, i) => (
-              <article key={p.slug} className="d-block">
-                <div className="d-block-top">
-                  <h3>{p.title}</h3>
-                  <span className="d-block-ref">U{String(i + 1).padStart(2, "0")}</span>
-                </div>
-                <p>{p.summary}</p>
-                <p className="d-block-detail">{p.detail}</p>
-                <div className="d-pins">
-                  {p.stack.map((s, n) => (
-                    <div key={s}>
-                      <span>{n + 1}</span>
-                      <span>{s}</span>
+              <article key={p.slug} className="lx-work">
+                <a href="#contact">
+                  <span className="lx-work-no">{String(i + 1).padStart(2, "0")}</span>
+                  <div>
+                    <h3>{p.title}</h3>
+                    <p>{p.summary}</p>
+                  </div>
+                  <div>
+                    <p className="lx-work-detail">{p.detail}</p>
+                    <div className="lx-tags">
+                      {p.stack.map((s) => (
+                        <span key={s} className="lx-tag">
+                          {s}
+                        </span>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                </a>
               </article>
             ))}
           </div>
         </section>
 
-        {/* ── Organisation ──────────────────────────────────────────────── */}
-        <section id="org" className="d-shell d-sec">
-          <div className="d-sec-head">
-            <h2 className="d-h">The blocks that are not code</h2>
-            <p className="d-mono">Implant layer</p>
+        {/* ── The instrument ────────────────────────────────────────────── */}
+        <section id="latency" className="lx-shell lx-sec">
+          <div className="lx-head-block lx-in">
+            <div>
+              <p className="lx-eyebrow">The hardest claim on this page</p>
+              <h2 className="lx-title" style={{ marginTop: 22 }}>
+                One spoken turn, <em>{BUDGET_MS} milliseconds</em>
+              </h2>
+            </div>
+            <p className="lx-body">
+              Real-time voice over telephony: six services against a single clock, with a ceiling
+              at {CEILING_MS} ms — above that a conversation stops feeling like one. Take any hop
+              for what it does and the decision that keeps it inside its slice.
+            </p>
           </div>
-          <hr className="d-rule" />
-          <p className="d-prose d-sec-sub">
-            An architecture is only as durable as the organisation running it. Four things I own
-            besides the systems, each tied to the one fact that stands behind it.
+
+          <Instrument />
+
+          <p className="lx-small lx-in" style={{ marginTop: 26, maxWidth: "88ch" }}>
+            The dial holds the designed budget rather than live traffic, and every fourth turn
+            runs long in retrieval because a tail always exists and drawing it is more honest
+            than a page that hides it. Nothing here is fast because a fast model was chosen: each
+            hop was given a ceiling first and then built to fit, work was moved off the critical
+            path wherever it could start early, and the two hops nobody controls — the
+            caller&rsquo;s pause and the carrier — were reserved before any service got to spend.
           </p>
-          <div className="d-org d-in">
-            {leadership.map((pillar) => (
-              <article key={pillar.title}>
+        </section>
+
+        {/* ── Leadership ────────────────────────────────────────────────── */}
+        <section id="leadership" className="lx-shell lx-sec">
+          <div className="lx-head-block lx-in">
+            <div>
+              <p className="lx-eyebrow">The other half</p>
+              <h2 className="lx-title" style={{ marginTop: 22 }}>
+                An architecture is only as durable as <em>the organisation running it</em>
+              </h2>
+            </div>
+            <p className="lx-body">
+              Four things I own besides the systems, each tied to the one fact that stands behind
+              it. This pairing is the argument: most people are credibly one or the other.
+            </p>
+          </div>
+
+          <div className="lx-pillars lx-in">
+            {leadership.map((pillar, i) => (
+              <article key={pillar.title} className="lx-pillar">
+                <span className="lx-pillar-no">{String(i + 1).padStart(2, "0")}</span>
                 <h3>{pillar.title}</h3>
                 <p>{pillar.detail}</p>
-                <p className="d-org-proof">{pillar.proof}</p>
+                <p className="lx-pillar-proof">{pillar.proof}</p>
               </article>
             ))}
           </div>
         </section>
 
         {/* ── Depth ─────────────────────────────────────────────────────── */}
-        <section id="stack" className="d-shell d-sec">
-          <div className="d-sec-head">
-            <h2 className="d-h">Depth, layer by layer</h2>
-            <p className="d-mono">Six areas · full stack</p>
+        <section id="depth" className="lx-shell lx-sec">
+          <div className="lx-head-block lx-in">
+            <div>
+              <p className="lx-eyebrow">Technical depth</p>
+              <h2 className="lx-title" style={{ marginTop: 22 }}>
+                Six areas, <em>to depth</em>
+              </h2>
+            </div>
+            <p className="lx-body">
+              Each with the production evidence behind it rather than a claim of familiarity —
+              and the full surface underneath.
+            </p>
           </div>
-          <hr className="d-rule" />
-          <p className="d-prose d-sec-sub">
-            What I can be interviewed on to depth, each with the production evidence behind it
-            rather than a claim of familiarity — then the whole surface underneath, read as a
-            cross-section: coarse routing at the top, fine structure at the bottom.
-          </p>
 
-          <div className="d-blocks d-blocks--three d-in" style={{ marginBottom: 26 }}>
+          <div className="lx-depth lx-in">
             {expertise.map((e) => (
-              <article key={e.title} className="d-block">
-                <div className="d-block-top">
-                  <h3>{e.title}</h3>
-                </div>
+              <article key={e.title} className="lx-area">
+                <h3>{e.title}</h3>
+                <hr className="lx-rule" />
                 <p>{e.detail}</p>
-                <div className="d-pins">
-                  {e.tags.map((t, n) => (
-                    <div key={t}>
-                      <span>{n + 1}</span>
-                      <span>{t}</span>
-                    </div>
+                <div className="lx-tags">
+                  {e.tags.map((t) => (
+                    <span key={t} className="lx-tag">
+                      {t}
+                    </span>
                   ))}
                 </div>
               </article>
             ))}
           </div>
 
-          <div className="d-stack d-in">
-            {layers.map((l) => (
-              <div key={l.id} className="d-layer" data-tier={l.tier}>
-                <span className="d-layer-id">
-                  <b aria-hidden />
-                  {l.id}
-                </span>
-                <span className="d-layer-name">{l.group!.title}</span>
-                <span className="d-layer-items">{l.group!.items.join("  ·  ")}</span>
+          <dl className="lx-craft lx-in">
+            {skills.map((group) => (
+              <div key={group.title} className="lx-craft-row">
+                <dt>{group.title}</dt>
+                <dd>{group.items.join("   ·   ")}</dd>
               </div>
             ))}
-          </div>
+          </dl>
         </section>
 
         {/* ── Experience ────────────────────────────────────────────────── */}
-        <section id="revs" className="d-shell d-sec">
-          <div className="d-sec-head">
-            <h2 className="d-h">Revisions</h2>
-            <p className="d-mono">Three seats · five years</p>
+        <section id="experience" className="lx-shell lx-sec">
+          <div className="lx-head-block lx-in">
+            <div>
+              <p className="lx-eyebrow">Experience</p>
+              <h2 className="lx-title" style={{ marginTop: 22 }}>
+                Three seats, <em>five years</em>
+              </h2>
+            </div>
           </div>
-          <hr className="d-rule" />
-          <div className="d-revs d-in" style={{ marginTop: 26 }}>
-            {roles.map((role, i) => (
-              <article key={role.org} className="d-rev">
-                <div className="d-rev-meta">
-                  {role.current ? <span className="d-rev-live">Current seat</span> : null}
-                  <span className="d-rev-when">
+
+          <div className="lx-roles lx-in">
+            {roles.map((role) => (
+              <article key={role.org} className="lx-role">
+                <div className="lx-role-meta">
+                  {role.current ? <span className="lx-role-now">Current seat</span> : null}
+                  <span className="lx-role-when">
                     {role.start} — {role.end}
                   </span>
-                  <span className="d-rev-org">{role.orgShort ?? role.org}</span>
-                  <span className="d-mono">rev {roles.length - i}.0</span>
+                  <span className="lx-role-org">{role.orgShort ?? role.org}</span>
                 </div>
                 <div>
                   <h3>{role.title}</h3>
-                  <p className="d-rev-scope">{role.scope}</p>
+                  <p className="lx-role-scope">{role.scope}</p>
                   <ul>
                     {role.points.map((point) => (
                       <li key={point}>{point}</li>
@@ -265,78 +276,76 @@ export default function Die() {
         </section>
       </main>
 
-      {/* ── Pinout ──────────────────────────────────────────────────────── */}
-      <footer id="contact" className="d-out">
-        <div className="d-shell d-out-in">
+      {/* ── Closing ─────────────────────────────────────────────────────── */}
+      <footer id="contact" className="lx-close">
+        <div className="lx-shell lx-close-in">
           <div>
-            <h2>
-              Open to leadership
-              <br />
-              <em>positions in AI</em>
+            <p className="lx-eyebrow">{site.availability}</p>
+            <h2 className="lx-display">
+              Let&rsquo;s build the <em>function</em>, not just the model.
             </h2>
-            <p>
+            <p className="lx-lede">
               If you are putting an AI function on the map — or you have one and it is not
               shipping — that is the conversation I want. Email is fastest.
             </p>
-            <div className="d-acts">
-              <a className="d-key d-key--live" href={`mailto:${site.email}`}>
+            <div className="lx-acts" style={{ marginTop: 34 }}>
+              <a className="lx-cta lx-cta--solid" href={`mailto:${site.email}`}>
                 Email {first}
               </a>
-              <a className="d-key" href={site.resume}>
-                Download résumé
+              <a className="lx-cta" href={site.linkedin} rel="noopener noreferrer" target="_blank">
+                LinkedIn
               </a>
             </div>
           </div>
 
-          <div className="d-pinout">
-            <div className="d-pin">
-              <span className="n">01</span>
-              <span className="k">Email</span>
-              <a className="v" href={`mailto:${site.email}`}>
-                {site.email}
-              </a>
+          <dl className="lx-contact">
+            <div className="lx-contact-row">
+              <dt>Email</dt>
+              <dd>
+                <a className="lx-link" href={`mailto:${site.email}`}>
+                  {site.email}
+                </a>
+              </dd>
               <Copy value={site.email} label="email" />
             </div>
-            <div className="d-pin">
-              <span className="n">02</span>
-              <span className="k">LinkedIn</span>
-              <a className="v" href={site.linkedin} rel="noopener noreferrer" target="_blank">
-                /in/shreenivas-joshi
-              </a>
+            <div className="lx-contact-row">
+              <dt>LinkedIn</dt>
+              <dd>
+                <a
+                  className="lx-link"
+                  href={site.linkedin}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  /in/shreenivas-joshi
+                </a>
+              </dd>
               <span />
             </div>
-            <div className="d-pin">
-              <span className="n">03</span>
-              <span className="k">Résumé</span>
-              <a className="v" href={site.resume}>
-                Shreenivas_Joshi_Resume.pdf
-              </a>
+            <div className="lx-contact-row">
+              <dt>Résumé</dt>
+              <dd>
+                <a className="lx-link" href={site.resume}>
+                  Shreenivas_Joshi_Resume.pdf
+                </a>
+              </dd>
               <span />
             </div>
-            <div className="d-pin">
-              <span className="n">04</span>
-              <span className="k">Located</span>
-              <span className="v">{site.location}</span>
+            <div className="lx-contact-row">
+              <dt>Based</dt>
+              <dd>{site.location}</dd>
               <span />
             </div>
-            <div className="d-pin">
-              <span className="n">05</span>
-              <span className="k">Status</span>
-              <span className="v" style={{ color: "var(--d-via-ink)" }}>
-                {site.availability}
-              </span>
-              <span />
-            </div>
-          </div>
+          </dl>
         </div>
 
-        <div className="d-shell d-colophon">
+        <div className="lx-shell lx-foot">
           <p>
             {site.name} · {site.role}
           </p>
           <p>
-            Every figure on this page is taken from the résumé. The charge crossing the die runs
-            a designed latency budget, not live traffic.
+            Every figure on this page is taken from the résumé. The dial holds a designed latency
+            budget, not live traffic.
           </p>
         </div>
       </footer>

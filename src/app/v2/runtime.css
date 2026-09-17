@@ -103,6 +103,16 @@
 
 .cn main, .cn > footer, .cn > header { position: relative; z-index: 2; }
 
+/* Anchored sections land below the running head rather than under it. Scoped
+   by `:has()` so it never reaches the primary site.
+
+   Scroll snapping was tried here and taken out: with two full-height screens,
+   `proximity` snapping fought every anchor jump — a link to a section further
+   down was pulled back to the nearest screen edge and left the reader looking
+   at the wrong thing. The gap it was meant to solve is a layout problem, and
+   it is solved below, in the layout. */
+html:has(.cn) { scroll-padding-top: 74px; }
+
 /* ── Measure ─────────────────────────────────────────────────────────────── */
 
 .cn-shell { max-width: 1680px; margin: 0 auto; padding-inline: var(--cn-gutter); }
@@ -183,7 +193,7 @@
   display: flex; flex-direction: column; justify-content: center;
   padding-block: clamp(40px, 6vw, 90px) clamp(30px, 4vw, 60px);
 }
-.js .cn-hero-in { transform: translate3d(0, calc(var(--p, 0) * -9vh), 0); opacity: calc(1 - var(--p, 0) * 1.15); will-change: transform, opacity; }
+.js .cn-hero-in { transform: translate3d(0, calc(var(--p, 0) * -7vh), 0); opacity: calc(1 - var(--p, 0) * 0.72); will-change: transform, opacity; }
 .cn-hero-status { display: inline-flex; align-items: center; gap: 10px; align-self: flex-start; padding: 8px 16px 8px 12px; border: 1px solid var(--cn-hair); border-radius: 999px; background: rgb(246 247 250 / 0.03); backdrop-filter: blur(8px); }
 .cn-hero-status i { width: 6px; height: 6px; border-radius: 50%; background: var(--cn-lit); box-shadow: 0 0 12px 2px rgb(143 176 255 / 0.7); animation: cn-live 3s var(--cn-ease) infinite; }
 @keyframes cn-live { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
@@ -237,9 +247,14 @@
 /* The second screen, and only the figures on it. They are the forty-second
    read, so they are given a frame of their own rather than a strip under the
    opening. */
-.cn-screen { min-height: calc(100svh - 74px); display: flex; flex-direction: column; justify-content: center; gap: clamp(28px, 4vw, 56px); padding-block: clamp(50px, 6vw, 90px); }
+.cn-screen {
+  min-height: min(calc(100svh - 74px), 620px);
+  display: flex; flex-direction: column; justify-content: flex-start;
+  gap: clamp(20px, 2.4vw, 34px);
+  padding-block: clamp(34px, 6vh, 72px) clamp(40px, 5vw, 76px);
+}
 .cn-screen-head { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; }
-.cn-screen-head p:last-child { margin-left: auto; }
+.cn-screen-head p + p { margin-left: auto; }
 
 .cn-figures { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--cn-hair-2); border-bottom: 1px solid var(--cn-hair-2); }
 @media (min-width: 900px) { .cn-figures { grid-template-columns: repeat(4, minmax(0, 1fr)); } }

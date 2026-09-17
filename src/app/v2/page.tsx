@@ -8,7 +8,7 @@ import {
   site,
   skills,
 } from "@/lib/content";
-import { Copy, Figure, Head, Reveal, Sequence } from "./_components/Chrome";
+import { Copy, Figure, Head, HeroMotion, Reveal, Sequence } from "./_components/Chrome";
 import { Stage } from "./_components/Stage";
 import { BUDGET_MS, CEILING_MS } from "./_components/turn";
 
@@ -93,15 +93,29 @@ export default function Cine() {
 
             <div className="cn-hero-foot">
               <span className="cn-scroll">
-                <i aria-hidden />
+                <span className="cn-scroll-rail">
+                  <svg width="16" height="18" viewBox="0 0 16 18" fill="none" aria-hidden>
+                    <path d="M8 0v15" stroke="currentColor" strokeWidth="1.2" />
+                    <path
+                      d="M2.5 10.5 8 16l5.5-5.5"
+                      stroke="currentColor"
+                      strokeWidth="1.2"
+                      strokeLinecap="square"
+                    />
+                  </svg>
+                </span>
                 Scroll
               </span>
             </div>
           </div>
         </section>
 
-        {/* ── Figures ───────────────────────────────────────────────────── */}
-        <section className="cn-shell">
+        {/* ── Figures: the second screen ────────────────────────────────── */}
+        <section className="cn-shell cn-screen">
+          <div className="cn-screen-head cn-in">
+            <p className="cn-label">By the numbers</p>
+            <p className="cn-small">Every figure on this page is taken from the résumé.</p>
+          </div>
           <div className="cn-figures cn-in">
             {railFigures.map((f) => (
               <Figure key={f.label} value={f.value} unit={f.unit} label={f.label} />
@@ -410,6 +424,7 @@ export default function Cine() {
         </div>
       </footer>
 
+      <HeroMotion />
       <Reveal />
     </>
   );

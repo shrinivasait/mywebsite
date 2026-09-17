@@ -70,6 +70,47 @@ export function Head() {
   );
 }
 
+/**
+ * The opening leaves rather than being scrolled past.
+ *
+ * Writes `--p` — how far the first screen has been scrolled away, 0–1 — onto
+ * the hero, which CSS turns into a short rise and a fade. It is one rounded
+ * value per frame and only while the hero is on screen, so it costs a style
+ * write rather than a layout.
+ */
+export function HeroMotion() {
+  useEffect(() => {
+    const hero = document.querySelector<HTMLElement>(".cn-hero");
+    if (!hero) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let raf = 0;
+    let last = -1;
+    const measure = () => {
+      raf = 0;
+      const h = hero.offsetHeight || 1;
+      const p = Math.min(1, Math.max(0, window.scrollY / h));
+      const want = Math.round(p * 100) / 100;
+      if (want !== last) {
+        last = want;
+        hero.style.setProperty("--p", String(want));
+      }
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(measure);
+    };
+    measure();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+  return null;
+}
+
 /** Entrance. One gesture, staggered between siblings, with a hard fallback. */
 export function Reveal() {
   useEffect(() => {

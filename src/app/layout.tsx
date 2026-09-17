@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Archivo, Chivo_Mono } from "next/font/google";
 import { site } from "@/lib/content";
@@ -83,7 +84,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       {/* The stock lives on `html` so the sheet's ground is continuous through
           overscroll; `body` carries only the ink. */}
-      <body className="min-h-dvh text-ink">{children}</body>
+      <body className="min-h-dvh text-ink">
+        {children}
+        {/* Page views, counted by the host. It sits in the root layout so both
+            routes are covered by one script, it loads after everything else,
+            and it is inert in development — so nothing here is measured until
+            the site is actually deployed. */}
+        <Analytics />
+      </body>
     </html>
   );
 }

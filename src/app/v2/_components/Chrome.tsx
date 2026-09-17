@@ -242,7 +242,7 @@ export function Figure({ value, unit, label }: { value: string; unit: string; la
  * budget. Taking a hop holds it and states what it does and the decision that
  * keeps it inside its slice.
  *
- * It plays the designed budget, not live traffic, and the caption says so.
+ * The budgets are the architecture's own, held in `turn.ts`.
  */
 export function Sequence() {
   const ref = useRef<HTMLDivElement>(null);

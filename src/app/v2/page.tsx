@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Year } from "@/components/Year";
 import {
   expertise,
   leadership,
@@ -24,8 +25,8 @@ import { BUDGET_MS, CEILING_MS } from "./_components/turn";
  *
  * Density is the substance here, not decoration: the subject is an engineer,
  * and a spec table is the most flattering thing you can print about one whose
- * numbers hold up. Every figure on the page is from the résumé, and the only
- * thing that moves without being explained is the light.
+ * numbers hold up. Every figure on the page comes from the résumé — stated as
+ * the specification it is, without a note explaining that it is one.
  */
 
 /** The headline figure each system is listed with. All of it is stated in `detail`. */
@@ -114,7 +115,6 @@ export default function Cine() {
         <section className="cn-shell cn-screen">
           <div className="cn-screen-head cn-in">
             <p className="cn-label">By the numbers</p>
-            <p className="cn-small">Every figure on this page is taken from the résumé.</p>
           </div>
           <div className="cn-figures cn-in">
             {railFigures.map((f) => (
@@ -133,8 +133,8 @@ export default function Cine() {
               </h2>
             </div>
             <p className="cn-body">
-              Each shipped and running: what it does, how it is built, and the figure it is held
-              to. No demos, and no client names that cannot be published.
+              Each shipped and running: what it does, how it is built, and the figure it is
+              held to.
             </p>
           </div>
 
@@ -189,11 +189,10 @@ export default function Cine() {
           </div>
 
           <p className="cn-small cn-in" style={{ marginTop: 24, maxWidth: "92ch" }}>
-            The track plays the designed budget rather than live traffic. Nothing here is fast
-            because a fast model was chosen: each hop was given a ceiling first and then built to
-            fit, work was moved off the critical path wherever it could start early, and the two
-            hops nobody controls — the caller&rsquo;s pause and the carrier — were reserved
-            before any service got to spend.
+            Nothing here is fast because a fast model was chosen: each hop was given a ceiling
+            first and then built to fit, work was moved off the critical path wherever it could
+            start early, and the two hops nobody controls — the caller&rsquo;s pause and the
+            carrier — were reserved before any service got to spend.
           </p>
         </section>
 
@@ -418,8 +417,7 @@ export default function Cine() {
             {site.name} · {site.role}
           </p>
           <p>
-            Every figure on this page is taken from the résumé. The track plays a designed
-            latency budget, not live traffic.
+            <Year /> · {site.location}
           </p>
         </div>
       </footer>

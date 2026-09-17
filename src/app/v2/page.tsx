@@ -52,8 +52,10 @@ export default function Sleeve() {
 
       <main id="main">
         {/* ── Front cover ───────────────────────────────────────────────── */}
-        <section className="bn-shell bn-cover">
-          <div className="bn-sleeve">
+        <section className="bn-cover">
+          {/* The sleeve is trimmed at the sheet edge rather than matted inside
+              a column, so it runs the full width of the window. */}
+          <div className="bn-sleeve bn-bleed">
             <div className="bn-sleeve-type">
               <p className="bn-stereo">
                 <span className="bn-caps">{site.availability}</span>
@@ -93,12 +95,13 @@ export default function Sleeve() {
             </div>
           </div>
 
+          <div className="bn-shell">
           <div className="bn-lede">
             <h2>{site.tagline}</h2>
             <p className="bn-prose">{site.intro}</p>
           </div>
 
-          <div className="bn-figs" style={{ marginTop: 34 }}>
+          <div className="bn-figs" style={{ marginTop: 40 }}>
             {railFigures.map((f) => (
               <div key={f.label}>
                 <b>
@@ -108,6 +111,7 @@ export default function Sleeve() {
                 <small>{f.label}</small>
               </div>
             ))}
+          </div>
           </div>
         </section>
 

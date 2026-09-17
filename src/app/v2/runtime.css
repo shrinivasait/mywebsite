@@ -113,7 +113,7 @@
 
 .bn-prose { font-size: 1rem; line-height: 1.68; color: var(--bn-ink-2); margin: 0; max-width: 68ch; }
 
-.bn-shell { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+.bn-shell { max-width: 1720px; margin: 0 auto; padding: 0 clamp(20px, 3.2vw, 64px); }
 
 .bn-rule { border: 0; border-top: 1px solid var(--bn-ink); margin: 0; }
 .bn-rule--thick { border-top-width: 3px; }
@@ -179,18 +179,27 @@
    hero taller than the viewport, which is a worse reading of the same object.
    ─────────────────────────────────────────────────────────────────────────── */
 
-.bn-cover { padding-top: 30px; }
+.bn-cover { padding-top: 0; }
+.bn-bleed { width: 100%; }
 .bn-sleeve {
   position: relative;
   background: var(--bn-sleeve);
   color: var(--bn-bone);
   display: grid;
 }
-@media (min-width: 900px) { .bn-sleeve { aspect-ratio: 2 / 1; grid-template-columns: 1fr 1fr; } }
+@media (min-width: 900px) {
+  .bn-sleeve { aspect-ratio: 2 / 1; grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 1280px) {
+  .bn-sleeve { aspect-ratio: auto; min-height: clamp(520px, 38vw, 660px); grid-template-columns: 1.02fr 0.98fr; }
+}
 
 .bn-sleeve > * { min-width: 0; }
 .bn-sleeve-type { display: flex; flex-direction: column; padding: 30px 22px 30px; min-width: 0; }
 @media (min-width: 900px) { .bn-sleeve-type { padding: 46px 40px 44px; } }
+/* Bled to the window edge, the type needs a real margin to sit inside, or the
+   name reads as having fallen off the sheet. */
+@media (min-width: 1280px) { .bn-sleeve-type { padding: 60px clamp(48px, 4.4vw, 96px) 58px; } }
 
 .bn-stereo { display: inline-flex; align-items: center; gap: 10px; align-self: flex-start; border: 1px solid var(--bn-bone-3); padding: 5px 10px; color: var(--bn-bone-2); }
 .bn-stereo .bn-caps { font-size: 0.5625rem; color: inherit; }
@@ -225,9 +234,9 @@
   filter: grayscale(1) contrast(1.22) brightness(0.8) sepia(1) saturate(2.3) hue-rotate(-38deg);
 }
 
-.bn-lede { padding: 34px 0 0; display: grid; gap: 26px; align-items: start; }
-@media (min-width: 900px) { .bn-lede { grid-template-columns: 1.15fr 0.85fr; gap: 54px; } }
-.bn-lede h2 { font-size: clamp(1.5rem, 2.6vw, 2.125rem); font-variation-settings: "wdth" 92; font-weight: 700; letter-spacing: -0.025em; line-height: 1.08; margin: 0; }
+.bn-lede { padding: 44px 0 0; display: grid; gap: 26px; align-items: start; }
+@media (min-width: 900px) { .bn-lede { grid-template-columns: 1.1fr 0.9fr; gap: clamp(40px, 6vw, 110px); } }
+.bn-lede h2 { font-size: clamp(1.5rem, 3vw, 2.75rem); font-variation-settings: "wdth" 92; font-weight: 700; letter-spacing: -0.025em; line-height: 1.08; margin: 0; }
 
 /* ── Figures ─────────────────────────────────────────────────────────────────
    Not a stat strip: four figures set as a run of type on one ruled line, the
@@ -292,6 +301,7 @@
 .bn-panel-bar .bn-caps { color: var(--bn-bone-2); font-size: 0.5625rem; }
 .bn-spacer { margin-left: auto; }
 .bn-canvas-host { position: relative; height: 244px; }
+@media (min-width: 1280px) { .bn-canvas-host { height: 292px; } }
 .bn-canvas-host canvas { display: block; width: 100%; height: 100%; }
 .bn-readout { display: flex; flex-wrap: wrap; gap: 8px 26px; padding: 12px 16px; border-top: 1px solid rgb(244 239 228 / 0.16); }
 .bn-readout div { display: flex; align-items: baseline; gap: 8px; }
@@ -346,7 +356,7 @@
 
 .bn-personnel { border-top: 1px solid var(--bn-ink); }
 .bn-credit { padding: 24px 0; border-bottom: 1px solid var(--bn-rule); display: grid; gap: 12px; }
-@media (min-width: 880px) { .bn-credit { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 40px; } }
+@media (min-width: 880px) { .bn-credit { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(40px, 5vw, 90px); } }
 .bn-credit-lead { display: flex; align-items: baseline; gap: 10px; }
 .bn-credit-lead h3 { margin: 0; font-variation-settings: "wdth" 94; font-weight: 700; font-size: 1.125rem; text-transform: uppercase; letter-spacing: -0.015em; line-height: 1.12; }
 .bn-credit-dots { flex: 1; border-bottom: 1px dotted var(--bn-rule-2); transform: translateY(-4px); min-width: 20px; }
@@ -359,6 +369,7 @@
 .bn-liner { border-top: 1px solid var(--bn-ink); padding-top: 28px; }
 .bn-liner-cols { columns: 1; column-gap: 44px; }
 @media (min-width: 820px) { .bn-liner-cols { columns: 2; } }
+@media (min-width: 1400px) { .bn-liner-cols { columns: 3; column-gap: 56px; } }
 .bn-liner-cols section { break-inside: avoid; margin-bottom: 26px; }
 .bn-liner-cols h3 { margin: 0 0 7px; font-variation-settings: "wdth" 96; font-weight: 700; font-size: 1.0625rem; text-transform: uppercase; letter-spacing: -0.015em; }
 .bn-liner-cols p { margin: 0; color: var(--bn-ink-2); font-size: 0.9375rem; line-height: 1.7; }
@@ -367,7 +378,7 @@
 /* The instrumentation run: skills as one continuous credited line. */
 .bn-instr { border-top: 1px solid var(--bn-ink); padding-top: 22px; margin-top: 12px; display: grid; gap: 14px; }
 .bn-instr-row { display: grid; gap: 4px 20px; }
-@media (min-width: 720px) { .bn-instr-row { grid-template-columns: 190px minmax(0, 1fr); align-items: baseline; } }
+@media (min-width: 720px) { .bn-instr-row { grid-template-columns: 210px minmax(0, 1fr); align-items: baseline; } }
 .bn-instr-row dt { font-family: var(--bn-bill); font-variation-settings: "wdth" 110; font-weight: 600; font-size: 0.625rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--bn-ink-3); }
 .bn-instr-row dd { margin: 0; font-size: 0.9375rem; line-height: 1.6; color: var(--bn-ink-2); overflow-wrap: anywhere; }
 .bn-instr-row dd b { font-weight: 400; color: var(--bn-ink); }
@@ -376,7 +387,8 @@
 
 .bn-sessions { border-top: 1px solid var(--bn-ink); }
 .bn-session { padding: 30px 0; border-bottom: 1px solid var(--bn-rule); display: grid; gap: 18px; }
-@media (min-width: 880px) { .bn-session { grid-template-columns: 250px minmax(0, 1fr); gap: 44px; } }
+@media (min-width: 880px) { .bn-session { grid-template-columns: 250px minmax(0, 1fr); gap: clamp(44px, 5vw, 96px); } }
+@media (min-width: 1400px) { .bn-session ul { columns: 2; column-gap: 56px; } .bn-session li { break-inside: avoid; margin-bottom: 10px; } }
 .bn-session-when { display: flex; flex-direction: column; gap: 9px; align-items: flex-start; }
 .bn-session-date { font-family: var(--bn-mono); font-size: 0.75rem; color: var(--bn-ink-3); letter-spacing: 0.03em; }
 .bn-session-org { font-variation-settings: "wdth" 104; font-weight: 600; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bn-ink); }
@@ -391,7 +403,7 @@
 
 .bn-back { margin-top: 84px; background: var(--bn-sleeve); color: var(--bn-bone); }
 .bn-back-in { display: grid; gap: 34px; padding-block: 54px 46px; }
-@media (min-width: 900px) { .bn-back-in { grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: start; } }
+@media (min-width: 900px) { .bn-back-in { grid-template-columns: 1.1fr 0.9fr; gap: clamp(56px, 7vw, 130px); align-items: start; } }
 .bn-back h2 { margin: 0 0 18px; font-size: clamp(2rem, 5vw, 3.5rem); font-variation-settings: "wdth" 82; font-weight: 700; line-height: 0.9; letter-spacing: -0.035em; text-transform: uppercase; }
 .bn-back h2 em { font-style: normal; color: var(--bn-plate); }
 .bn-back p { margin: 0; color: var(--bn-bone-2); font-size: 1rem; line-height: 1.7; max-width: 46ch; }

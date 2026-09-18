@@ -10,6 +10,7 @@ import {
   skills,
 } from "@/lib/content";
 import { Copy, Figure, Head, HeroMotion, Reveal, Sequence } from "./_components/Chrome";
+import { Circuit, Pipeline } from "./_components/Flow";
 import { Stage } from "./_components/Stage";
 import { BUDGET_MS, CEILING_MS } from "./_components/turn";
 
@@ -151,13 +152,7 @@ export default function Cine() {
                 <h3 className="cn-h3">{p.title}</h3>
                 <p>{p.summary}</p>
                 <p className="cn-system-detail">{p.detail}</p>
-                <div className="cn-chips">
-                  {p.stack.map((s) => (
-                    <span key={s} className="cn-chip">
-                      {s}
-                    </span>
-                  ))}
-                </div>
+                <Pipeline stack={p.stack} />
                 <dl className="cn-specs">
                   {HEADLINE[p.slug].map((row) => (
                     <div key={row.k}>
@@ -168,6 +163,26 @@ export default function Cine() {
                 </dl>
               </article>
             ))}
+          </div>
+        </section>
+
+        {/* ── The circuit ───────────────────────────────────────────────── */}
+        <section className="cn-shell cn-sec">
+          <div className="cn-sec-head cn-in">
+            <div>
+              <p className="cn-label">How the halves connect</p>
+              <h2 className="cn-h2">
+                One circuit, <em>not two careers</em>
+              </h2>
+            </div>
+            <p className="cn-body">
+              Strategy funds the team, the team builds the reference architecture, the
+              architecture produces the systems — and the evaluation framework closes the loop
+              back onto the architecture once they are live.
+            </p>
+          </div>
+          <div className="cn-in">
+            <Circuit />
           </div>
         </section>
 

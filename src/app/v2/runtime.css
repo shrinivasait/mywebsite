@@ -455,3 +455,119 @@ html:has(.cn) { scroll-padding-top: 74px; }
   .cn *, .cn *::before, .cn *::after { animation: none !important; transition-duration: 0.001ms !important; }
   .js .cn-in { opacity: 1; transform: none; filter: none; }
 }
+
+/* ── Drawn flows ─────────────────────────────────────────────────────────────
+   The page's argument, put on the screen instead of only in prose: the pairing
+   as one circuit with a feedback loop, and each system as the chain it runs as.
+   Hairlines carry the structure; one signal runs them.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.cn-wire { stroke: var(--cn-hair); stroke-width: 1; fill: none; }
+.cn-wire--live {
+  stroke: var(--cn-lit);
+  stroke-dasharray: 26 210;
+  stroke-dashoffset: 236;
+  opacity: 0.9;
+}
+.js .cn-wire--live { animation: cn-run 3.4s linear infinite; }
+.js .cn-wire--loop { animation: cn-run-back 5s linear infinite; stroke-dasharray: 34 900; }
+@keyframes cn-run { to { stroke-dashoffset: 0; } }
+@keyframes cn-run-back { from { stroke-dashoffset: 0; } to { stroke-dashoffset: 934; } }
+
+.cn-arrow, .cn-pipe-arrow, .cn-loop-arrow { fill: none; stroke: var(--cn-grey-2); stroke-width: 1.2; stroke-linecap: square; }
+
+/* ── The circuit ─────────────────────────────────────────────────────────── */
+
+.cn-circuit { margin: 0; position: relative; }
+.cn-circuit-row { display: grid; gap: 0; }
+@media (min-width: 900px) { .cn-circuit-row { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 26px); } }
+
+.cn-node-wrap { position: relative; display: flex; flex-direction: column; }
+@media (min-width: 900px) { .cn-node-wrap { display: block; } }
+
+.cn-node {
+  position: relative; z-index: 1;
+  background: rgb(5 5 7 / 0.78); backdrop-filter: blur(10px);
+  border: 1px solid var(--cn-hair-2);
+  padding: clamp(18px, 1.8vw, 26px);
+  display: flex; flex-direction: column; gap: 8px;
+  min-height: 132px;
+  transition: border-color 0.5s var(--cn-ease), background 0.5s var(--cn-ease);
+}
+.cn-node:hover { border-color: var(--cn-hair); background: rgb(16 18 25 / 0.85); }
+.cn-node[data-kind="in"] { border-left: 1px solid var(--cn-lit-deep); }
+.cn-node[data-kind="out"] { border-right: 1px solid var(--cn-lit-deep); }
+.cn-node-no { font-size: 0.6875rem; letter-spacing: 0.18em; color: var(--cn-lit); font-variant-numeric: tabular-nums; }
+.cn-node-label { font-size: 1.0625rem; font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; }
+.cn-node-datum { font-size: 0.8125rem; color: var(--cn-grey-2); margin-top: auto; }
+
+/* The connector between two stages: horizontal on a wide screen, vertical when
+   the row stacks, so the chain still reads as a chain either way. */
+.cn-link-h, .cn-link-v { position: absolute; display: none; align-items: center; justify-content: center; pointer-events: none; z-index: 2; }
+.cn-link-h svg:first-child, .cn-link-v svg:first-child { width: 100%; height: 100%; }
+.cn-link-h .cn-arrow, .cn-link-v .cn-arrow { position: absolute; width: 11px; height: 11px; }
+@media (min-width: 900px) {
+  .cn-link-h {
+    display: flex; top: 50%; height: 12px; transform: translateY(-50%);
+    right: calc(clamp(14px, 1.6vw, 26px) * -1); width: clamp(14px, 1.6vw, 26px);
+  }
+  .cn-link-h .cn-arrow { right: -3px; }
+}
+@media (max-width: 899px) {
+  .cn-link-v { display: flex; position: relative; left: 0; right: auto; width: 100%; height: 34px; }
+  .cn-link-v svg:first-child { height: 34px; }
+  .cn-link-v .cn-arrow { bottom: -1px; left: 50%; transform: translateX(-50%); }
+}
+
+/* ── The feedback stage ──────────────────────────────────────────────────
+   Drawn as a block under the right half rather than as a line looping the
+   whole row: the loop runs from the systems, through evaluation, and back on
+   to the architecture, and a line sweeping the full width said the wrong
+   thing — it appeared to return to stage one.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.cn-fb-wrap { display: grid; margin-top: 44px; }
+@media (min-width: 900px) {
+  .cn-fb-wrap { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 26px); }
+  .cn-fb { grid-column: 3 / span 2; }
+}
+.cn-fb {
+  position: relative;
+  background: rgb(5 5 7 / 0.78); backdrop-filter: blur(10px);
+  border: 1px solid var(--cn-hair-2); border-top-color: var(--cn-lit-deep);
+  padding: clamp(16px, 1.6vw, 22px);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.cn-fb .cn-node-no { color: var(--cn-grey-2); text-transform: uppercase; letter-spacing: 0.2em; }
+.cn-fb .cn-node-label { font-size: 0.9375rem; }
+
+/* The two wires: down out of the systems on the right, back up into the
+   architecture on the left. Each is a hairline with the signal running it. */
+.cn-fb-stub { position: absolute; bottom: 100%; width: 1px; height: 44px; background: var(--cn-hair); display: none; }
+@media (min-width: 900px) { .cn-fb-stub { display: block; } }
+.cn-fb-stub::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent, var(--cn-lit), transparent);
+  background-size: 100% 40%; background-repeat: no-repeat;
+}
+.js .cn-fb-stub--in::after { animation: cn-drop 3.4s linear infinite; }
+.js .cn-fb-stub--out::after { animation: cn-lift 3.4s linear 1.7s infinite; }
+@keyframes cn-drop { from { background-position: 0 -44px; } to { background-position: 0 44px; } }
+@keyframes cn-lift { from { background-position: 0 44px; } to { background-position: 0 -44px; } }
+.cn-fb-stub svg { position: absolute; left: 50%; width: 11px; height: 11px; transform: translateX(-50%); fill: none; stroke: var(--cn-grey-2); stroke-width: 1.2; }
+.cn-fb-stub--in { right: 12%; }
+.cn-fb-stub--in svg { bottom: -3px; }
+.cn-fb-stub--out { left: 12%; }
+.cn-fb-stub--out svg { top: -3px; }
+
+/* ── A system's pipeline ─────────────────────────────────────────────────── */
+
+.cn-pipe { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; }
+.cn-pipe li { display: flex; align-items: center; gap: 4px; }
+.cn-pipe-node {
+  font-size: 0.6875rem; letter-spacing: 0.04em; color: var(--cn-grey-2);
+  border: 1px solid var(--cn-hair-2); border-radius: 999px; padding: 6px 12px;
+  transition: border-color 0.4s var(--cn-ease), color 0.4s var(--cn-ease);
+}
+.cn-system:hover .cn-pipe-node, .cn-area:hover .cn-pipe-node { border-color: var(--cn-hair); color: var(--cn-grey); }
+.cn-pipe-arrow { width: 11px; height: 11px; flex: none; }

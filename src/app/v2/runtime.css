@@ -453,9 +453,24 @@ html:has(.cn) { scroll-padding-top: 74px; }
   transition-delay: var(--d, 0ms);
 }
 
+/* Reduced motion, read properly. The preference is about movement, not about
+   feedback: a colour change, a glow appearing, a border lighting under the
+   cursor are all still welcome and are left alone. What goes is everything
+   that travels — entrances, parallax, lifts, and every continuous loop. */
 @media (prefers-reduced-motion: reduce) {
-  .cn *, .cn *::before, .cn *::after { animation: none !important; transition-duration: 0.001ms !important; }
-  .cn-in { opacity: 1; transform: none; filter: none; }
+  .cn-in, .cn-hero-in, [data-kinetic] .cn-word-in, .cn-in .cn-bar-fill, .cn-in .cn-rail-fill {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+  .cn-system:hover, .cn-pillar:hover, .cn-figure:hover, .cn-btn:hover,
+  .cn-node:hover, .cn-rail-seg:hover { transform: none !important; }
+  .cn-ambient, .cn-sweep, .cn-scroll-rail svg, .cn-wire--live, .cn-fb-stub::after,
+  .cn-step--live, .cn-rail-now, .cn-hero-status i,
+  .cn-node[data-kind="in"]::after, .cn-node[data-kind="out"]::after,
+  .cn-hero [data-kinetic] .cn-word-in { animation: none !important; }
+  .cn-system::after { display: none; }
 }
 
 /* ── Drawn flows ─────────────────────────────────────────────────────────────
@@ -761,12 +776,6 @@ html:has(.cn) { scroll-padding-top: 74px; }
   100% { transform: translateX(60%); opacity: 0; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .cn-hero [data-kinetic] .cn-word-in { animation: none; }
-  [data-kinetic] .cn-word-in { transform: none !important; }
-  .cn-sweep { animation: none; opacity: 0; }
-}
-
 /* ── Pointer light ───────────────────────────────────────────────────────────
    A soft highlight under the cursor on the surfaces that read as objects. The
    position comes from two custom properties written by `Pointer`; everything
@@ -869,7 +878,3 @@ html:has(.cn) { scroll-padding-top: 74px; }
 .cn-contact-row:hover dt { color: var(--cn-lit); }
 .cn-contact-row dt { transition: color 0.45s var(--cn-ease); }
 
-@media (prefers-reduced-motion: reduce) {
-  .cn-ambient { animation: none; }
-  .cn-rail-now, .cn-node[data-kind="in"]::after, .cn-node[data-kind="out"]::after { animation: none; }
-}

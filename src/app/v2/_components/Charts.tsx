@@ -1,4 +1,4 @@
-import { roles } from "@/lib/content";
+import { railFigures, roles } from "@/lib/content";
 
 /**
  * Charts.
@@ -182,13 +182,20 @@ export function SeatRail() {
   const years: number[] = [];
   for (let y = Math.ceil(first / 12); y * 12 <= last; y += 1) years.push(y);
 
+  /* The headline figure is the résumé's, not one derived from these three
+     bars. Measuring the listed seats end to end gives 4.9 years and reads as a
+     correction to the 5+ stated everywhere else on the page — the experience
+     starts before the first seat listed here. The bars still carry their own
+     true durations; only the total is quoted rather than computed. */
+  const experience = railFigures.find((f) => f.label === "Experience in AI");
+
   return (
     <figure className="cn-rail">
       <figcaption className="cn-chart-head">
         <span className="cn-label">Seats, to scale</span>
         <span className="cn-chart-value">
-          {Math.round((total / 12) * 10) / 10}
-          <i>years, end to end</i>
+          {experience?.value ?? "5+"}
+          <i>{experience?.unit ?? "years"} in AI</i>
         </span>
       </figcaption>
 

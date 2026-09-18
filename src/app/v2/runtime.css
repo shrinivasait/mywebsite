@@ -878,3 +878,50 @@ html:has(.cn) { scroll-padding-top: 74px; }
 .cn-contact-row:hover dt { color: var(--cn-lit); }
 .cn-contact-row dt { transition: color 0.45s var(--cn-ease); }
 
+
+/* ── Headlines you can touch ─────────────────────────────────────────────────
+   The word rise plays once, on arrival — which means a reader with the tab
+   already open never sees it. These are repeatable: hovering any headline
+   runs the wave again, word by word, every time.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.cn-display .cn-word-in,
+.cn-h2 .cn-word-in,
+.cn-out h2 .cn-word-in {
+  transition:
+    transform 0.55s var(--cn-ease),
+    color 0.55s var(--cn-ease),
+    text-shadow 0.55s var(--cn-ease);
+}
+.cn-display:hover .cn-word-in,
+.cn-h2:hover .cn-word-in,
+.cn-out h2:hover .cn-word-in {
+  transform: translateY(-0.085em);
+  text-shadow: 0 10px 34px rgb(143 176 255 / 0.45);
+  transition-delay: calc(var(--i, 0) * 45ms);
+}
+/* The accent half of a headline warms as the wave passes through it. */
+.cn-h2:hover em .cn-word-in,
+.cn-display:hover em .cn-word-in { color: var(--cn-white); }
+
+/* ── One continuous mark ─────────────────────────────────────────────────────
+   A slow light travels the accent words of every headline, so a headline is
+   never completely still even when nobody is pointing at it.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.cn-h2 em .cn-word-in,
+.cn-out h2 em .cn-word-in {
+  animation: cn-glint 6s var(--cn-ease) infinite;
+  animation-delay: calc(var(--i, 0) * 260ms);
+}
+@keyframes cn-glint {
+  0%, 62%, 100% { text-shadow: 0 0 0 rgb(143 176 255 / 0); }
+  78% { text-shadow: 0 0 26px rgb(143 176 255 / 0.55); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cn-display:hover .cn-word-in,
+  .cn-h2:hover .cn-word-in,
+  .cn-out h2:hover .cn-word-in { transform: none; }
+  .cn-h2 em .cn-word-in, .cn-out h2 em .cn-word-in { animation: none; }
+}

@@ -571,3 +571,78 @@ html:has(.cn) { scroll-padding-top: 74px; }
 }
 .cn-system:hover .cn-pipe-node, .cn-area:hover .cn-pipe-node { border-color: var(--cn-hair); color: var(--cn-grey); }
 .cn-pipe-arrow { width: 11px; height: 11px; flex: none; }
+
+/* ── Charts ──────────────────────────────────────────────────────────────────
+   Drawn from figures already stated on the page. One accent, hairlines for
+   structure, and a signal that runs the plotted path.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.cn-charts { display: grid; gap: 1px; background: var(--cn-hair-2); border: 1px solid var(--cn-hair-2); margin-bottom: clamp(24px, 3vw, 44px); }
+@media (min-width: 900px) { .cn-charts { grid-template-columns: 1.15fr 1fr; } }
+
+.cn-chart { margin: 0; background: rgb(5 5 7 / 0.72); backdrop-filter: blur(10px); padding: clamp(22px, 2.4vw, 38px); display: flex; flex-direction: column; gap: 18px; }
+.cn-chart-head { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+.cn-chart-value { font-size: clamp(1.75rem, 3vw, 2.75rem); font-weight: 500; letter-spacing: -0.045em; line-height: 1; font-variant-numeric: tabular-nums; }
+.cn-chart-value i { font-style: normal; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cn-grey-2); margin-left: 10px; }
+.cn-chart-foot { margin: 0; font-size: 0.8125rem; line-height: 1.6; color: var(--cn-grey-2); }
+
+.cn-chart-svg { width: 100%; height: auto; display: block; }
+.cn-grid { stroke: var(--cn-hair-2); stroke-width: 1; }
+.cn-tick { fill: var(--cn-grey-2); font-size: 11px; font-family: inherit; }
+.cn-area { fill: rgb(143 176 255 / 0.09); }
+.cn-step { fill: none; stroke: var(--cn-hair); stroke-width: 1.6; }
+.cn-step--live { stroke: var(--cn-lit); stroke-dasharray: 40 900; stroke-dashoffset: 940; }
+.js .cn-step--live { animation: cn-run 3.6s linear infinite; }
+.cn-dot { fill: var(--cn-black); stroke: var(--cn-lit); stroke-width: 1.6; }
+
+.cn-chart-key { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 26px; }
+.cn-chart-key li { display: flex; align-items: baseline; gap: 8px; }
+.cn-chart-key b { font-size: 0.9375rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+.cn-chart-key span { font-size: 0.8125rem; color: var(--cn-grey-2); }
+
+/* The stacked bar. Three segments of one total, filling on arrival. */
+.cn-bar { display: flex; gap: 4px; height: 14px; }
+.cn-bar-seg { position: relative; overflow: hidden; background: rgb(246 247 250 / 0.06); border-radius: 2px; }
+.cn-bar-fill { position: absolute; inset: 0; transform-origin: left; background: var(--cn-lit); }
+.cn-bar-seg[data-i="1"] .cn-bar-fill { background: var(--cn-lit-deep); }
+.cn-bar-seg[data-i="2"] .cn-bar-fill { background: rgb(143 176 255 / 0.4); }
+.js .cn-in .cn-bar-fill { transform: scaleX(0); transition: transform 1s var(--cn-ease); }
+.js .cn-in[data-seen="1"] .cn-bar-fill, .js .cn-in[data-fallback="1"] .cn-bar-fill { transform: none; }
+.js .cn-in[data-seen="1"] .cn-bar-seg[data-i="1"] .cn-bar-fill { transition-delay: 0.12s; }
+.js .cn-in[data-seen="1"] .cn-bar-seg[data-i="2"] .cn-bar-fill { transition-delay: 0.24s; }
+.cn-swatch { width: 9px; height: 9px; border-radius: 2px; background: var(--cn-lit); display: block; }
+.cn-swatch[data-i="1"] { background: var(--cn-lit-deep); }
+.cn-swatch[data-i="2"] { background: rgb(143 176 255 / 0.4); }
+.cn-chart-key--split li { align-items: center; }
+
+/* ── The seat rail ───────────────────────────────────────────────────────── */
+
+.cn-rail { margin-bottom: clamp(26px, 3vw, 44px); }
+.cn-rail-track { position: relative; height: 76px; border-top: 1px solid var(--cn-hair-2); }
+.cn-rail-seg {
+  position: absolute; top: 14px; height: 46px;
+  border-left: 1px solid var(--cn-hair);
+  padding: 0 0 0 12px; display: flex; flex-direction: column; gap: 3px; justify-content: center;
+  background: linear-gradient(90deg, rgb(143 176 255 / 0.1), rgb(143 176 255 / 0));
+}
+.cn-rail-seg[data-current="1"] { border-left-color: var(--cn-lit); background: linear-gradient(90deg, rgb(143 176 255 / 0.22), rgb(143 176 255 / 0.02)); }
+.cn-rail-seg b { font-size: 0.8125rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cn-rail-seg i { font-style: normal; font-size: 0.6875rem; color: var(--cn-grey-2); font-variant-numeric: tabular-nums; }
+.cn-rail-seg em { position: absolute; top: -28px; left: 0; font-style: normal; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cn-grey-2); white-space: nowrap; }
+@media (max-width: 899px) { .cn-rail-seg b { font-size: 0.6875rem; } .cn-rail-seg i, .cn-rail-seg em { display: none; } }
+
+/* ── The surface field ───────────────────────────────────────────────────── */
+
+.cn-field { margin: clamp(34px, 4vw, 64px) 0 0; display: flex; flex-direction: column; gap: 22px; }
+.cn-field-grid { display: grid; gap: 1px; background: var(--cn-hair-2); border: 1px solid var(--cn-hair-2); }
+.cn-field-row { background: var(--cn-black); display: grid; gap: 10px 22px; padding: 14px clamp(14px, 1.6vw, 22px); align-items: center; }
+@media (min-width: 780px) { .cn-field-row { grid-template-columns: 210px minmax(0, 1fr); } }
+.cn-field-label { font-size: 0.8125rem; color: var(--cn-white); font-weight: 500; }
+.cn-field-cells { display: flex; flex-wrap: wrap; gap: 5px; }
+.cn-cell {
+  width: 22px; height: 10px; border-radius: 2px;
+  background: rgb(143 176 255 / 0.16); border: 1px solid rgb(143 176 255 / 0.22);
+  transition: background 0.35s var(--cn-ease), transform 0.35s var(--cn-ease);
+}
+.cn-field-row:hover .cn-cell { background: rgb(143 176 255 / 0.3); }
+.cn-cell:hover { background: var(--cn-lit); transform: scaleY(1.5); }

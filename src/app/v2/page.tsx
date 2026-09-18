@@ -10,6 +10,7 @@ import {
   skills,
 } from "@/lib/content";
 import { Copy, Figure, Head, HeroMotion, Reveal, Sequence } from "./_components/Chrome";
+import { GrantSplit, SeatRail, SkillField, TeamCurve } from "./_components/Charts";
 import { Circuit, Pipeline } from "./_components/Flow";
 import { Stage } from "./_components/Stage";
 import { BUDGET_MS, CEILING_MS } from "./_components/turn";
@@ -229,6 +230,11 @@ export default function Cine() {
             </p>
           </div>
 
+          <div className="cn-charts cn-in">
+            <TeamCurve />
+            <GrantSplit />
+          </div>
+
           <div className="cn-pillars cn-in">
             {leadership.map((pillar, i) => (
               <article key={pillar.title} className="cn-pillar">
@@ -272,6 +278,10 @@ export default function Cine() {
             ))}
           </div>
 
+          <div className="cn-in">
+            <SkillField groups={skills} />
+          </div>
+
           <dl className="cn-spec-table cn-in">
             {skills.map((group) => (
               <div key={group.title} className="cn-spec-row">
@@ -291,6 +301,10 @@ export default function Cine() {
                 Three seats, <em>five years</em>
               </h2>
             </div>
+          </div>
+
+          <div className="cn-in">
+            <SeatRail />
           </div>
 
           <div className="cn-roles cn-in">

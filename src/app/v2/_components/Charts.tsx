@@ -1,0 +1,240 @@
+import { roles } from "@/lib/content";
+
+/**
+ * Charts.
+ *
+ * Every figure drawn here is already written somewhere on the page — team
+ * sizes, grant amounts, seat dates. Nothing is estimated and nothing is
+ * scored: there are no invented ratings, no percentages of mastery, no radar
+ * of self-assessed skill. A chart that plots an opinion is worse than the
+ * sentence it replaced.
+ *
+ * All of it is server-rendered SVG and CSS. The only motion is a signal on a
+ * path, and it stops under `prefers-reduced-motion`.
+ */
+
+/* ── The team, over time ──────────────────────────────────────────────────
+   Three points, all from the résumé: the first AI hire at Basal Analytics
+   joining a team of six, that team at ten by the time he left, and eighteen
+   at HB Software Solutions today. Drawn as steps rather than a curve because
+   headcount moves in whole people.
+   ─────────────────────────────────────────────────────────────────────── */
+
+const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+
+/** "Oct 2021" → months since 2000. "Present" → now. */
+function monthIndex(label: string): number {
+  if (/present/i.test(label)) {
+    const now = new Date();
+    return (now.getFullYear() - 2000) * 12 + now.getMonth();
+  }
+  const [mon, year] = label.trim().split(/\s+/);
+  const m = MONTHS.indexOf(mon.slice(0, 3).toLowerCase());
+  return (Number(year) - 2000) * 12 + (m < 0 ? 0 : m);
+}
+
+const HEADS = [
+  { at: "Jun 2022", n: 6, note: "First AI hire" },
+  { at: "Jul 2025", n: 10, note: "Grown 6 → 10" },
+  { at: "Aug 2025", n: 18, note: "Current seat" },
+] as const;
+
+export function TeamCurve() {
+  const W = 460;
+  const H = 200;
+  const padL = 26;
+  const padB = 34;
+  const max = 20;
+
+  const t0 = monthIndex(HEADS[0].at);
+  const now = monthIndex("Present");
+  const span = Math.max(1, now - t0);
+  const x = (at: string) => padL + ((monthIndex(at) - t0) / span) * (W - padL - 16);
+  const right = padL + (W - padL - 16);
+  const y = (n: number) => H - padB - (n / max) * (H - padB - 18);
+
+  // A step path: hold the level, then rise, so the shape reads as hires rather
+  // than as a smooth trend nobody actually experienced. The last level is held
+  // out to today, because it is still true.
+  const step = `${HEADS.map((h, i) =>
+    i === 0 ? `M${x(h.at)} ${y(h.n)}` : `H${x(h.at)} V${y(h.n)}`,
+  ).join(" ")} H${right}`;
+  const area = `${step} V${H - padB} H${x(HEADS[0].at)} Z`;
+
+  return (
+    <figure className="cn-chart" aria-label="Team size: six engineers when he joined as the first AI hire, ten by the end of that seat, eighteen today.">
+      <figcaption className="cn-chart-head">
+        <span className="cn-label">Team</span>
+        <span className="cn-chart-value">
+          18<i>engineers today</i>
+        </span>
+      </figcaption>
+
+      <svg viewBox={`0 0 ${W} ${H}`} className="cn-chart-svg" aria-hidden>
+        {[0, 10, 20].map((n) => (
+          <g key={n}>
+            <line className="cn-grid" x1={padL} y1={y(n)} x2={W - 16} y2={y(n)} vectorEffect="non-scaling-stroke" />
+            <text className="cn-tick" x={padL - 8} y={y(n) + 4} textAnchor="end">
+              {n}
+            </text>
+          </g>
+        ))}
+
+        <path className="cn-area" d={area} />
+        <path className="cn-step" d={step} vectorEffect="non-scaling-stroke" />
+        <path className="cn-step cn-step--live" d={step} vectorEffect="non-scaling-stroke" />
+
+        {HEADS.map((h, i) => (
+          <g key={h.at}>
+            <circle className="cn-dot" cx={x(h.at)} cy={y(h.n)} r={4} />
+            {i === 0 ? (
+              <text className="cn-tick" x={x(h.at)} y={H - padB + 20} textAnchor="start">
+                {h.at}
+              </text>
+            ) : null}
+          </g>
+        ))}
+        <text className="cn-tick" x={right} y={H - padB + 20} textAnchor="end">
+          Today
+        </text>
+      </svg>
+
+      <ul className="cn-chart-key">
+        {HEADS.map((h) => (
+          <li key={h.at}>
+            <b>{h.n}</b>
+            <span>{h.note}</span>
+          </li>
+        ))}
+      </ul>
+    </figure>
+  );
+}
+
+/* ── The grants ───────────────────────────────────────────────────────────
+   Roughly USD 50K, and the page already states the split. A stacked bar is
+   the whole chart: three parts of one total, which is exactly what a reader
+   wants to check.
+   ─────────────────────────────────────────────────────────────────────── */
+
+const GRANTS = [
+  { name: "Azure", k: 25 },
+  { name: "AWS", k: 20 },
+  { name: "Google", k: 5 },
+] as const;
+
+export function GrantSplit() {
+  const total = GRANTS.reduce((s, g) => s + g.k, 0);
+
+  return (
+    <figure className="cn-chart" aria-label="Cloud grants secured: about USD 25K Azure, 20K AWS and 5K Google, roughly 50K in total.">
+      <figcaption className="cn-chart-head">
+        <span className="cn-label">Cloud grants secured</span>
+        <span className="cn-chart-value">
+          ≈50<i>USD K</i>
+        </span>
+      </figcaption>
+
+      <div className="cn-bar" aria-hidden>
+        {GRANTS.map((g, i) => (
+          <span key={g.name} className="cn-bar-seg" data-i={i} style={{ flexGrow: g.k }}>
+            <span className="cn-bar-fill" />
+          </span>
+        ))}
+      </div>
+
+      <ul className="cn-chart-key cn-chart-key--split">
+        {GRANTS.map((g, i) => (
+          <li key={g.name}>
+            <i className="cn-swatch" data-i={i} aria-hidden />
+            <b>≈{g.k}K</b>
+            <span>{g.name}</span>
+          </li>
+        ))}
+      </ul>
+
+      <p className="cn-chart-foot">
+        {Math.round((GRANTS[0].k / total) * 100)}% of it on one provider, and none of it drawn
+        from the engineering budget.
+      </p>
+    </figure>
+  );
+}
+
+/* ── The seats, to scale ──────────────────────────────────────────────────
+   The three roles as a rail, each segment as wide as the time actually spent
+   in it. Dates come from `roles`; the open-ended one is measured to the build
+   date, which moves the rail by a few pixels a month and nothing else.
+   ─────────────────────────────────────────────────────────────────────── */
+
+export function SeatRail() {
+  const spans = roles
+    .map((r) => ({
+      role: r,
+      from: monthIndex(r.start),
+      to: monthIndex(r.end),
+    }))
+    .sort((a, b) => a.from - b.from);
+
+  const first = spans[0].from;
+  const last = spans[spans.length - 1].to;
+  const total = Math.max(1, last - first);
+
+  return (
+    <div className="cn-rail" aria-hidden>
+      <div className="cn-rail-track">
+        {spans.map((s, i) => (
+          <span
+            key={s.role.org}
+            className="cn-rail-seg"
+            data-current={s.role.current ? "1" : "0"}
+            style={{
+              left: `${((s.from - first) / total) * 100}%`,
+              width: `${((s.to - s.from) / total) * 100}%`,
+            }}
+          >
+            <b>{s.role.orgShort ?? s.role.org}</b>
+            <i>{s.to - s.from} mo</i>
+            <em data-side={i === 0 ? "start" : "mid"}>{s.role.start}</em>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── The surface ──────────────────────────────────────────────────────────
+   Every named thing he works with, one cell each, grouped by row. It encodes
+   nothing but presence — which is the honest encoding, since there is no
+   score behind any of it — and what it shows at a glance is breadth.
+   ─────────────────────────────────────────────────────────────────────── */
+
+export function SkillField({ groups }: { groups: readonly { title: string; items: readonly string[] }[] }) {
+  const count = groups.reduce((s, g) => s + g.items.length, 0);
+
+  return (
+    <figure className="cn-field">
+      <figcaption className="cn-chart-head">
+        <span className="cn-label">The surface</span>
+        <span className="cn-chart-value">
+          {count}<i>named tools, models and methods</i>
+        </span>
+      </figcaption>
+
+      <div className="cn-field-grid">
+        {groups.map((g) => (
+          <div key={g.title} className="cn-field-row">
+            <span className="cn-field-label">{g.title}</span>
+            <span className="cn-field-cells">
+              {g.items.map((item) => (
+                <span key={item} className="cn-cell" title={item}>
+                  <span className="sr-only">{item}</span>
+                </span>
+              ))}
+            </span>
+          </div>
+        ))}
+      </div>
+    </figure>
+  );
+}

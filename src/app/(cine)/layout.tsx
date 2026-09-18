@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Schibsted_Grotesk } from "next/font/google";
-import { site } from "@/lib/content";
 import "./runtime.css";
 
 /**
@@ -18,19 +17,17 @@ const cine = Schibsted_Grotesk({
 });
 
 /**
- * A second surface for the same record.
+ * The site's front page.
  *
- * Every token is redefined on `.cn`, so the theme class on <html> has no say
- * in here. Kept out of the index on purpose: two pages carrying one résumé
- * under one domain is duplicate content, and the primary route should be the
- * one that ranks. Remove `robots` here if this becomes the primary.
+ * A route group, so the folder names the world without adding a path segment:
+ * this layout and its page serve `/`. Every token is redefined on `.cn`, so
+ * the theme class on <html> has no say in here — the datasheet at `/v2` is the
+ * surface that answers the theme, and this one is a single material.
  */
 export const metadata: Metadata = {
-  title: `${site.name} — ${site.role}`,
-  description: site.intro,
-  robots: { index: false, follow: false },
+  alternates: { canonical: "/" },
 };
 
-export default function CineLayout({ children }: LayoutProps<"/v2">) {
+export default function CineLayout({ children }: LayoutProps<"/">) {
   return <div className={`cn ${cine.variable}`}>{children}</div>;
 }

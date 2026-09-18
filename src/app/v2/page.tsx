@@ -11,6 +11,7 @@ import {
 } from "@/lib/content";
 import { Copy, Figure, Head, HeroMotion, Reveal, Sequence } from "./_components/Chrome";
 import { Kinetic } from "./_components/Kinetic";
+import { Words } from "./_components/words";
 import { GrantSplit, SeatRail, SkillField, TeamCurve } from "./_components/Charts";
 import { Circuit, Pipeline } from "./_components/Flow";
 import { Stage } from "./_components/Stage";
@@ -80,7 +81,9 @@ export default function Cine() {
             <h1 className="cn-display">
               <span className="cn-name-wrap">
                 <span className="cn-sweep" aria-hidden />
-                <span data-kinetic>{site.name}</span>
+                <span data-kinetic>
+                  <Words>{site.name}</Words>
+                </span>
               </span>
             </h1>
             <p className="cn-title">{site.role}</p>
@@ -140,7 +143,7 @@ export default function Cine() {
             <div>
               <p className="cn-label">Selected work</p>
               <h2 className="cn-h2" data-kinetic>
-                Four systems, <em>in production</em>
+                <Words>{"Four systems,"}</Words> <em><Words start={2}>{"in production"}</Words></em>
               </h2>
             </div>
             <p className="cn-body">
@@ -179,7 +182,7 @@ export default function Cine() {
             <div>
               <p className="cn-label">How the halves connect</p>
               <h2 className="cn-h2" data-kinetic>
-                One circuit, <em>not two careers</em>
+                <Words>{"One circuit,"}</Words> <em><Words start={2}>{"not two careers"}</Words></em>
               </h2>
             </div>
             <p className="cn-body">
@@ -199,7 +202,7 @@ export default function Cine() {
             <div>
               <p className="cn-label">The hardest claim on this page</p>
               <h2 className="cn-h2" data-kinetic>
-                One spoken turn, <em>{BUDGET_MS} milliseconds</em>
+                <Words>{"One spoken turn,"}</Words> <em><Words start={3}>{`${BUDGET_MS} milliseconds`}</Words></em>
               </h2>
             </div>
             <p className="cn-body">
@@ -227,7 +230,7 @@ export default function Cine() {
             <div>
               <p className="cn-label">The other half</p>
               <h2 className="cn-h2" data-kinetic>
-                An architecture is only as durable as <em>the organisation running it</em>
+                <Words>{"An architecture is only as durable as"}</Words> <em><Words start={7}>{"the organisation running it"}</Words></em>
               </h2>
             </div>
             <p className="cn-body">
@@ -259,7 +262,7 @@ export default function Cine() {
             <div>
               <p className="cn-label">Technical depth</p>
               <h2 className="cn-h2" data-kinetic>
-                Six areas, <em>to depth</em>
+                <Words>{"Six areas,"}</Words> <em><Words start={2}>{"to depth"}</Words></em>
               </h2>
             </div>
             <p className="cn-body">
@@ -304,7 +307,7 @@ export default function Cine() {
             <div>
               <p className="cn-label">Record</p>
               <h2 className="cn-h2" data-kinetic>
-                Three seats, <em>five years</em>
+                <Words>{"Three seats,"}</Words> <em><Words start={2}>{"five years"}</Words></em>
               </h2>
             </div>
           </div>
@@ -353,7 +356,7 @@ export default function Cine() {
             <div className="cn-portrait-copy">
               <p className="cn-label">{site.location}</p>
               <h2 className="cn-h2" data-kinetic>
-                I lead the work <em>and do it</em>
+                <Words>{"I lead the work"}</Words> <em><Words start={4}>{"and do it"}</Words></em>
               </h2>
               <p className="cn-body">
                 Five years across AI and deep learning, from computer vision for geospatial
@@ -389,7 +392,7 @@ export default function Cine() {
           <div>
             <p className="cn-label">{site.availability}</p>
             <h2 className="cn-h2" data-kinetic>
-              Let&rsquo;s build the function, <em>not just the model</em>
+              <Words>{"Let&rsquo;s build the function,"}</Words> <em><Words start={4}>{"not just the model"}</Words></em>
             </h2>
             <p className="cn-lede">
               If you are putting an AI function on the map — or you have one and it is not

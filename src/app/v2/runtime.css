@@ -210,7 +210,7 @@ html:has(.cn) { scroll-padding-top: 74px; }
   display: flex; flex-direction: column; justify-content: center;
   padding-block: clamp(40px, 6vw, 90px) clamp(30px, 4vw, 60px);
 }
-.js .cn-hero-in {
+.cn-hero-in {
   transform: translate3d(0, calc(var(--p, 0) * -5vh), 0) scale(calc(1 - var(--p, 0) * 0.055));
   opacity: calc(1 - var(--p, 0) * 0.85);
   filter: blur(calc(var(--p, 0) * 5px));
@@ -256,7 +256,7 @@ html:has(.cn) { scroll-padding-top: 74px; }
 .cn-scroll-rail { position: relative; display: block; width: 22px; height: 40px; color: var(--cn-white); }
 .cn-scroll-rail::before { content: ""; position: absolute; left: 50%; top: 0; width: 1px; height: 100%; background: linear-gradient(180deg, transparent, rgb(246 247 250 / 0.28), transparent); }
 .cn-scroll-rail svg { position: absolute; left: 50%; top: 0; transform: translateX(-50%); }
-.js .cn-scroll-rail svg { animation: cn-travel 2.4s var(--cn-ease) infinite; }
+.cn-scroll-rail svg { animation: cn-travel 2.4s var(--cn-ease) infinite; }
 @keyframes cn-travel {
   0% { transform: translate(-50%, 0); opacity: 0; }
   22% { opacity: 1; }
@@ -444,8 +444,10 @@ html:has(.cn) { scroll-padding-top: 74px; }
 /* The arrival never hides a section outright: a reader moving fast, or an
    observer that fires late, must still find the page there. It starts at a
    quarter opacity with a short rise and a light blur, and resolves quickly. */
-.js .cn-in { opacity: 0.25; transform: translateY(20px); filter: blur(5px); }
-.js .cn-in[data-seen="1"], .js .cn-in[data-fallback="1"] {
+@media (scripting: enabled) {
+  .cn-in { opacity: 0.25; transform: translateY(20px); filter: blur(5px); }
+}
+.cn-in[data-seen="1"], .cn-in[data-fallback="1"] {
   opacity: 1; transform: none; filter: none;
   transition: opacity 0.65s var(--cn-ease), transform 0.95s var(--cn-ease), filter 0.65s var(--cn-ease);
   transition-delay: var(--d, 0ms);
@@ -453,7 +455,7 @@ html:has(.cn) { scroll-padding-top: 74px; }
 
 @media (prefers-reduced-motion: reduce) {
   .cn *, .cn *::before, .cn *::after { animation: none !important; transition-duration: 0.001ms !important; }
-  .js .cn-in { opacity: 1; transform: none; filter: none; }
+  .cn-in { opacity: 1; transform: none; filter: none; }
 }
 
 /* ── Drawn flows ─────────────────────────────────────────────────────────────
@@ -469,8 +471,8 @@ html:has(.cn) { scroll-padding-top: 74px; }
   stroke-dashoffset: 236;
   opacity: 0.9;
 }
-.js .cn-wire--live { animation: cn-run 3.4s linear infinite; }
-.js .cn-wire--loop { animation: cn-run-back 5s linear infinite; stroke-dasharray: 34 900; }
+.cn-wire--live { animation: cn-run 3.4s linear infinite; }
+.cn-wire--loop { animation: cn-run-back 5s linear infinite; stroke-dasharray: 34 900; }
 @keyframes cn-run { to { stroke-dashoffset: 0; } }
 @keyframes cn-run-back { from { stroke-dashoffset: 0; } to { stroke-dashoffset: 934; } }
 
@@ -575,8 +577,8 @@ html:has(.cn) { scroll-padding-top: 74px; }
   background: linear-gradient(180deg, transparent, var(--cn-lit), transparent);
   background-size: 100% 40%; background-repeat: no-repeat;
 }
-.js .cn-fb-stub--in::after { animation: cn-drop 3.4s linear infinite; }
-.js .cn-fb-stub--out::after { animation: cn-lift 3.4s linear 1.7s infinite; }
+.cn-fb-stub--in::after { animation: cn-drop 3.4s linear infinite; }
+.cn-fb-stub--out::after { animation: cn-lift 3.4s linear 1.7s infinite; }
 @keyframes cn-drop { from { background-position: 0 -44px; } to { background-position: 0 44px; } }
 @keyframes cn-lift { from { background-position: 0 44px; } to { background-position: 0 -44px; } }
 .cn-fb-stub svg { position: absolute; left: 50%; width: 11px; height: 11px; transform: translateX(-50%); fill: none; stroke: var(--cn-grey-2); stroke-width: 1.2; }
@@ -617,7 +619,7 @@ html:has(.cn) { scroll-padding-top: 74px; }
 .cn-area { fill: rgb(143 176 255 / 0.09); }
 .cn-step { fill: none; stroke: var(--cn-hair); stroke-width: 1.6; }
 .cn-step--live { stroke: var(--cn-lit); stroke-dasharray: 40 900; stroke-dashoffset: 940; }
-.js .cn-step--live { animation: cn-run 3.6s linear infinite; }
+.cn-step--live { animation: cn-run 3.6s linear infinite; }
 .cn-dot { fill: var(--cn-black); stroke: var(--cn-lit); stroke-width: 1.6; }
 
 .cn-chart-key { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 26px; }
@@ -631,10 +633,12 @@ html:has(.cn) { scroll-padding-top: 74px; }
 .cn-bar-fill { position: absolute; inset: 0; transform-origin: left; background: var(--cn-lit); }
 .cn-bar-seg[data-i="1"] .cn-bar-fill { background: var(--cn-lit-deep); }
 .cn-bar-seg[data-i="2"] .cn-bar-fill { background: rgb(143 176 255 / 0.4); }
-.js .cn-in .cn-bar-fill { transform: scaleX(0); transition: transform 1s var(--cn-ease); }
-.js .cn-in[data-seen="1"] .cn-bar-fill, .js .cn-in[data-fallback="1"] .cn-bar-fill { transform: none; }
-.js .cn-in[data-seen="1"] .cn-bar-seg[data-i="1"] .cn-bar-fill { transition-delay: 0.12s; }
-.js .cn-in[data-seen="1"] .cn-bar-seg[data-i="2"] .cn-bar-fill { transition-delay: 0.24s; }
+@media (scripting: enabled) {
+  .cn-in .cn-bar-fill { transform: scaleX(0); transition: transform 1s var(--cn-ease); }
+}
+.cn-in[data-seen="1"] .cn-bar-fill, .cn-in[data-fallback="1"] .cn-bar-fill { transform: none; }
+.cn-in[data-seen="1"] .cn-bar-seg[data-i="1"] .cn-bar-fill { transition-delay: 0.12s; }
+.cn-in[data-seen="1"] .cn-bar-seg[data-i="2"] .cn-bar-fill { transition-delay: 0.24s; }
 .cn-swatch { width: 9px; height: 9px; border-radius: 2px; background: var(--cn-lit); display: block; }
 .cn-swatch[data-i="1"] { background: var(--cn-lit-deep); }
 .cn-swatch[data-i="2"] { background: rgb(143 176 255 / 0.4); }
@@ -668,8 +672,10 @@ html:has(.cn) { scroll-padding-top: 74px; }
   background: linear-gradient(135deg, rgb(143 176 255 / 0.6), rgb(63 93 214 / 0.32) 55%, rgb(10 11 15 / 0.85));
 }
 /* Each seat draws itself open, left to right, as the section arrives. */
-.js .cn-in .cn-rail-fill { transform-origin: left; transform: scaleX(0); transition: transform 0.9s var(--cn-ease); }
-.js .cn-in[data-seen="1"] .cn-rail-fill, .js .cn-in[data-fallback="1"] .cn-rail-fill { transform: none; }
+@media (scripting: enabled) {
+  .cn-in .cn-rail-fill { transform-origin: left; transform: scaleX(0); transition: transform 0.9s var(--cn-ease); }
+}
+.cn-in[data-seen="1"] .cn-rail-fill, .cn-in[data-fallback="1"] .cn-rail-fill { transform: none; }
 
 .cn-rail-copy { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 3px; padding: 0 14px; min-width: 0; }
 .cn-rail-copy b { font-size: 0.875rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -705,21 +711,37 @@ html:has(.cn) { scroll-padding-top: 74px; }
 .cn-field-row:hover .cn-cell { background: rgb(143 176 255 / 0.3); }
 .cn-cell:hover { background: var(--cn-lit); transform: scaleY(1.5); }
 
-/* ── Kinetic headlines ───────────────────────────────────────────────────────
-   Words arrive from under their own line, one after another, on the page's
-   single ease. The mask is the line box itself, so a word that never plays is
-   still readable — the effect can fail without costing the reader anything.
-   ─────────────────────────────────────────────────────────────────────────── */
+/* ── Kinetic headlines ───────────────────────────────────────────────
+   Words rise from under their own line box. The words are split on the server,
+   so the masked state is in the first frame and the heading never flashes.
 
-.cn-word { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.06em; margin-bottom: -0.06em; }
+   Two mechanisms, deliberately: the opening's headline runs on a plain CSS
+   animation, so it plays whether or not the JavaScript ever arrives, and the
+   headlines further down are masked only once something has undertaken to
+   reveal them — `data-armed`, set by the client only for headings still below
+   the fold. Nothing on screen is ever hidden and then restored.
+   ─────────────────────────────────────────────────────────────────────── */
+
+.cn-word { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.08em; margin-bottom: -0.08em; }
 .cn-word-in { display: inline-block; will-change: transform; }
-.js [data-kinetic][data-split="1"] .cn-word-in { transform: translate3d(0, 108%, 0); opacity: 0.4; }
-.js [data-kinetic][data-play="1"] .cn-word-in {
-  transform: none; opacity: 1;
-  transition:
-    transform 0.9s var(--cn-ease),
-    opacity 0.7s var(--cn-ease);
-  transition-delay: calc(var(--i, 0) * 60ms);
+
+@keyframes cn-word-rise {
+  from { transform: translate3d(0, 115%, 0) rotate(2deg); }
+  to { transform: none; }
+}
+
+/* The opening: no JavaScript in the path at all. */
+.cn-hero [data-kinetic] .cn-word-in {
+  animation: cn-word-rise 1.15s var(--cn-ease) both;
+  animation-delay: calc(var(--i, 0) * 110ms + 150ms);
+}
+
+/* Everything below it: masked only once armed, released on arrival. */
+[data-kinetic][data-armed="1"] .cn-word-in { transform: translate3d(0, 115%, 0) rotate(2deg); }
+[data-kinetic][data-armed="1"][data-play="1"] .cn-word-in {
+  transform: none;
+  transition: transform 1.15s var(--cn-ease);
+  transition-delay: calc(var(--i, 0) * 95ms);
 }
 
 /* One light pass across the name, once, after it has landed — the page's only
@@ -727,18 +749,20 @@ html:has(.cn) { scroll-padding-top: 74px; }
 .cn-name-wrap { position: relative; display: inline-block; isolation: isolate; }
 .cn-sweep {
   position: absolute; inset: -12% -6%; pointer-events: none; z-index: -1;
-  background: linear-gradient(105deg, transparent 38%, rgb(143 176 255 / 0.28) 50%, transparent 62%);
-  filter: blur(22px);
+  background: linear-gradient(105deg, transparent 34%, rgb(176 202 255 / 0.85) 50%, transparent 66%);
+  filter: blur(26px);
   opacity: 0;
 }
-.js .cn-sweep { animation: cn-pass 2.6s var(--cn-ease) 0.7s 1 both; }
+.cn-sweep { animation: cn-pass 2.2s var(--cn-ease) 1.1s 1 both; }
 @keyframes cn-pass {
-  0% { transform: translateX(-42%); opacity: 0; }
-  35% { opacity: 1; }
-  100% { transform: translateX(42%); opacity: 0; }
+  0% { transform: translateX(-60%); opacity: 0; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: translateX(60%); opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .js [data-kinetic] .cn-word-in { transform: none !important; opacity: 1 !important; }
-  .js .cn-sweep { animation: none; opacity: 0; }
+  .cn-hero [data-kinetic] .cn-word-in { animation: none; }
+  [data-kinetic] .cn-word-in { transform: none !important; }
+  .cn-sweep { animation: none; opacity: 0; }
 }

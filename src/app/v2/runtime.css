@@ -766,3 +766,87 @@ html:has(.cn) { scroll-padding-top: 74px; }
   [data-kinetic] .cn-word-in { transform: none !important; }
   .cn-sweep { animation: none; opacity: 0; }
 }
+
+/* ── Pointer light ───────────────────────────────────────────────────────────
+   A soft highlight under the cursor on the surfaces that read as objects. The
+   position comes from two custom properties written by `Pointer`; everything
+   else is CSS, so the cost per frame is one style write.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.cn-system, .cn-pillar, .cn-chart, .cn-rail-seg, .cn-field-row { position: relative; }
+.cn-system::before,
+.cn-pillar::before,
+.cn-chart::before,
+.cn-rail-seg::before,
+.cn-field-row::before {
+  content: "";
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 50%),
+    rgb(143 176 255 / 0.16),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.5s var(--cn-ease);
+}
+.cn-system[data-lit]::before,
+.cn-pillar[data-lit]::before,
+.cn-chart[data-lit]::before,
+.cn-rail-seg[data-lit]::before,
+.cn-field-row[data-lit]::before { opacity: 1; }
+/* The card's own content has to sit above its highlight. */
+.cn-system > *, .cn-pillar > *, .cn-chart > *, .cn-field-row > * { position: relative; z-index: 1; }
+
+/* ── Continuous life ─────────────────────────────────────────────────────────
+   Below the opening the 3D object is gone, so the page needs something of its
+   own: one slow drift of light behind the content, and a breath on the marks
+   that stand for something live.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.cn-after { isolation: isolate; }
+.cn-after > *:not(.cn-ambient) { position: relative; z-index: 1; }
+.cn-ambient {
+  position: fixed; inset: -20% -10%; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(38% 30% at 22% 28%, rgb(63 93 214 / 0.18), transparent 70%),
+    radial-gradient(30% 26% at 78% 68%, rgb(143 176 255 / 0.1), transparent 72%);
+  filter: blur(30px);
+  animation: cn-drift 38s ease-in-out infinite alternate;
+}
+@keyframes cn-drift {
+  from { transform: translate3d(-3%, -2%, 0) scale(1); }
+  to { transform: translate3d(4%, 3%, 0) scale(1.12); }
+}
+
+/* Marks that mean "live" breathe rather than sit. */
+.cn-rail-now, .cn-node[data-kind="in"]::after, .cn-node[data-kind="out"]::after {
+  animation: cn-breathe 4.2s var(--cn-ease) infinite;
+}
+@keyframes cn-breathe { 0%, 100% { opacity: 1; } 50% { opacity: 0.62; } }
+
+/* ── Hover, everywhere it is earned ─────────────────────────────────────────── */
+
+.cn-figure { transition: transform 0.5s var(--cn-ease); }
+.cn-figure:hover { transform: translateY(-4px); }
+.cn-figure:hover b i { color: var(--cn-white); }
+.cn-figure b i, .cn-figure b { transition: color 0.4s var(--cn-ease); }
+
+/* The nav marks where you are going before you get there. */
+.cn-nav a { position: relative; }
+.cn-nav a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px;
+  background: var(--cn-lit); transform: scaleX(0); transform-origin: right;
+  transition: transform 0.45s var(--cn-ease);
+}
+.cn-nav a:hover::after, .cn-nav a[data-live="1"]::after { transform: scaleX(1); transform-origin: left; }
+
+/* Contact rows lift their value as you go down the list. */
+.cn-contact-row { transition: background 0.45s var(--cn-ease); }
+.cn-contact-row:hover { background: rgb(246 247 250 / 0.03); }
+.cn-contact-row:hover dt { color: var(--cn-lit); }
+.cn-contact-row dt { transition: color 0.45s var(--cn-ease); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cn-ambient { animation: none; }
+  .cn-rail-now, .cn-node[data-kind="in"]::after, .cn-node[data-kind="out"]::after { animation: none; }
+}

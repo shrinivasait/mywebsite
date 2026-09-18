@@ -11,6 +11,7 @@ import {
 } from "@/lib/content";
 import { Copy, Figure, Head, HeroMotion, Reveal, Sequence } from "./_components/Chrome";
 import { Kinetic } from "./_components/Kinetic";
+import { Pointer } from "./_components/Pointer";
 import { Words } from "./_components/words";
 import { GrantSplit, SeatRail, SkillField, TeamCurve } from "./_components/Charts";
 import { Circuit, Pipeline } from "./_components/Flow";
@@ -125,6 +126,7 @@ export default function Cine() {
         {/* The sheet: everything after the opening travels as one surface,
             drawn up over the shot that stays pinned behind it. */}
         <div className="cn-after">
+        <div className="cn-ambient" aria-hidden />
         {/* ── Figures: the second screen ────────────────────────────────── */}
         <section className="cn-shell cn-screen">
           <div className="cn-screen-head cn-in">
@@ -392,7 +394,7 @@ export default function Cine() {
           <div>
             <p className="cn-label">{site.availability}</p>
             <h2 className="cn-h2" data-kinetic>
-              <Words>{"Let&rsquo;s build the function,"}</Words> <em><Words start={4}>{"not just the model"}</Words></em>
+              <Words>{"Let’s build the function,"}</Words> <em><Words start={4}>{"not just the model"}</Words></em>
             </h2>
             <p className="cn-lede">
               If you are putting an AI function on the map — or you have one and it is not
@@ -466,6 +468,7 @@ export default function Cine() {
 
       <HeroMotion />
       <Kinetic />
+      <Pointer />
       <Reveal />
     </>
   );

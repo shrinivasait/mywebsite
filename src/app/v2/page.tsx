@@ -10,6 +10,7 @@ import {
   skills,
 } from "@/lib/content";
 import { Copy, Figure, Head, HeroMotion, Reveal, Sequence } from "./_components/Chrome";
+import { Kinetic } from "./_components/Kinetic";
 import { GrantSplit, SeatRail, SkillField, TeamCurve } from "./_components/Charts";
 import { Circuit, Pipeline } from "./_components/Flow";
 import { Stage } from "./_components/Stage";
@@ -76,7 +77,12 @@ export default function Cine() {
               <span>{site.availability}</span>
             </p>
 
-            <h1 className="cn-display">{site.name}</h1>
+            <h1 className="cn-display">
+              <span className="cn-name-wrap">
+                <span className="cn-sweep" aria-hidden />
+                <span data-kinetic>{site.name}</span>
+              </span>
+            </h1>
             <p className="cn-title">{site.role}</p>
 
             <p className="cn-lede">
@@ -133,7 +139,7 @@ export default function Cine() {
           <div className="cn-sec-head cn-in">
             <div>
               <p className="cn-label">Selected work</p>
-              <h2 className="cn-h2">
+              <h2 className="cn-h2" data-kinetic>
                 Four systems, <em>in production</em>
               </h2>
             </div>
@@ -172,7 +178,7 @@ export default function Cine() {
           <div className="cn-sec-head cn-in">
             <div>
               <p className="cn-label">How the halves connect</p>
-              <h2 className="cn-h2">
+              <h2 className="cn-h2" data-kinetic>
                 One circuit, <em>not two careers</em>
               </h2>
             </div>
@@ -192,7 +198,7 @@ export default function Cine() {
           <div className="cn-sec-head cn-in">
             <div>
               <p className="cn-label">The hardest claim on this page</p>
-              <h2 className="cn-h2">
+              <h2 className="cn-h2" data-kinetic>
                 One spoken turn, <em>{BUDGET_MS} milliseconds</em>
               </h2>
             </div>
@@ -220,7 +226,7 @@ export default function Cine() {
           <div className="cn-sec-head cn-in">
             <div>
               <p className="cn-label">The other half</p>
-              <h2 className="cn-h2">
+              <h2 className="cn-h2" data-kinetic>
                 An architecture is only as durable as <em>the organisation running it</em>
               </h2>
             </div>
@@ -252,7 +258,7 @@ export default function Cine() {
           <div className="cn-sec-head cn-in">
             <div>
               <p className="cn-label">Technical depth</p>
-              <h2 className="cn-h2">
+              <h2 className="cn-h2" data-kinetic>
                 Six areas, <em>to depth</em>
               </h2>
             </div>
@@ -297,7 +303,7 @@ export default function Cine() {
           <div className="cn-sec-head cn-in">
             <div>
               <p className="cn-label">Record</p>
-              <h2 className="cn-h2">
+              <h2 className="cn-h2" data-kinetic>
                 Three seats, <em>five years</em>
               </h2>
             </div>
@@ -346,7 +352,7 @@ export default function Cine() {
 
             <div className="cn-portrait-copy">
               <p className="cn-label">{site.location}</p>
-              <h2 className="cn-h2">
+              <h2 className="cn-h2" data-kinetic>
                 I lead the work <em>and do it</em>
               </h2>
               <p className="cn-body">
@@ -382,7 +388,7 @@ export default function Cine() {
         <div className="cn-shell cn-close-in">
           <div>
             <p className="cn-label">{site.availability}</p>
-            <h2 className="cn-h2">
+            <h2 className="cn-h2" data-kinetic>
               Let&rsquo;s build the function, <em>not just the model</em>
             </h2>
             <p className="cn-lede">
@@ -456,6 +462,7 @@ export default function Cine() {
       </footer>
 
       <HeroMotion />
+      <Kinetic />
       <Reveal />
     </>
   );

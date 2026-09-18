@@ -704,3 +704,41 @@ html:has(.cn) { scroll-padding-top: 74px; }
 }
 .cn-field-row:hover .cn-cell { background: rgb(143 176 255 / 0.3); }
 .cn-cell:hover { background: var(--cn-lit); transform: scaleY(1.5); }
+
+/* ── Kinetic headlines ───────────────────────────────────────────────────────
+   Words arrive from under their own line, one after another, on the page's
+   single ease. The mask is the line box itself, so a word that never plays is
+   still readable — the effect can fail without costing the reader anything.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.cn-word { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.06em; margin-bottom: -0.06em; }
+.cn-word-in { display: inline-block; will-change: transform; }
+.js [data-kinetic][data-split="1"] .cn-word-in { transform: translate3d(0, 108%, 0); opacity: 0.4; }
+.js [data-kinetic][data-play="1"] .cn-word-in {
+  transform: none; opacity: 1;
+  transition:
+    transform 0.9s var(--cn-ease),
+    opacity 0.7s var(--cn-ease);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+
+/* One light pass across the name, once, after it has landed — the page's only
+   specular moment, and it never touches the glyph fill. */
+.cn-name-wrap { position: relative; display: inline-block; isolation: isolate; }
+.cn-sweep {
+  position: absolute; inset: -12% -6%; pointer-events: none; z-index: -1;
+  background: linear-gradient(105deg, transparent 38%, rgb(143 176 255 / 0.28) 50%, transparent 62%);
+  filter: blur(22px);
+  opacity: 0;
+}
+.js .cn-sweep { animation: cn-pass 2.6s var(--cn-ease) 0.7s 1 both; }
+@keyframes cn-pass {
+  0% { transform: translateX(-42%); opacity: 0; }
+  35% { opacity: 1; }
+  100% { transform: translateX(42%); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-kinetic] .cn-word-in { transform: none !important; opacity: 1 !important; }
+  .js .cn-sweep { animation: none; opacity: 0; }
+}

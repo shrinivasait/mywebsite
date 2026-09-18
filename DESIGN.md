@@ -139,6 +139,18 @@ components:
 
 # Design System: Shreenivas Joshi — personal site
 
+> **Scope.** This document describes the datasheet, which is the surface at
+> `/v2`. It was the front page when it was written and it is still built and
+> maintained to every rule below.
+>
+> The front page at `/` is a different world — a cinematic launch: true black,
+> one lit object on a fixed stage in the opening, Schibsted Grotesk at launch
+> scale, and one accent taken from the light on the object. It is not governed
+> by anything here; the two surfaces deliberately share no tokens, only the
+> content in `src/lib/content.ts`. Its direction contract lives in
+> `.impeccable/surfaces/src-app-cine-page-tsx.md`, and this document should be
+> read as describing `/v2` until that world is documented in its own right.
+
 ## Overview
 
 **Creative North Star: "The Datasheet"**

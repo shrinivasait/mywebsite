@@ -21,6 +21,13 @@ Blog and case-study content was explicitly deferred ("it will be added later,
 for now skip it"). The content system is not built yet; `src/lib/content.ts` is
 structured so it can be added without disturbing the page.
 
+**Two surfaces, one record.** `src/app/(cine)/` is the front page — a route
+group, so the folder names the world without adding a path segment — and
+`src/app/v2/` keeps the datasheet that held that seat before it. Both read the
+same `src/lib/content.ts`, so a figure can never differ between them. The front
+page is the indexed one; `/v2` is noindexed, because one résumé on two pages is
+duplicate content.
+
 ## Users
 
 Primary: **hiring managers and technical recruiters** filling senior AI
@@ -87,16 +94,32 @@ résumé PDF is a real deliverable visitors download and forward internally.
 - The professional portrait (`public/profile.jpg`) is real and is an asset, not
   a placeholder. For a recruiter audience a face is load-bearing.
 - No logo and no fixed brand palette.
-- **Standing preference: convention over invention.** After a high-concept
-  "funding instrument" redesign shipped, the user judged it "not user friendly
-  and very confusing" and chose to start over with the category standard. This
-  is now a brand commitment, not a one-off: this site should look like the
-  familiar, well-made engineer's site, executed at full craft. Do not introduce
-  a governing metaphor, an unusual vocabulary for section names, or a visual
-  world that has to be decoded. If a label is jargon, it is a defect.
-- Craft bar set by the user: leerob.com / rauchg.com, Linear / Vercel,
-  Stripe / Resend docs, and the polished developer-portfolio archetype. The
-  common thread is fast, restrained, strong typography, obvious structure.
+- **Nothing has to be decoded.** Plain section names, no invented vocabulary,
+  no governing metaphor a reader has to work out before they can read. If a
+  label is jargon, it is a defect. This began as half of a wider
+  "convention over invention" commitment, written after a high-concept
+  "funding instrument" redesign was judged "not user friendly and very
+  confusing", and it still holds without exception.
+- **The other half of that commitment is retired.** It said the site should
+  look like the familiar, well-made engineer's site and take the category
+  standard. That described the surface now at `/v2`, which is kept. The front
+  page is deliberately not that: over several rounds the user rejected four
+  quieter directions in turn — a console ("generic"), a record sleeve
+  ("basic"), a silicon die ("still not good") and a gold-on-black house
+  ("basic; the others were good compared to this") — and then stated the brief
+  directly: cinematic, premium, with real imagery and 3D, more on screen and
+  more motion. The front page answers that brief.
+
+  The two halves are separable, and the distinction is the whole point: the
+  front page is expressive in *register* and plain in *language*. Its
+  navigation reads Systems, Latency, Scale, Depth, Record, Contact.
+- Craft bar, front page: the cinematic-launch register — Apple, Rolex,
+  Bang & Olufsen — chosen by the user from a set of named alternatives. One lit
+  object carrying the opening, type at launch scale, and sections dense with
+  specification rather than sparse with taste.
+- Craft bar, `/v2`: leerob.com / rauchg.com, Linear / Vercel, Stripe / Resend
+  docs, and the polished developer-portfolio archetype — fast, restrained,
+  strong typography, obvious structure.
 
 ## Evidence on Hand
 

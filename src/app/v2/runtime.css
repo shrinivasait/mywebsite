@@ -793,15 +793,29 @@ html:has(.cn) { scroll-padding-top: 74px; }
 .cn-system, .cn-pillar, .cn-chart, .cn-field-row {
   transition: border-color 0.45s var(--cn-ease), box-shadow 0.45s var(--cn-ease);
 }
-.cn-system[data-lit], .cn-pillar[data-lit], .cn-chart[data-lit], .cn-field-row[data-lit] {
+.cn-system:hover, .cn-system[data-lit],
+.cn-pillar:hover, .cn-pillar[data-lit],
+.cn-chart:hover, .cn-chart[data-lit],
+.cn-field-row:hover, .cn-field-row[data-lit] {
   border-color: rgb(143 176 255 / 0.38);
   box-shadow: 0 24px 60px -34px rgb(63 93 214 / 0.8);
 }
-.cn-system[data-lit]::before,
-.cn-pillar[data-lit]::before,
-.cn-chart[data-lit]::before,
-.cn-rail-seg[data-lit]::before,
-.cn-field-row[data-lit]::before { opacity: 1; }
+/* A card that is being pointed at also rises a little, so the response is
+   legible from the corner of the eye and not only where the cursor is. */
+.cn-system, .cn-pillar { transform: translateY(0); }
+.cn-system:hover, .cn-pillar:hover { transform: translateY(-3px); }
+.cn-system, .cn-pillar {
+  transition:
+    border-color 0.45s var(--cn-ease),
+    box-shadow 0.45s var(--cn-ease),
+    transform 0.45s var(--cn-ease),
+    background 0.6s var(--cn-ease);
+}
+.cn-system:hover::before, .cn-system[data-lit]::before,
+.cn-pillar:hover::before, .cn-pillar[data-lit]::before,
+.cn-chart:hover::before, .cn-chart[data-lit]::before,
+.cn-rail-seg:hover::before, .cn-rail-seg[data-lit]::before,
+.cn-field-row:hover::before, .cn-field-row[data-lit]::before { opacity: 1; }
 /* The card's own content has to sit above its highlight. */
 .cn-system > *, .cn-pillar > *, .cn-chart > *, .cn-field-row > * { position: relative; z-index: 1; }
 

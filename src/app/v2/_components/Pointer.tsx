@@ -14,6 +14,11 @@ import { useEffect } from "react";
  * organisation panels, the charts and the seats. Text blocks do not, because a
  * light that follows the cursor across a paragraph is a distraction rather
  * than a response.
+ *
+ * The response does not depend on any of this. `:hover` lights the card in CSS
+ * on its own; all this adds is *where* the light falls. If this never runs —
+ * no scripting, a hydration failure, a device it declines to listen on — the
+ * card still answers the cursor.
  */
 const GLOW = ".cn-system, .cn-pillar, .cn-chart, .cn-rail-seg, .cn-field-row";
 

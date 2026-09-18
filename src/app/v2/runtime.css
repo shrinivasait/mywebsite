@@ -782,12 +782,20 @@ html:has(.cn) { scroll-padding-top: 74px; }
   content: "";
   position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background: radial-gradient(
-    240px circle at var(--mx, 50%) var(--my, 50%),
-    rgb(143 176 255 / 0.16),
-    transparent 70%
+    340px circle at var(--mx, 50%) var(--my, 50%),
+    rgb(143 176 255 / 0.3),
+    rgb(143 176 255 / 0.08) 45%,
+    transparent 72%
   );
   opacity: 0;
-  transition: opacity 0.5s var(--cn-ease);
+  transition: opacity 0.45s var(--cn-ease);
+}
+.cn-system, .cn-pillar, .cn-chart, .cn-field-row {
+  transition: border-color 0.45s var(--cn-ease), box-shadow 0.45s var(--cn-ease);
+}
+.cn-system[data-lit], .cn-pillar[data-lit], .cn-chart[data-lit], .cn-field-row[data-lit] {
+  border-color: rgb(143 176 255 / 0.38);
+  box-shadow: 0 24px 60px -34px rgb(63 93 214 / 0.8);
 }
 .cn-system[data-lit]::before,
 .cn-pillar[data-lit]::before,
@@ -808,14 +816,15 @@ html:has(.cn) { scroll-padding-top: 74px; }
 .cn-ambient {
   position: fixed; inset: -20% -10%; z-index: 0; pointer-events: none;
   background:
-    radial-gradient(38% 30% at 22% 28%, rgb(63 93 214 / 0.18), transparent 70%),
-    radial-gradient(30% 26% at 78% 68%, rgb(143 176 255 / 0.1), transparent 72%);
-  filter: blur(30px);
-  animation: cn-drift 38s ease-in-out infinite alternate;
+    radial-gradient(40% 32% at 22% 28%, rgb(63 93 214 / 0.38), transparent 70%),
+    radial-gradient(34% 28% at 78% 66%, rgb(143 176 255 / 0.2), transparent 72%),
+    radial-gradient(28% 24% at 52% 96%, rgb(63 93 214 / 0.22), transparent 74%);
+  filter: blur(26px);
+  animation: cn-drift 26s ease-in-out infinite alternate;
 }
 @keyframes cn-drift {
-  from { transform: translate3d(-3%, -2%, 0) scale(1); }
-  to { transform: translate3d(4%, 3%, 0) scale(1.12); }
+  from { transform: translate3d(-6%, -4%, 0) scale(1); }
+  to { transform: translate3d(7%, 5%, 0) scale(1.2); }
 }
 
 /* Marks that mean "live" breathe rather than sit. */
@@ -827,7 +836,7 @@ html:has(.cn) { scroll-padding-top: 74px; }
 /* ── Hover, everywhere it is earned ─────────────────────────────────────────── */
 
 .cn-figure { transition: transform 0.5s var(--cn-ease); }
-.cn-figure:hover { transform: translateY(-4px); }
+.cn-figure:hover { transform: translateY(-6px); }
 .cn-figure:hover b i { color: var(--cn-white); }
 .cn-figure b i, .cn-figure b { transition: color 0.4s var(--cn-ease); }
 

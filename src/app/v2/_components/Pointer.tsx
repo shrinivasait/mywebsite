@@ -19,9 +19,14 @@ const GLOW = ".cn-system, .cn-pillar, .cn-chart, .cn-rail-seg, .cn-field-row";
 
 export function Pointer() {
   useEffect(() => {
-    // A device without a fine pointer never sees this, so it never listens.
-    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    /* `any-hover`/`any-pointer`, not `hover`/`pointer`: on a touchscreen laptop
+       the *primary* pointer is reported as coarse, which would have switched
+       this off for the mouse sitting right next to it.
+
+       It is deliberately not gated on reduced motion. A highlight that follows
+       the cursor changes brightness, not position — it is feedback, and the
+       preference is about movement. */
+    if (!window.matchMedia("(any-hover: hover) and (any-pointer: fine)").matches) return;
 
     let raf = 0;
     let pending: { el: HTMLElement; x: number; y: number } | null = null;

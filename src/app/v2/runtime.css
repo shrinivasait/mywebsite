@@ -462,7 +462,7 @@ html:has(.cn) { scroll-padding-top: 74px; }
    Hairlines carry the structure; one signal runs them.
    ─────────────────────────────────────────────────────────────────────────── */
 
-.cn-wire { stroke: var(--cn-hair); stroke-width: 1; fill: none; }
+.cn-wire { stroke: rgb(246 247 250 / 0.22); stroke-width: 1.4; fill: none; }
 .cn-wire--live {
   stroke: var(--cn-lit);
   stroke-dasharray: 26 210;
@@ -474,7 +474,8 @@ html:has(.cn) { scroll-padding-top: 74px; }
 @keyframes cn-run { to { stroke-dashoffset: 0; } }
 @keyframes cn-run-back { from { stroke-dashoffset: 0; } to { stroke-dashoffset: 934; } }
 
-.cn-arrow, .cn-pipe-arrow, .cn-loop-arrow { fill: none; stroke: var(--cn-grey-2); stroke-width: 1.2; stroke-linecap: square; }
+.cn-arrow, .cn-loop-arrow { fill: none; stroke: var(--cn-lit); stroke-width: 1.4; stroke-linecap: square; }
+.cn-pipe-arrow { fill: none; stroke: var(--cn-grey-2); stroke-width: 1.2; stroke-linecap: square; }
 
 /* ── The circuit ─────────────────────────────────────────────────────────── */
 
@@ -486,18 +487,40 @@ html:has(.cn) { scroll-padding-top: 74px; }
 @media (min-width: 900px) { .cn-node-wrap { display: block; } }
 
 .cn-node {
-  position: relative; z-index: 1;
-  background: rgb(5 5 7 / 0.78); backdrop-filter: blur(10px);
-  border: 1px solid var(--cn-hair-2);
+  position: relative; z-index: 1; isolation: isolate;
+  background: linear-gradient(165deg, rgb(24 28 40 / 0.94), rgb(7 8 12 / 0.94));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgb(246 247 250 / 0.11);
+  box-shadow: 0 18px 40px -26px rgb(0 0 0 / 0.9), inset 0 1px 0 0 rgb(246 247 250 / 0.07);
   padding: clamp(18px, 1.8vw, 26px);
-  display: flex; flex-direction: column; gap: 8px;
-  min-height: 132px;
-  transition: border-color 0.5s var(--cn-ease), background 0.5s var(--cn-ease);
+  display: flex; flex-direction: column; gap: 10px;
+  min-height: 146px;
+  transition: border-color 0.5s var(--cn-ease), transform 0.5s var(--cn-ease), box-shadow 0.5s var(--cn-ease);
 }
-.cn-node:hover { border-color: var(--cn-hair); background: rgb(16 18 25 / 0.85); }
-.cn-node[data-kind="in"] { border-left: 1px solid var(--cn-lit-deep); }
-.cn-node[data-kind="out"] { border-right: 1px solid var(--cn-lit-deep); }
-.cn-node-no { font-size: 0.6875rem; letter-spacing: 0.18em; color: var(--cn-lit); font-variant-numeric: tabular-nums; }
+/* A lit edge across the top of every stage, so the row reads as a run of
+   instruments rather than as four dark boxes. */
+.cn-node::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cn-lit), transparent);
+  opacity: 0.4; transition: opacity 0.5s var(--cn-ease);
+}
+.cn-node:hover {
+  border-color: rgb(143 176 255 / 0.4); transform: translateY(-3px);
+  box-shadow: 0 26px 52px -26px rgb(0 0 0 / 0.95), inset 0 1px 0 0 rgb(246 247 250 / 0.1);
+}
+.cn-node:hover::before { opacity: 1; }
+.cn-node[data-kind="in"]::after, .cn-node[data-kind="out"]::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 2px;
+  background: var(--cn-lit); box-shadow: 0 0 18px 0 rgb(143 176 255 / 0.55);
+}
+.cn-node[data-kind="in"]::after { left: 0; }
+.cn-node[data-kind="out"]::after { right: 0; }
+.cn-node-no {
+  align-self: flex-start;
+  font-size: 0.625rem; letter-spacing: 0.18em; color: var(--cn-lit); font-variant-numeric: tabular-nums;
+  border: 1px solid rgb(143 176 255 / 0.3); border-radius: 999px; padding: 4px 10px;
+  background: rgb(143 176 255 / 0.1);
+}
 .cn-node-label { font-size: 1.0625rem; font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; }
 .cn-node-datum { font-size: 0.8125rem; color: var(--cn-grey-2); margin-top: auto; }
 
@@ -533,17 +556,19 @@ html:has(.cn) { scroll-padding-top: 74px; }
 }
 .cn-fb {
   position: relative;
-  background: rgb(5 5 7 / 0.78); backdrop-filter: blur(10px);
-  border: 1px solid var(--cn-hair-2); border-top-color: var(--cn-lit-deep);
+  background: linear-gradient(165deg, rgb(20 24 36 / 0.94), rgb(7 8 12 / 0.94));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgb(143 176 255 / 0.24);
+  box-shadow: 0 18px 40px -26px rgb(0 0 0 / 0.9), inset 0 1px 0 0 rgb(143 176 255 / 0.2);
   padding: clamp(16px, 1.6vw, 22px);
-  display: flex; flex-direction: column; gap: 6px;
+  display: flex; flex-direction: column; gap: 8px;
 }
-.cn-fb .cn-node-no { color: var(--cn-grey-2); text-transform: uppercase; letter-spacing: 0.2em; }
+.cn-fb .cn-node-no { align-self: flex-start; color: var(--cn-lit); text-transform: uppercase; letter-spacing: 0.2em; }
 .cn-fb .cn-node-label { font-size: 0.9375rem; }
 
 /* The two wires: down out of the systems on the right, back up into the
    architecture on the left. Each is a hairline with the signal running it. */
-.cn-fb-stub { position: absolute; bottom: 100%; width: 1px; height: 44px; background: var(--cn-hair); display: none; }
+.cn-fb-stub { position: absolute; bottom: 100%; width: 1px; height: 44px; background: rgb(246 247 250 / 0.22); display: none; }
 @media (min-width: 900px) { .cn-fb-stub { display: block; } }
 .cn-fb-stub::after {
   content: ""; position: absolute; inset: 0;
@@ -617,19 +642,52 @@ html:has(.cn) { scroll-padding-top: 74px; }
 
 /* ── The seat rail ───────────────────────────────────────────────────────── */
 
-.cn-rail { margin-bottom: clamp(26px, 3vw, 44px); }
-.cn-rail-track { position: relative; height: 76px; border-top: 1px solid var(--cn-hair-2); }
-.cn-rail-seg {
-  position: absolute; top: 14px; height: 46px;
-  border-left: 1px solid var(--cn-hair);
-  padding: 0 0 0 12px; display: flex; flex-direction: column; gap: 3px; justify-content: center;
-  background: linear-gradient(90deg, rgb(143 176 255 / 0.1), rgb(143 176 255 / 0));
+.cn-rail { margin: 0 0 clamp(30px, 3.4vw, 52px); display: flex; flex-direction: column; gap: 22px; }
+.cn-rail-track { position: relative; height: 112px; }
+
+/* Year ticks: the rail is read against real years rather than against its own
+   length, which is what turns three bars into a chart. */
+.cn-rail-tick { position: absolute; top: 0; bottom: 0; }
+.cn-rail-tick i { position: absolute; top: 22px; bottom: 0; width: 1px; background: rgb(246 247 250 / 0.07); }
+.cn-rail-tick em {
+  position: absolute; top: 0; left: 0; transform: translateX(-50%); font-style: normal;
+  font-size: 0.625rem; letter-spacing: 0.14em; color: var(--cn-grey-2); font-variant-numeric: tabular-nums;
 }
-.cn-rail-seg[data-current="1"] { border-left-color: var(--cn-lit); background: linear-gradient(90deg, rgb(143 176 255 / 0.22), rgb(143 176 255 / 0.02)); }
-.cn-rail-seg b { font-size: 0.8125rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.cn-rail-seg i { font-style: normal; font-size: 0.6875rem; color: var(--cn-grey-2); font-variant-numeric: tabular-nums; }
-.cn-rail-seg em { position: absolute; top: -28px; left: 0; font-style: normal; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cn-grey-2); white-space: nowrap; }
-@media (max-width: 899px) { .cn-rail-seg b { font-size: 0.6875rem; } .cn-rail-seg i, .cn-rail-seg em { display: none; } }
+
+.cn-rail-seg {
+  position: absolute; top: 34px; height: 66px; border-radius: 4px; overflow: hidden;
+  border: 1px solid rgb(246 247 250 / 0.12);
+  box-shadow: 0 16px 36px -24px rgb(0 0 0 / 0.9), inset 0 1px 0 0 rgb(246 247 250 / 0.06);
+  display: flex; align-items: center;
+  transition: border-color 0.5s var(--cn-ease), transform 0.5s var(--cn-ease);
+}
+.cn-rail-seg:hover { border-color: rgb(143 176 255 / 0.45); transform: translateY(-2px); }
+.cn-rail-fill { position: absolute; inset: 0; background: linear-gradient(135deg, rgb(63 93 214 / 0.36), rgb(10 11 15 / 0.9)); }
+.cn-rail-seg[data-current="1"] { border-color: rgb(143 176 255 / 0.55); }
+.cn-rail-seg[data-current="1"] .cn-rail-fill {
+  background: linear-gradient(135deg, rgb(143 176 255 / 0.6), rgb(63 93 214 / 0.32) 55%, rgb(10 11 15 / 0.85));
+}
+/* Each seat draws itself open, left to right, as the section arrives. */
+.js .cn-in .cn-rail-fill { transform-origin: left; transform: scaleX(0); transition: transform 0.9s var(--cn-ease); }
+.js .cn-in[data-seen="1"] .cn-rail-fill, .js .cn-in[data-fallback="1"] .cn-rail-fill { transform: none; }
+
+.cn-rail-copy { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 3px; padding: 0 14px; min-width: 0; }
+.cn-rail-copy b { font-size: 0.875rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cn-rail-copy i {
+  font-style: normal; font-size: 0.6875rem; color: var(--cn-grey);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums;
+}
+.cn-rail-now {
+  position: relative; z-index: 1; margin: 0 12px 0 auto; white-space: nowrap;
+  font-size: 0.5625rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600;
+  color: var(--cn-black); background: var(--cn-lit); border-radius: 999px; padding: 4px 9px;
+}
+@media (max-width: 899px) {
+  .cn-rail-track { height: 96px; }
+  .cn-rail-seg { height: 54px; }
+  .cn-rail-copy i, .cn-rail-now { display: none; }
+  .cn-rail-copy b { font-size: 0.6875rem; }
+}
 
 /* ── The surface field ───────────────────────────────────────────────────── */
 

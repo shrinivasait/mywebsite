@@ -169,37 +169,56 @@ export function GrantSplit() {
 
 export function SeatRail() {
   const spans = roles
-    .map((r) => ({
-      role: r,
-      from: monthIndex(r.start),
-      to: monthIndex(r.end),
-    }))
+    .map((r) => ({ role: r, from: monthIndex(r.start), to: monthIndex(r.end) }))
     .sort((a, b) => a.from - b.from);
 
   const first = spans[0].from;
   const last = spans[spans.length - 1].to;
   const total = Math.max(1, last - first);
+  const pct = (m: number) => ((m - first) / total) * 100;
+
+  // A tick per January inside the span, so the rail is read against real years
+  // rather than against its own length.
+  const years: number[] = [];
+  for (let y = Math.ceil(first / 12); y * 12 <= last; y += 1) years.push(y);
 
   return (
-    <div className="cn-rail" aria-hidden>
+    <figure className="cn-rail">
+      <figcaption className="cn-chart-head">
+        <span className="cn-label">Seats, to scale</span>
+        <span className="cn-chart-value">
+          {Math.round((total / 12) * 10) / 10}
+          <i>years, end to end</i>
+        </span>
+      </figcaption>
+
       <div className="cn-rail-track">
-        {spans.map((s, i) => (
+        {years.map((y) => (
+          <span key={y} className="cn-rail-tick" style={{ left: `${pct(y * 12)}%` }} aria-hidden>
+            <i />
+            <em>{2000 + y}</em>
+          </span>
+        ))}
+
+        {spans.map((s) => (
           <span
             key={s.role.org}
             className="cn-rail-seg"
             data-current={s.role.current ? "1" : "0"}
-            style={{
-              left: `${((s.from - first) / total) * 100}%`,
-              width: `${((s.to - s.from) / total) * 100}%`,
-            }}
+            style={{ left: `${pct(s.from)}%`, width: `${((s.to - s.from) / total) * 100}%` }}
           >
-            <b>{s.role.orgShort ?? s.role.org}</b>
-            <i>{s.to - s.from} mo</i>
-            <em data-side={i === 0 ? "start" : "mid"}>{s.role.start}</em>
+            <span className="cn-rail-fill" aria-hidden />
+            <span className="cn-rail-copy">
+              <b>{s.role.title}</b>
+              <i>
+                {s.role.orgShort ?? s.role.org} · {s.to - s.from} mo
+              </i>
+            </span>
+            {s.role.current ? <span className="cn-rail-now">Now</span> : null}
           </span>
         ))}
       </div>
-    </div>
+    </figure>
   );
 }
 

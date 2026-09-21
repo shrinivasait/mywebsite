@@ -8,7 +8,8 @@ import { Fragment } from "react";
  * masked state is in the very first frame — the heading never appears, then
  * disappears, then returns, which is what the client-side version did.
  *
- * With scripting off the mask is inert (the pre-state is gated on `.js`) and
+ * With scripting off the mask is inert (the pre-state sits behind
+ * `@media (scripting: enabled)`, never a `.js` class) and
  * the heading is an ordinary heading. The spaces are real text nodes rendered
  * *between* the masks rather than inside them, so word spacing survives the
  * clipping and the line still breaks where it should.

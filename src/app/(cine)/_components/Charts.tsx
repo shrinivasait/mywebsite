@@ -80,7 +80,7 @@ export function TeamCurve() {
           </g>
         ))}
 
-        <path className="cn-area" d={area} />
+        <path className="cn-chart-area" d={area} />
         <path className="cn-step" d={step} vectorEffect="non-scaling-stroke" />
         <path className="cn-step cn-step--live" d={step} vectorEffect="non-scaling-stroke" />
 

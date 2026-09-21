@@ -1,1224 +1,354 @@
 ---
-name: Shreenivas Joshi — personal site
-description: >-
-  A two-ink technical document. Black ink carries every word and every rule on
-  cool spec stock; one process cyan carries the plotted mark and the primary
-  action. Nothing glows, nothing blurs, nothing is round, and there is no
-  gradient anywhere on the page. The evidence is a characteristics table where
-  every figure states its unit and its test condition, the pairing is drawn as
-  one circuit with a feedback loop, the running head carries a sheet counter
-  instead of a progress bar, and the 3D object is a solid orthographic loss
-  landscape with contour rings on it and four optimisers descending at once,
-  rather than a glass orb that spins.
+name: Shreenivas Joshi — Front Page (Cinematic)
+description: A product-launch page for an AI engineering leader, built on true black with one lit blue-white accent and a single variable grotesque.
 colors:
-  light:
-    stock: "#f7f8f7"
-    stock-plate: "#ffffff"
-    stock-sunken: "#eef0ef"
-    ink: "#14171b"
-    ink-2: "#4a5157"
-    ink-3: "#626a70"
-    reticule: "#dcdfde"
-    reticule-2: "#c4c9c8"
-    trace: "#046a90"
-    trace-bright: "#0a93c4"
-    trace-wash: "rgb(4 106 144 / 0.07)"
-    trace-fg: "#ffffff"
-    scene-face: "#eceeed"
-    scene-face-2: "#f7f8f7"
-    scene-face-3: "#d8dcdb"
-    scene-edge: "#14171b"
-    scene-mark: "#046a90"
-  dark:
-    stock: "#101315"
-    stock-plate: "#171b1e"
-    stock-sunken: "#0b0e0f"
-    ink: "#e7eae9"
-    ink-2: "#a7afb3"
-    ink-3: "#8b9297"
-    reticule: "#23282b"
-    reticule-2: "#363d41"
-    trace: "#4fb9de"
-    trace-bright: "#67c9ea"
-    trace-wash: "rgb(79 185 222 / 0.1)"
-    trace-fg: "#05242e"
-    scene-face: "#23282b"
-    scene-face-2: "#2c3236"
-    scene-face-3: "#191d20"
-    scene-edge: "#cfd5d4"
-    scene-mark: "#4fb9de"
+  black: "#000000"
+  ink: "#050507"
+  ink-2: "#0a0b0f"
+  ink-3: "#101219"
+  ink-4: "#171a24"
+  white: "#f6f7fa"
+  grey: "#a7adbd"
+  grey-2: "#7b8194"
+  lit: "#8fb0ff"
+  lit-deep: "#3f5dd6"
+  lit-wash: "rgb(143 176 255 / 0.1)"
+  hair: "rgb(246 247 250 / 0.1)"
+  hair-2: "rgb(246 247 250 / 0.055)"
 typography:
-  spec-title:
-    fontFamily: "Archivo, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "2.375rem / 3.375rem at ≥640px"
-    fontWeight: 600
-    lineHeight: 1.02
-    letterSpacing: "-0.03em"
-  spec-section:
-    fontFamily: "Archivo, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "0.8125rem"
-    fontWeight: 600
-    lineHeight: 1.2
-    letterSpacing: "0.075em"
-    textTransform: uppercase
-  spec-head:
-    fontFamily: "Archivo, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1.0625rem block titles, up to 1.875rem for the contact line"
-    fontWeight: 600
-    lineHeight: 1.32
-    letterSpacing: "-0.018em"
-  spec-label:
-    fontFamily: "Chivo Mono, ui-monospace, monospace"
-    fontSize: "0.6875rem"
-    fontWeight: 400
-    lineHeight: 1.2
-    letterSpacing: "0.09em"
-    textTransform: uppercase
-  spec-value:
-    fontFamily: "Archivo, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1.0625rem"
-    fontWeight: 600
-    letterSpacing: "-0.012em"
-    fontVariantNumeric: tabular-nums
-  spec-datum:
-    fontFamily: "Chivo Mono, ui-monospace, monospace"
-    fontSize: "0.75rem"
+  display:
+    fontFamily: "Schibsted Grotesk, system-ui, sans-serif"
+    fontSize: "clamp(2.75rem, 6.1vw, 6.25rem)"
+    fontWeight: 500
+    lineHeight: 0.92
+    letterSpacing: "-0.045em"
+  headline:
+    fontFamily: "Schibsted Grotesk, system-ui, sans-serif"
+    fontSize: "clamp(2rem, 4.6vw, 4.25rem)"
+    fontWeight: 500
+    lineHeight: 0.98
+    letterSpacing: "-0.04em"
+  title:
+    fontFamily: "Schibsted Grotesk, system-ui, sans-serif"
+    fontSize: "clamp(1.375rem, 2vw, 1.875rem)"
+    fontWeight: 500
+    lineHeight: 1.12
+    letterSpacing: "-0.028em"
+  figure:
+    fontFamily: "Schibsted Grotesk, system-ui, sans-serif"
+    fontSize: "clamp(2.75rem, 6vw, 6rem)"
+    fontWeight: 500
+    lineHeight: 1
+    letterSpacing: "-0.055em"
+    fontFeature: "tabular-nums"
+  lede:
+    fontFamily: "Schibsted Grotesk, system-ui, sans-serif"
+    fontSize: "clamp(1.0625rem, 1.5vw, 1.5rem)"
     fontWeight: 400
     lineHeight: 1.5
-    letterSpacing: "-0.005em"
-    fontVariantNumeric: tabular-nums
+    letterSpacing: "-0.015em"
   body:
-    fontFamily: "Archivo, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "0.9375rem default / 0.875rem secondary"
+    fontFamily: "Schibsted Grotesk, system-ui, sans-serif"
+    fontSize: "1rem"
     fontWeight: 400
-    lineHeight: "1.65–1.7"
+    lineHeight: 1.7
+  small:
+    fontFamily: "Schibsted Grotesk, system-ui, sans-serif"
+    fontSize: "0.8125rem"
+    fontWeight: 400
+    lineHeight: 1.7
+  label:
+    fontFamily: "Schibsted Grotesk, system-ui, sans-serif"
+    fontSize: "0.6875rem"
+    fontWeight: 500
+    lineHeight: 1.2
+    letterSpacing: "0.26em"
 rounded:
   none: "0px"
+  xs: "2px"
+  sm: "4px"
+  sheet: "clamp(14px, 1.8vw, 26px)"
+  pill: "999px"
 spacing:
-  section-top: "4rem / 6rem at ≥640px"
-  front-page: "2.5rem top, 3.5rem bottom / 3.5rem and 4rem at ≥640px"
-  container: "max-width 68rem, padding 1.25rem / 2rem at ≥640px"
-  table-cell: "0.75rem 0.875rem body, 0.5rem 0.875rem header"
+  gutter: "clamp(20px, 4vw, 80px)"
+  section: "clamp(56px, 5.4vw, 104px)"
+  panel: "clamp(26px, 2.6vw, 46px)"
+  card: "clamp(22px, 2.4vw, 38px)"
+  seam: "1px"
+  head: "74px"
 components:
-  key-primary:
-    backgroundColor: "{colors.light.trace}"
-    textColor: "{colors.light.trace-fg}"
-    rounded: "{rounded.none}"
-    padding: "0.625rem 1rem"
-    typography: "Archivo 600, 0.875rem"
-  key-secondary:
-    backgroundColor: "{colors.light.stock-plate}"
-    textColor: "{colors.light.ink}"
-    borderColor: "{colors.light.reticule-2}"
-    rounded: "{rounded.none}"
-    padding: "0.625rem 1rem"
-  key-quiet:
+  button-primary:
+    backgroundColor: "{colors.white}"
+    textColor: "{colors.black}"
+    rounded: "{rounded.pill}"
+    padding: "15px 28px"
+  button-primary-hover:
+    backgroundColor: "#ffffff"
+    textColor: "{colors.black}"
+  button-secondary:
+    backgroundColor: "rgb(246 247 250 / 0.04)"
+    textColor: "{colors.white}"
+    rounded: "{rounded.pill}"
+    padding: "15px 28px"
+  button-secondary-hover:
+    backgroundColor: "rgb(246 247 250 / 0.1)"
+    textColor: "{colors.white}"
+  button-head:
+    backgroundColor: "{colors.white}"
+    textColor: "{colors.black}"
+    rounded: "{rounded.pill}"
+    padding: "10px 20px"
+  chip:
     backgroundColor: "transparent"
-    textColor: "{colors.light.ink-2}"
+    textColor: "{colors.grey-2}"
+    rounded: "{rounded.pill}"
+    padding: "6px 12px"
+  chip-hover:
+    textColor: "{colors.grey}"
+  badge-live:
+    backgroundColor: "{colors.lit}"
+    textColor: "{colors.black}"
+    rounded: "{rounded.pill}"
+    padding: "5px 11px"
+  status-pill:
+    backgroundColor: "rgb(246 247 250 / 0.03)"
+    textColor: "{colors.grey}"
+    rounded: "{rounded.pill}"
+    padding: "8px 16px 8px 12px"
+  panel-glass:
+    backgroundColor: "rgb(5 5 7 / 0.72)"
+    textColor: "{colors.grey}"
     rounded: "{rounded.none}"
-    padding: "0.625rem 0.5rem"
-  plate:
-    backgroundColor: "{colors.light.stock-plate}"
-    borderColor: "{colors.light.reticule-2}"
+    padding: "{spacing.panel}"
+  panel-glass-hover:
+    backgroundColor: "rgb(16 18 25 / 0.82)"
+  node-card:
+    backgroundColor: "{colors.ink-4}"
+    textColor: "{colors.white}"
     rounded: "{rounded.none}"
-    padding: "1.5rem / 2rem for the featured plate"
-  plate-sunken:
-    backgroundColor: "{colors.light.stock-sunken}"
-    borderColor: "{colors.light.reticule-2}"
+    padding: "clamp(18px, 1.8vw, 26px)"
+    height: "146px"
+  spec-cell:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.white}"
     rounded: "{rounded.none}"
-  tbl:
-    backgroundColor: "{colors.light.stock-plate}"
-    borderColor: "{colors.light.reticule-2}"
-    rounded: "{rounded.none}"
-  nav-item-active:
-    backgroundColor: "{colors.light.stock-sunken}"
-    textColor: "{colors.light.ink}"
-    rounded: "{rounded.none}"
-    padding: "0.375rem 0.625rem"
+    padding: "12px 14px"
+  link-inline:
+    backgroundColor: "transparent"
+    textColor: "{colors.lit}"
 ---
 
-# Design System: Shreenivas Joshi — personal site
+# Design System: Shreenivas Joshi — Front Page (Cinematic)
 
-> **Scope.** This document describes the datasheet, which is the surface at
-> `/v2`. It was the front page when it was written and it is still built and
-> maintained to every rule below.
->
-> The front page at `/` is a different world — a cinematic launch: true black,
-> one lit object on a fixed stage in the opening, Schibsted Grotesk at launch
-> scale, and one accent taken from the light on the object. It is not governed
-> by anything here; the two surfaces deliberately share no tokens, only the
-> content in `src/lib/content.ts`. Its direction contract lives in
-> `.impeccable/surfaces/src-app-cine-page-tsx.md`, and this document should be
-> read as describing `/v2` until that world is documented in its own right.
+> **Scope.** This file documents the front page only — the route group `src/app/(cine)/`, which serves `/`. The datasheet at `/v2` is a separate world with its own document, `DESIGN.v2.md`; the two share no tokens, no classes and no type ramp. Their only shared surface is the content in `src/lib/content.ts`. Do not merge them, and do not resolve a question about one by reading the other.
 
 ## Overview
 
-**Creative North Star: "The Datasheet"**
+**Creative North Star: "The Product Launch, where the product is the system he builds"**
 
-A two-ink technical document. The page is one printed sheet on cool spec stock:
-black ink carries every word, every rule and every frame, and a single process
-cyan carries the plotted mark and the primary action. Nothing glows, nothing
-blurs, nothing is round, and there is no gradient anywhere.
+The page is staged the way a silicon or watch launch is staged: one lit, machined object held in the opening frame, true black underneath so the rendered object and the document share a single ground, type at launch scale, and evidence set as specification rather than as prose. Four earlier worlds on this route were rejected as generic or basic, and the diagnosis that finally stuck was that all four were *drawings* — flat fills and hairlines, no lit material and no motion. This world answers that with material: real depth, real light, and a page that is never completely still.
 
-This world **replaces** the one recorded here before rather than refining it.
-The previous system was a neutral ramp plus a violet accent carrying an aurora
-of blurred blooms, a transmissive glass artifact with a lit core, grain over
-large fields, rules that faded at both ends, and a pointer-tracked spotlight. It
-was carefully built and thoroughly documented. It was also the single most
-over-represented look in generated interfaces — violet light, glass, glow — and
-the user's report was exactly that: *"Still UI looks like AI generated use
-something unique and fantastics and premium."*
+Every token is declared on the `.cn` scope, so the site-wide theme class on `<html>` has no vote here. The page is a single material in a single mode. Density is deliberate: the subject is an engineer, and a specification table is the most flattering thing you can print about one whose numbers hold up. Sections are dense and precise; the restraint is in the palette, not in the quantity of evidence.
 
-The direction was chosen through a roll rather than by ranking, and the user
-locked the card presented as Impeccable's Pick with its familiarity risk stated
-on its face. Two of the dealt challengers are worth recording because they
-constrain future work. **Civic Bureau Prospectus** — bone white, hairline
-rules, one violet action, a rendered teal-to-violet ribbon — was declined on
-factual grounds rather than taste: it is the incumbent's own world with a
-different gradient, and it is the enterprise-SaaS default the brief names as the
-problem. **Custody of the Work** (a museum provenance ribbon) was judged
-competitive and remains the standing alternate: it is the only dealt world that
-turns the absence of case-study artefacts into a feature by distinguishing
-verified passages from inferred ones.
-
-Why this world and not another: **the product's own principles ask for it.**
-PRODUCT.md says numbers are the proof and the page must be judgeable in forty
-seconds. A datasheet is the document form that exists to make a claim checkable
-at a glance, because every value states its unit and the condition it holds
-under. So the four large hero figures became a nine-row characteristics table.
-That is more evidence in less space, and it retires the hero-metric template
-(big number, small label, accent) that the page was previously built on.
-
-The **convention-over-invention** commitment in PRODUCT.md is honoured and not
-overridden. Section names are still Work, Leadership, Technical depth,
-Experience, About and Contact. There is no governing metaphor to decode, no
-invented vocabulary, and no label that is jargon. What the world supplies is a
-*grammar* — table, rule, plate, reticule, running head — not a new
-set of names. That distinction is the whole reason this direction can be this
-committed without breaking the brand commitment.
+The accent is not a brand colour. It is the colour of the light on the object — a cool blue-white that reads as a reflection of the thing on the stage, which is why it appears on marks that mean *live*, *signal* or *now*, and almost nowhere else.
 
 **Key Characteristics:**
-
-- Two inks: one black in three measured weights, one process cyan. No third hue anywhere
-- Zero border radius, with two drawn circles as the only exceptions (the portrait, the status mark)
-- No gradient on the page: not on type, not on a rule, not on a surface, not behind anything
-- Two shadows in the entire system, both on things that genuinely float
-- Two faces, and exactly two weights of the text face
-- The central evidence is a characteristics table with a conditions column
-- The pairing is drawn as one circuit with a real feedback loop, not argued as two sections
-- A running head with a sheet counter, in place of a coloured progress bar
-- A solid orthographic loss landscape in WebGL: contour rings on the surface, projected on the plate, four concurrent descents and a live readout — drawn again as a contour map in SVG underneath
-- Complete, legible and unhidden with JavaScript off and with WebGL absent
+- True black ground (`#000000`) shared by the WebGL stage and the document.
+- One typeface, one accent, three weights of cool white.
+- Hairlines at 5.5–10% white do all the structural drawing; almost nothing has a radius.
+- Glass panels with backdrop blur floating over a slowly drifting field of light.
+- Motion is continuous and cheap: transform, opacity and custom properties only.
+- Nothing is ever fully hidden; every entrance carries a fallback that resolves it.
 
 ## Colors
 
-Two inks on stock. The palette is small enough to state in one sentence, and
-every value is measured rather than picked.
+A single-hue world: four blacks, three cool whites and one blue-white light, plus its deep and washed variants.
 
 ### Primary
-
-- **Process Cyan** (light `#046a90`, dark `#4fb9de`): the second ink of a
-  two-colour print run. It carries the primary action's fill, the leadership
-  proof lines, the "Current" chip, the status mark, links inside prose, the
-  focus ring, text selection, the caret, and the leads and marking on the 3D
-  object. It is not violet, not terracotta, not neon and not a signal red —
-  those are the three clusters a free aesthetic axis lands in, and process cyan
-  is what a technical document actually runs as its plate. Measured 5.6:1 light,
-  8.1:1 dark.
-- **Cyan Bright** (`--trace-bright`, 3.3:1 light): the full-chroma ink, for
-  graphics and large type only. It is never used for body text, and the two
-  values exist precisely so that rule cannot be broken by accident.
+- **Stage Light** (`#8fb0ff`, 8.6:1 on black): the light on the object, reused as the page's only accent. Figure and chart labels, accent halves of headlines, live marks, the active bar of the latency track, chart strokes, node numbers, inline links, focus rings, selection, caret. It is a signal, not a decoration.
+- **Deep Beam** (`#3f5dd6`): the far end of the light. The base of accent gradients, the first segment of the stacked bar, the dash before a record bullet, the coloured shadow under a pointed-at card.
+- **Light Wash** (`rgb(143 176 255 / 0.1)`): the accent at breathing strength — node-number pill fills, chart area fills, ambient washes on the stage.
 
 ### Neutral
-
-- **Stock** (`--stock`, `#f7f8f7`): the printed ground, on `html` so it is
-  continuous through overscroll. Cool, with a faint green-grey cast, because
-  that is what technical print runs on. It is deliberately **not** cream: warm
-  paper plus a high-contrast serif is the other cluster this redesign is
-  escaping, and landing there would have been the default wearing different
-  clothes.
-- **Stock Plate / Stock Sunken**: a bordered region of print stock, and a well.
-  A plate is pure white in light so it separates from the sheet by its own hard
-  edge rather than by tone.
-- **Ink** (`#14171b`, 16.0:1): headings, rules, frames, the running head's
-  identity. Never pure black — a printed black is a dense grey.
-- **Ink 2** (`#4a5157`, 7.3:1): all prose.
-- **Ink 3** (`#626a70`, 4.9:1): units, symbols, test conditions, captions,
-  column heads. Carries deliberate headroom over the 4.5 floor so a value
-  sitting on `--stock-sunken` still passes.
-- **Reticule / Reticule 2**: the drawn structure — the graph grid, the table
-  hairline, the plate edge.
-
-### Scene
-
-`--scene-face`, `--scene-face-2`, `--scene-face-3`, `--scene-edge`,
-`--scene-mark` and the scalar `--scene-key`. Not a second palette: the page's
-own inks expressed as the six values the drawing needs, read off
-`documentElement` and re-read whenever the theme class flips.
+- **True Black** (`#000000`): the page ground, the sheet's own fill, field rows, and the fill of chart dots. Not near-black: the WebGL canvas and the document must be indistinguishable at the seam.
+- **Ink** (`#050507`) / **Ink 2** (`#0a0b0f`) / **Ink 3** (`#101219`) / **Ink 4** (`#171a24`): the four steps above the ground. Ink fills spec cells; Ink 2 backs the portrait plate; Ink 3 is the hover state of a glass panel and the top of the sequence gradient; Ink 4 is the lit top of a circuit node. Panels use these at 72–94% alpha over the stage so the light behind them still shows.
+- **Cool White** (`#f6f7fa`, 19.6:1): headlines, figures, values, and any datum that is the answer to a label.
+- **Grey** (`#a7adbd`, 9.1:1): prose — ledes, body, panel paragraphs.
+- **Grey 2** (`#7b8194`, 5.2:1): labels, units, captions, ticks, inactive nav, and every piece of metadata that should be legible without competing.
+- **Hairline** (`rgb(246 247 250 / 0.1)`) and **Hairline Faint** (`rgb(246 247 250 / 0.055)`): the two structural strokes. Faint is the default divider and grid seam; the stronger hairline marks the top of a table, the border of a control, and the hover state of a chip.
 
 ### Named Rules
+**The Reflected Light Rule.** There is exactly one accent, and it is the colour of the light on the object. Anything that does not mean *live*, *signal*, *now* or *this is a link* stays white or grey. A second hue is never introduced — a state that needs distinguishing uses Deep Beam or the wash.
 
-**The Two-Ink Rule.** Black in three measured weights, plus one process cyan.
-Adding a colour means adding a plate to a print run, which is a decision at the
-level of the whole document, not a component. A third hue does not get added to
-make something look interesting.
+**The Shared Ground Rule.** The page ground is `#000000` and nothing else. The stage renders on the same value, so the canvas has no visible edge. Surfaces sit *above* black by alpha and blur, never by a lighter opaque fill.
 
-**The No-Gradient Rule.** There is no gradient anywhere on this page. Not on
-type, not on a rule, not on a surface, not behind the content. The previous
-world's signature was a rule that faded to transparent at both ends; a printed
-rule does not fade, so every rule here is hard. Tone comes from ink weight, from
-a well, or from a frame — never from a fade. (Donated by the One-Bit Desktop
-challenger, which earns every grey it shows through the density of its marks.)
-
-**The One Ramp Rule.** Every colour is a custom property on `:root`, overridden
-once under `.dark`, exposed to Tailwind through `@theme inline`. Nothing in a
-component hard-codes a hex. The 3D object obeys this too: it has no colours of
-its own. The one sanctioned exception is `opengraph-image.tsx`, where Satori
-resolves no custom properties; the values there are copied and commented as
-such.
-
-**The Owned-Field Rule.** The second ink appears at full strength as a *field*
-on the primary action, not as a 7%-opacity wash scattered over a neutral page.
-The one wash in the system is the table row's hover, and it is transient.
-(Donated by the Single-Hue Program challenger: a colour is either owned or it is
-decoration.)
-
-**The Negative, Not A Dark Theme.** Dark is the same document as a photostat
-reversal, which is why the reticule survives the switch and the cyan brightens
-rather than the whole palette flattening to grey. The scene inverts with it:
-faces go dark and edges go light, so the drawing is still a drawing rather than
-a pale object floating on black. The use scene decides which is primary — a
-recruiter at a desk in daylight, often with the LinkedIn profile and the PDF
-open in adjacent tabs — so light leads and the negative is the second material.
-
-**The Measured Grey Rule.** Every text grey clears 4.5:1 body / 3:1 large
-against its *effective* background resolved through ancestors, not picked by
-eye. A new grey is measured or it does not ship.
-
-**The Solid-Ground Rule.** A region that draws a pattern carries an explicit
-`background-color` underneath it, never a transparent overlay. The reticule
-without a ground let the page show through and left every annotation sitting on
-a backdrop that could not be resolved — which is both a contrast failure and
-wrong: a drawing region is printed on plate stock with the grid laid over it.
+**The Hairline Rule.** Structure is drawn at 5.5–10% white. A divider, a grid seam or a table rule is a hairline; it is never a filled bar, and it never strengthens past `rgb(246 247 250 / 0.1)`.
 
 ## Typography
 
-**Text face:** Archivo (with `ui-sans-serif`, `system-ui`, `sans-serif`)
-**Data face:** Chivo Mono (with `ui-monospace`, `monospace`)
+**Display Font:** Schibsted Grotesk (variable, via `next/font`, with `system-ui, sans-serif`)
+**Body Font:** Schibsted Grotesk — the same face
+**Label/Mono Font:** none. Numerals use the same face with `font-variant-numeric: tabular-nums`.
 
-Archivo is a grotesque drawn from printed signage and reference material — flat
-terminals, tight apertures, numerals that hold a column. Chivo Mono carries
-symbols, units, values, dates and test conditions. Neither is one of the
-training-data defaults, and neither was chosen by subject association.
-
-**Two weights ship: 400 and 600.** Not a variable axis — the weights are pinned
-in `next/font` so there is physically no third weight for a heading to drift
-into. `font-synthesis-weight` is off.
+**Character:** One contemporary neutral grotesque with slightly humanist joints, run from an 11px label to a ~100px headline. It holds at launch scale without the mechanical coldness of a default interface sans, and its tabular figures carry the specification tables. A second face would dilute a page whose voice is the object.
 
 ### Hierarchy
+- **Display** (500, `clamp(2.75rem, 6.1vw, 6.25rem)`, 0.92, −0.045em): the name in the opening frame, and nothing else. Balanced wrapping, capped at 11ch.
+- **Headline** (500, `clamp(2rem, 4.6vw, 4.25rem)`, 0.98, −0.04em): one per section. Set in two tones — the plain half in white, the accent half in an `<em>` that is not italic but Stage Light.
+- **Title** (500, `clamp(1.375rem, 2vw, 1.875rem)`, 1.12, −0.028em): system, pillar and role names.
+- **Figure** (500, `clamp(2.75rem, 6vw, 6rem)`, 1, −0.055em, tabular): the by-the-numbers row and the sequence clock. The unit rides beside it as a small accent uppercase glyph, never as part of the number.
+- **Lede** (400, `clamp(1.0625rem, 1.5vw, 1.5rem)`, 1.5, −0.015em, grey, max 46–52ch): the paragraph directly under a display or closing headline.
+- **Body** (400, 1rem, 1.7, grey, max 64ch): section-head prose and long explanation.
+- **Small** (400, 0.8125rem, 1.7, grey 2): footnotes, captions, chart feet.
+- **Label** (500, 0.6875rem, +0.26em, uppercase, Stage Light): the word that names a number — figure labels, chart captions.
 
-- **Spec Title** (600, 2.375rem → 3.375rem, 1.02, −0.03em): the name, once. The one place type is large.
-- **Spec Section** (600, 0.8125rem, +0.075em, uppercase): a section head, sitting on a 2px ink rule.
-- **Spec Head** (600, 1.0625rem block titles up to 1.875rem for the contact line, 1.32, −0.018em): block titles and the argument.
-- **Spec Value** (600, 1.0625rem, tabular): a measured value in a table cell.
-- **Spec Label** (Chivo Mono, 0.6875rem, +0.09em, uppercase): column heads and field labels.
-- **Spec Datum** (Chivo Mono, 0.75rem, tabular, sentence case): symbols, units, dates, conditions, stack lines, the sheet counter.
-- **Body** (400, 0.875–0.9375rem, 1.65–1.7, `--ink-2`): all prose, capped at 68–74ch.
+Between Body and Small the page uses a working pair of panel sizes: 0.9375rem/1.72 in grey for panel prose, and 0.875rem/1.7 in grey-2 for a second-rank detail line. Tracked uppercase metadata (role scopes, spec keys, node numbers) sits at 0.625–0.8125rem with +0.12em to +0.2em.
 
 ### Named Rules
+**The One Face Rule.** Schibsted Grotesk from 11px to 100px. No second family, no monospace, no italic — every `<em>` on this page is `font-style: normal` and carries a colour, not a slant.
 
-**The Head-Below-Content Rule.** A section head is *smaller* than the content
-beneath it, set in small caps on a two-pixel ink rule. In a reference document
-the table outranks its own label, and a section name set at display size would
-be shouting the filing system at a reader who came for the contents. This is the
-heading itself, not an eyebrow above one — the kicker remains banned.
+**The Negative Tracking Rule.** Type tightens as it grows: −0.015em at lede, −0.028em at title, −0.04em at headline, −0.045em at display, −0.055em at figure. Anything small and uppercase goes the other way, +0.12em to +0.26em.
 
-**The Mono-Is-Measurement Rule.** Monospace carries symbols, values, units,
-dates and conditions. It is never a costume for "technical", and prose never
-goes mono. Where mono appears, something is being measured or indexed.
-
-**The Tabular Rule.** Anything a reader compares down a column is set with
-`tabular-nums`. Table values, the sheet counter and the date column are all
-tabular; prose keeps proportional figures so sentences do not gap.
-
-**The Measure Rule.** Reading text is capped at 68–74ch. A paragraph allowed to
-run the full 68rem container is a defect, not a layout — including inside a
-grid column, which is where this failed on the first pass. The one exception is
-a table cell of joined data, and even the toolchain's `·`-joined list is capped
-at 72ch because it reads as a line rather than as a value.
+**The Tabular Figure Rule.** Every number that can change or be compared — figures, clocks, chart keys, years, spec values — is set with `font-variant-numeric: tabular-nums`. The base scope explicitly turns tabular figures *off* (`font-feature-settings: "tnum" 0`) so prose keeps proportional numerals; tabular is opted into per element.
 
 ## Layout
 
-A single 68rem centred container, 1.25rem gutters rising to 2rem at ≥640px,
-against a one-breakpoint system: `sm` (640px) does almost all the responsive
-work, with `md` switching the navigation and `lg` adding the running head's
-section name.
+A single centred shell, `max-width: 1680px`, with a fluid gutter of `clamp(20px, 4vw, 80px)` — the one horizontal measure on the page, reused for the absolute position of the scroll cue.
 
-The page is a stack of sheets on one continuous ground. Every section owns its
-own container, so the measure is stated once per section rather than inherited
-from a wrapper. There are no panels floating over a field, because there is no
-field: the ground is stock, and content is printed on it.
+Vertical rhythm is `clamp(56px, 5.4vw, 104px)` of block padding per section. Consecutive sections each carry their own, so the gap between two is the sum; each is therefore kept tighter than a single section would want, or the page reads as a series of empty rooms.
 
-**Sheet order.** Front page → characteristics → block diagram → selected work
-→ leadership → technical depth → experience → about → contact. Nine sheets, and
-the two evidence sheets sit immediately after the front page, before any prose.
+The document is two full-height screens and then a stack: the opening (`100svh − 74px`, min 520px) and the figures screen (`min(100svh − 74px, 620px)`). `svh`, never `vh`, so a collapsing mobile toolbar cannot cut the scroll cue off the bottom. The running head is 74px; `html:has(.cn)` sets `scroll-padding-top: 74px` so anchor jumps land below it rather than under it.
 
-**Front page.** A 12-column grid at ≥640px. Seven columns of text: name,
-designation line, a 2px rule, the argument, the lead, the features list, three
-actions. Five columns for the plot, in a framed reticule cell, with a compact
-identity strip beneath it carrying the portrait, the current seat and the
-availability mark.
+Breakpoints, as actually used: 780px (field rows), 860/880/900px (areas, pillars, spec rows, charts, circuit), 960px (record rows), 1000px (systems, section heads, portrait, closing), 1040px (nav appears), 1100px (stage offset and hero column cap at 56%), 1340px (three-up areas, two-column record bullets). Height is a breakpoint too: at `min-height: 700px` the scroll cue leaves flow and pins to the bottom edge.
 
-The drawing is in the first viewport and the portrait is a 64px circle rather
-than a five-column plate. Both facts are deliberate: the object has to be seen
-without scrolling, and a face is load-bearing for this audience but does not
-need a column of height to say so. On a narrow viewport the column order is
-text → drawing → identity, so the argument always precedes both.
-
-The drawing carries **no caption**. A line under it either restates what the
-drawing already says or, worse, claims the object is something it is not — a
-caption reading "multimodal voice stack" over a generic package was written and
-removed for exactly that reason. The identity strip carries the information.
-
-**The Say-It-Once Rule.** The first shipped composition put the name in the
-running head, in the `h1`, and again in the identity strip, with the location
-in two of the three. Three of one fact in one viewport is not emphasis, it is
-noise, and it costs the space a second fact could have used. The running head
-carries the name because a document names itself on every sheet; the `h1`
-carries it because that is the page's subject; the strip therefore carries what
-nothing else in the viewport says — the current seat, and the availability. Any
-new element in the first viewport has to earn its place by adding a fact.
-
-**Two-up registers.** Leadership, technical depth and the work list are all the
-same shape: a `1fr / 1.35fr` grid, title and its datum on the left, prose on the
-right, divided by hairlines. This deliberately replaces three separate grids of
-same-size cards.
-
-**Experience.** A 10.5rem mono date column beside the role — the
-revision-history shape — collapsing to a single column with the date and the
-"Current" chip inline below 640px.
+Grids are seamed, not gapped: the systems, pillars, charts, skill-field and spec-strip grids all use a 1px gap over a hairline-faint background, so the gap *is* the rule. Scroll snapping was tried and removed: with two full-height screens, proximity snapping fought every anchor jump.
 
 ### Named Rules
+**The Seam Rule.** A grid of panels is drawn with `gap: 1px` over a hairline-faint background and a hairline-faint border. Never add per-card borders to a seamed grid; the seam already is the border.
 
-**The No-Cards-As-Structure Rule.** A grid of same-size cards, each an icon
-above a heading above three lines, is not a page structure. The previous world
-used it for work, leadership and technical depth. All three are now ruled
-registers, and the two plates that remain (the featured system, the résumé) are
-plates because each is genuinely a single object, not because a card was the
-convenient container.
-
-**The Wide-Content-Scrolls-Inside Rule.** The characteristics table and the
-block diagram carry a `min-width` and scroll inside their own
-`overflow-x: auto` container. A drawing you pan sideways is native to this
-document form, and the sheet itself never scrolls horizontally.
-
-**The Frame-Belongs-To-The-Table Rule.** A ruled table draws its own outer
-frame; a bordered wrapper around it opens a gutter between the frame and the row
-rules. The scroll container is transparent and the border lives on `.tbl`.
-
-**The Unlayered Cascade Rule.** `.key`, `.plate`, `.tbl`, `.spec-*` and friends
-are unlayered CSS, while Tailwind utilities live in `@layer utilities`.
-Unlayered beats layered at equal importance, so a normal utility cannot override
-one of these. An `!important` utility *does* win, which is why the header's
-résumé control uses `max-sm:!hidden` and `!text-[0.8125rem]` rather than
-`hidden sm:inline-flex`. This exact bug shipped once.
+**The Sheet Rule.** Everything after the opening lives inside one element that carries the page's own black, a top radius, a hairline of light and a long upward shadow. The opening stays pinned under the head while the sheet is pulled up over it. New sections go inside the sheet; nothing follows it except the closing footer.
 
 ## Elevation & Depth
 
-Print has no drop shadows, and a page full of them was the previous world. There
-are **two shadows in the entire system**, and they exist only for the two things
-that genuinely float above the sheet: the running head once it detaches on
-scroll, and the query panel. Both carry a vertical offset and a soft blur in two
-layers.
+Hybrid, and the depth is real rather than implied. Behind the opening, an absolutely positioned canvas inside the hero renders the object; below the fold it is neither drawn nor rendered. Behind the reading sections, a fixed, blurred field of three radial washes drifts on a 26s alternating loop, so the page keeps a light source after the object is gone. Every panel is a piece of glass over that field: an ink fill at 72–94% alpha, `backdrop-filter: blur(10–14px)`, and a hairline border. Depth comes from *translucency plus blur* first, shadow second.
 
-Everything else is depth by **frame and tone**: a plate is a hard-edged bordered
-region of stock; a well is a step down in tone; a table is a frame with rules
-inside it. There is no edge highlight, no sheen, no inset lift, and no
-intermediate glass layer.
+### Shadow Vocabulary
+- **Lift** (`box-shadow: 0 40px 90px -40px rgb(0 0 0 / 0.9), 0 10px 30px -18px rgb(0 0 0 / 0.8)`): the two-stop drop under the objects that must read as physical plates — the sequence panel and the portrait. A tight contact shadow plus a long ambient one.
+- **Edge** (`box-shadow: inset 0 1px 0 0 rgb(246 247 250 / 0.07)`): the lit top edge of a plate, always paired with Lift.
+- **Sheet** (`box-shadow: 0 -30px 70px -20px rgb(0 0 0 / 0.95), 0 -1px 0 0 rgb(246 247 250 / 0.08)`): upward — the only shadow that throws up, because the sheet passes over the pinned shot.
+- **Node rest / hover** (`0 18px 40px -26px rgb(0 0 0 / 0.9)` → `0 26px 52px -26px rgb(0 0 0 / 0.95)`, each with an inset white edge): circuit nodes and rail seats.
+- **Pointed-at** (`box-shadow: 0 24px 60px -34px rgb(63 93 214 / 0.8)`): the only coloured shadow. A card being pointed at throws the light's own colour, not black.
+- **Glow** (`0 0 12px 2px`, `0 0 18px 0`, `0 0 22px -4px` in Stage Light at 55–70%): status dot, live node rails, the selected latency segment. Glow means live.
 
 ### Named Rules
+**The Glass-Over-Light Rule.** A panel is a translucent ink fill plus `backdrop-filter`, never an opaque light grey. If the drifting field cannot be seen through a surface, the surface is wrong.
 
-**The Two-Shadows Rule.** If a third shadow is being added, the thing being
-built probably wants a frame instead. A surface is raised by having an edge, not
-by being given a halo.
-
-**The Real Press Rule.** Every control moves 1px down on `:active` and drops its
-lift. Hover treatments sit behind `@media (hover: hover)` so a touch device
-never gets a stuck hover state.
+**The Coloured Shadow Rule.** Black shadows carry weight; the blue shadow carries attention. Only the pointer/hover response is allowed a coloured shadow.
 
 ## Shapes
 
-**Radius is zero.** Every plate, key, chip, table, frame and well is a hard
-rectangle, because a printed rule has no rounded corner — and four radius steps
-was the clearest single tell of the world this replaces. The two exceptions are
-drawn as circles on purpose: the availability mark and, where it appears, a
-portrait. A "square dot" is used as the list bullet rather than a round one.
+Hard-edged by default. Panels, cards, charts, tables, spec cells, the portrait plate and the circuit nodes all have no radius — the form language is rectangles separated by hairlines, the way a specification sheet is set.
 
-The 3D object obeys the same language: it is entirely right-angled, and its one
-asymmetry is a square corner index.
+Four exceptions, each earned:
+- **Pills (999px)** for anything that is a control or a token: buttons, chips, pipeline nodes, node numbers, the status pill, the "Now" and "Current seat" badges.
+- **The sheet's top corners** (`clamp(14px, 1.8vw, 26px)`, top only) — the one radius that carries meaning: it is what makes the arrival read as a surface passing over another surface.
+- **2px** on the small drawn parts: bar segments and fills, the latency track bars, key swatches, skill-field cells.
+- **4px** on the rail seats, which are larger drawn parts of the same family.
+- `50%` on the 6px status dot, which is a dot.
+
+Borders are 1px hairlines almost everywhere; SVG strokes are 1.2–1.6px. A circuit node adds a 1px top rule that fades in from transparent at both ends, so a row of nodes reads as a run of instruments.
 
 ### Named Rules
-
-**The Zero-Radius Rule.** A new component gets no radius. If something reads as
-unfriendly without one, the fix is spacing or ink weight, not a corner.
+**The Square-Unless-It-Is-a-Control Rule.** If it holds content, it has square corners. If it is pressable, selectable, or a token you could pick up, it is a pill. There is no middle radius.
 
 ## Components
 
-### Keys (controls)
+### Buttons
+- **Shape:** full pill (999px), inline-flex with a 10px gap.
+- **Primary:** cool white fill, black text, weight 600, `15px 28px`. Hover goes to pure `#ffffff` and rises 1px.
+- **Secondary:** 4% white fill over `blur(10px)`, hairline border, white text, weight 500, same padding. Hover raises the fill to 10% and the border to 22% white, and lifts 1px.
+- **Ghost:** the secondary with a transparent fill.
+- **In the running head:** the primary at `10px 20px`, 0.8125rem.
+- **Focus:** a 2px Stage Light outline at 3px offset, page-wide.
+- **Transitions:** 0.45s on the house easing.
 
-A control is a printed key: a hard-edged rectangle, `0.625rem 1rem`, Archivo 600
-at 0.875rem, with a 0.5rem gap to its 16px icon.
+### Chips
+- **Style:** hairline-faint border, grey-2 text at 0.6875rem, pill, `6px 12px`, transparent fill. Pipeline nodes are the same chip with a small arrow glyph drawn between them.
+- **State:** chips brighten from their *parent's* hover, not their own — hovering the area or system card raises every chip's border to the stronger hairline and its text to grey.
 
-- **Primary:** the second ink at full strength, white label, one small lift.
-  This is the only large field of cyan on the page, which is what makes it the
-  primary action. Hover mixes 12% ink into the fill; active drops the lift and
-  moves 1px down.
-- **Secondary:** ink on plate stock inside a hairline. Hover strengthens the
-  border to full ink.
-- **Quiet:** muted ink, no chrome, gaining a well on hover.
-- **Focus:** a square 2px cyan outline at 2px offset. Never removed, never
-  replaced per component, and square because the world has no radius.
-
-### Table
-
-The characteristics table and the toolchain table share one anatomy: a header
-band in a well with mono uppercase column heads, rows divided by hairlines,
-values tabular and ranged right, units and conditions in `--ink-3`, and the
-frame on the table itself. On a pointer device a row lights its own
-`--trace-wash` and brings its conditions cell up to `--ink-2` — the only hover
-response on the page that is not a control, and the reading gesture a spec table
-actually wants.
+### Cards / Containers
+- **Corner Style:** square.
+- **Background:** ink at 72% over `blur(10–12px)`; hover moves to ink-3 at 82%.
+- **Shadow Strategy:** none at rest inside a seamed grid; see Elevation for plates.
+- **Border:** provided by the 1px seam of the grid; a standalone panel takes a hairline-faint border.
+- **Internal Padding:** `clamp(26px, 2.6vw, 46px)` for feature panels, `clamp(22px, 2.4vw, 38px)` for charts, `12px 14px` for spec cells.
+- **Hover:** the whole panel answers — a Stage Light border at 38%, the blue shadow, a 3px rise, and a single pane of light that crosses the block diagonally over 1.1s.
 
 ### Navigation
+- **Running head:** sticky at top, 74px tall, transparent until stuck; at `data-stuck="1"` it takes black at 72% with `blur(18px) saturate(1.4)` and a hairline-faint bottom rule.
+- **Links:** 0.8125rem grey-2, shown only at ≥1040px, with a Stage Light underline that wipes in from the left on hover and stays for the section you are in (`data-live="1"`).
+- **Mark:** 0.9375rem, weight 600, −0.02em, white.
 
-A sticky running head, 3.5rem tall, transparent until scrolled, then 92% stock
-with a small blur, a full-ink bottom border and the one small lift. Its three
-fields are a document's: the subject at the left, the section you are reading in
-the middle, the sheet number at the right. The current section is marked with a
-well, never with a coloured underline. Below 768px the links collapse into a
-disclosure panel that closes on Escape (returning focus to its trigger) and on
-outside pointer-down; the panel is always in the DOM so `aria-controls`
-resolves.
+### Signature: the pinned opening and the sheet
+The opening is the first screen and does not scroll away: `position: sticky; top: 74px`, `height: calc(100svh - 74px)`. The rest of the document is one element carrying the page's own ground, a top radius, a lit top hairline and an upward shadow, pulled up over it. Scroll writes `--p` (0–1, rounded to 1/100, one style write per frame, only while the hero is on screen) onto the hero, which CSS turns into a −5vh rise, a scale to 0.945, an opacity fall to 0.15 and a 5px blur.
 
-### Icons
+### Signature: the stage and its CSS fallback
+The object is a WebGL canvas absolutely positioned *inside the hero* — not fixed behind the document — so below the fold it is neither drawn nor rendered and the reading sections sit on plain black. At ≥1100px the stage is inset to `left: 34%`, which keeps the sphere a sphere and clears the reading column; narrower, it takes the full frame behind the type. Underneath it, and permanently when WebGL is missing or the context is lost twice, a CSS room drawn in the same values ships: three radial washes, a left-to-right black scrim over the reading side, and a hard fade into the page's black at the bottom edge. `data-live="1"` only drops the CSS room to 55% opacity over 1.2s once the object arrives. three.js is behind a dynamic import, so it is never in the initial bundle.
 
-Four authored marks on one 24-unit grid at 1.6 stroke, `currentColor`, rendered
-at 14–16px. LinkedIn is the only filled mark, because its brand form is solid.
-The four pillar icons the previous world carried are gone with it: a reference
-document labels its fields, it does not illustrate them, and an icon tile above
-every card was part of what made the page read as assembled. No icon font, and
-no glyph or emoji standing in for an icon.
+### Signature: kinetic headlines
+Words are split into masked spans **on the server**, so the masked state is in the first frame and a headline never flashes. Two mechanisms, deliberately separate:
+- The opening's headline runs a pure CSS animation (1.15s rise from 115% with a 2deg rotation, 110ms per word after a 150ms delay), so it plays whether or not JavaScript ever arrives.
+- Every headline below it is masked *only once armed*: the client sets `data-armed="1"` on headings still below 90% of the viewport, then `data-play="1"` on intersection, with a 2.5s safety timer that plays anything the observer misses. A heading already on screen is never armed, so nothing visible is hidden and restored.
 
-### Motion
+Each word carries `--i`, and a `start` offset continues the count across an accent `<em>` so a two-tone headline staggers as one line. Headlines are repeatably hoverable — the wave runs again at 45ms per word with a blue text-shadow — and accent words carry a slow 6s glint so a headline is never completely still. One light pass crosses the name once, behind the glyphs, after it lands.
 
-Two easings: `--ease-plot` (0.16, 1, 0.3, 1) for the entrance,
-`--ease-set` (0.25, 1, 0.5, 1) for state changes. State transitions run
-0.1–0.2s.
+### Signature: pointer light
+One delegated `pointermove` listener for the whole document writes `--mx` / `--my` (percentages) on the card under the cursor — one style write per frame, nothing else. The highlight is a 340px radial gradient of Stage Light drawn in a `::before` on the five surfaces that read as objects: system cards, organisation panels, charts, rail seats and field rows. It is gated on `(any-hover: hover) and (any-pointer: fine)` — `any-`, so a touchscreen laptop's mouse still gets it. **The response does not depend on the script:** `:hover` lights the same card in CSS with the gradient defaulting to 50%/50%; the script only decides *where* the light falls. Text blocks never take it.
 
-**One authored moment: the sheet plots itself.** A pen plotter draws a technical
-page in a fixed order — rules first, then the type. On the front page the 2px
-rule draws from zero width (`[data-plot]`, 0.9s) and the type sets in sequence
-(`[data-set]`, 0.55s opacity plus 6px). It happens once, in the first viewport,
-and it is the only place the page performs.
+### Signature: drawn flows and charts
+Diagrams are SVG drawn from figures already stated in prose. Structure is a 1.4px hairline stroke at 22% white; one live signal runs it as a dashed Stage Light stroke on a linear infinite loop (3.4s for wires, 3.6s for the chart step, a 5s reverse for the feedback loop, and 3.4s drop/lift on the two feedback stubs). Charts use hairline-faint grid lines, grey-2 ticks at 11px, an accent area fill at 9%, a hairline step path with a live accent path drawn over it, and black-filled dots with accent strokes. The stacked bar and the seat rail draw themselves open from the left on arrival (`scaleX(0)` → none over 0.9–1s, staggered 0.12s).
 
-Below the fold there is a second, deliberately duller population: `[data-reveal]`
-at 0.5s opacity and six pixels. It exists because the user asked for the page to
-feel alive as it is scrolled, and it is kept quiet so it reads as pages turning
-rather than as eight sections each doing a trick.
+### Motion and the reduced-motion policy
+One easing curve for the whole page: `cubic-bezier(0.16, 1, 0.3, 1)`. Durations are 0.35–0.6s for state, 0.9–1.2s for arrivals, and 2.2–26s for continuous life.
 
-**The Two Populations Rule.** Below-the-fold reveals are always the quieter one:
-less travel, less time, group-relative stagger capped at six steps. A new
-section gets `[data-reveal]`, never `[data-plot]`.
+The arrival gesture never hides anything: it starts at 0.25 opacity, 20px down and 5px blurred, and resolves on intersection with an 80ms sibling stagger (capped at six) — plus a 1.2s fallback attribute that resolves anything the observer missed.
 
-**The One-Contract-Two-Files Rule.** The population names live in `globals.css`
-(which hides them) and in `Reveal.tsx` (which reveals them), and they must
-match. When the hero population was renamed in the CSS and not in the component,
-every element stayed at `opacity: 0` and **the entire front page rendered
-blank** — silently, because hidden text still has valid computed styles, still
-server-renders in the HTML, and passes every automated check including the
-detector. `Reveal.tsx` now warns in development when the population is empty.
-Renaming a `[data-*]` hook means editing both files and looking at the page.
+`prefers-reduced-motion: reduce` is read as being about *movement, not feedback*. Everything that travels is removed: entrances, the hero parallax, word rises, bar and rail fills, hover lifts, and every continuous loop — ambient drift, breathing marks, running signals, the scroll-cue arrow, the light pane. Everything that is feedback is kept: colour changes, border changes, the glow under the cursor, and the pointer light itself, which changes brightness rather than position.
 
-**The Unhidden-Everywhere Rule.** Every hidden start state is `.js`-gated *and*
-neutralised in three places: the reduced-motion block, `@media print`, and the
-no-IntersectionObserver path. The reduced-motion override must match or exceed
-`.js [data-set]` specificity or the start state wins and the page renders blank
-— this exact failure has shipped here before, which is why all three populations
-are listed explicitly rather than relying on a wildcard.
+### Named Rules
+**The Never-Hidden Rule.** No entrance may set `opacity: 0` or `display: none` on content. The arrival floor is 0.25 opacity, and every deferred reveal carries a timer that resolves it regardless.
 
-**Print is a real target.** This page and the résumé both get forwarded and
-printed inside hiring teams, and an entrance that has not fired prints as one
-header followed by empty sheets. It is also the one medium this world was
-designed for, so print needs almost nothing undone: it hides the JavaScript-only
-widget and the drawing band, and forces plates to pure white.
+**The Scripting-Query Rule.** The only three rules on this page whose initial state withholds content — the arrival pre-state, the bar fill and the rail fill — are wrapped in `@media (scripting: enabled)`. Any future rule whose "before" state is invisible goes in that query or does not ship.
 
-### The Running Head's Sheet Counter (signature)
+**The No-`.js`-Gate Rule.** Never gate styling on a `.js` class on `<html>`. React restores the server-rendered className on `<html>` during hydration and removes it, so a `.js`-gated style dies mid-session. Use `@media (scripting: enabled)` or a data attribute owned by the component.
 
-The page's whole progress indicator is a **sheet number** — `03 / 09` in tabular
-mono, with the section name beside it above 1024px. A document has page numbers;
-it does not have a coloured bar creeping across the top. This replaces the
-previous world's accent hairline and tells the visitor two things the hairline
-never could: what they are currently inside, and how much document is left.
-
-It is written straight to the DOM through a ref rather than through state, so a
-scroll frame never re-renders the header, and it is recomputed on resize because
-section offsets move with the viewport.
-
-**The Document-Wayfinding Rule.** Progress is expressed in the document's own
-units. If a future surface needs a progress affordance, it gets a count, an
-index or a position — not a bar, and not the accent running the viewport width.
-
-### The Loss Surface (signature)
-
-A solid three-dimensional loss landscape with a graticule draped over it,
-standing on a plate inside a drawn cage, with **contour rings traced onto the
-surface itself**, **the same rings projected flat onto the plate below it**, a
-sparse graticule draped over the form, and **four optimisers descending at
-once** from starts spread around the field. Each runner lays down a faint
-history line with a full-strength head trail and a faceted marker at its tip.
-Three reach the deep basin by three different routes of 7.3 to 8.8 units; the
-fourth settles in the shallow corner pocket. Then the traces retract and the
-next cycle sets off from a different ring of starts. A small mono readout in the
-corner of the cell reports the leading loss, the step count, and which minimum
-is currently winning.
-
-**One of the four runners always ends in the shallow local minimum instead of
-the global one** — loss −0.24 against −1.35, and the composition is guaranteed
-by construction rather than by luck: `cycleStarts` returns three global
-approaches and one trap approach for every cycle. That is deliberate. Descent
-does not always find the best answer, and a demonstration that pretends
-otherwise is a worse demonstration.
-
-**Four at once, not one at a time.** This was the enhancement that mattered most
-when the object was refined. Running concurrently turns a demonstration into a
-*comparison*, which is also what the work actually looks like — you run a sweep,
-not a job — and it is what makes the trapped runner legible: it fails *beside*
-three that succeed, rather than in a cycle of its own that nobody connects to
-the others. Runners are staggered by 0.19s and the stagger is re-normalised over
-the remaining span, so the last to set off still finishes rather than being cut
-off mid-descent.
-
-**Contour rings are what turn a shaded blob into a plot.** They are real
-iso-lines of the same function the surface is displaced by, so they tighten
-where the field is steep and open out where it is flat, and their nesting reads
-as depth with no colour doing the work. The projection on the plate is the
-standard convention for the same reason: it gives the surface a floor to be
-measured against. The draped graticule was made sparser and quieter when they
-arrived — a regular grid and a set of iso-lines at the same weight on the same
-surface is two overlapping patterns, so the grid steps back to saying "ruled
-plot" and lets the contours carry the topography. Ticks up the back post sit at
-the contour levels, so the rings on the surface and the scale on the axis are
-the same set of numbers.
-
-This is the **third** object to occupy this slot, and the sequence is the record
-of the same lesson learned twice:
-
-1. **A transmissive glass sphere with a lit core.** Real optics, well built, and
-   the single most recognisable ornament in generated interfaces. Replaced when
-   the whole world was replaced.
-2. **An exploded chip package.** Correctly drawn, and it read as *semiconductor
-   hardware* rather than as AI systems. It was the datasheet's own default
-   object, reached for because the world offered it rather than because the
-   product did.
-3. **A 16×16 attention surface as 256 extruded columns.** Honest and on-world,
-   and still wrong: a field of thin bars has no mass. From an axonometric view
-   it read as fuzz, and structurally it was a bar chart rather than a form.
-
-A loss landscape answers all three failures at once. It is the most recognisable
-image in machine learning, so it needs no caption to say what it is. It is a
-genuinely **solid body** rather than a scatter of small parts. And it is a
-*surface plot with a traced path*, which is native to the document this page is
-— a datasheet's typical performance characteristics are surfaces exactly like
-this one, so the object belongs to the world instead of being placed in it.
-
-**The Product's-Object Rule.** When the visual world offers a default artifact
-and the product has an artifact of its own, the product's wins. The chip package
-was the datasheet's object; the loss surface is this engineer's object. A world
-supplies grammar, not subject matter.
-
-**The Field Is Shared Code.** `loss-surface.ts` holds the closed-form field, the
-measured range, the four starts and the numerical descent, as pure functions
-with no three.js and no DOM. The scene and the SVG fallback both import it, so
-the 3D surface and the flat contour map are the same function with the same
-paths on it and cannot drift.
-
-**The Tuned-Not-Eyeballed Rule.** Every constant in that field was tuned against
-the actual integration, and the first version proved why: it looked plausible
-and was wrong. With no global trend the gradients vanished on the outer plateau,
-three of four runs never reached the basin, two landed on the same point, and
-one slid into the domain wall and stopped. The `bowl` term is the fix and it is
-also the honest one — a real loss surface has an overall convex trend with local
-structure on top, not local structure alone. The shipped values were verified by
-evaluating the shipped module directly: field range −1.354 to 1.366 inside its
-declared bounds, three convergences on the global basin from three directions
-travelling 7.5 to 8.5 units each, one settling in the trap after 5.8 units, and
-no path touching the boundary. A generated field is measured or it does not
-ship.
-
-**The Static-Surface Rule.** The landscape does not morph; only the descents
-move. A surface that also animates gives the eye nothing to follow, and the
-whole point is watching the paths find the bottom.
-
-**The Readout-Is-A-Measurement Rule.** The corner box carries a value that
-changes as the traces descend — the number a visitor watches fall — which is
-why it earns a place where a line *describing* the drawing did not, and was
-removed. It sits on its own plate so its ink is never read against the canvas,
-and it is reported on change rather than per frame: sixty DOM writes a second
-for a value that moves in the third decimal is waste. It starts out `hidden` and
-is revealed by the first sample, so a visitor with no scripting or no WebGL
-never sees an empty readout frame.
-
-**The `display: contents` Trap.** `.js-only` resolves to `display: contents`,
-which generates no box at all — so an absolutely positioned element carrying
-that class silently loses its positioning. It is a wrapper gate, correct for the
-query panel and wrong for anything placed. Anything positioned uses the `hidden`
-attribute instead. This shipped once in this build.
-
-The mechanics below are rules because each one already broke:
-
-**The Orthographic Rule.** A surface plot is read, not looked at: parallel edges
-must stay parallel, so two points at the same height are at the same height on
-screen wherever they sit in the field. Perspective would make the plot lie. The
-frustum is derived from the host's aspect so the field keeps its proportions at
-every width, and a cell taller than it is wide fits across its width instead of
-running out of frame sideways.
-
-**The Polygon-Offset Rule.** The draped graticule lies exactly on the surface it
-describes, so the filled surface carries `polygonOffset` to push it a hair back.
-Without it the drape z-fights into stipple and the whole object looks broken.
-Hidden-line removal is then free: the opaque surface occludes the lines running
-behind it, which is what makes a wireframe drape read as a solid body.
-
-**The Two-Light Rule.** One key, one low fill, one hemisphere, and no
-environment map. A surface this large needs the fill or its shaded side goes
-flat black in the negative. No specular highlight anywhere — a highlight would
-be the first thing that made this look rendered rather than plotted, and a
-mirror-smooth lit surface is precisely the ornament this world was chosen to
-escape.
-
-**The Growing-Draw-Range Rule.** Every trace is a fixed-length buffer whose
-`drawRange` grows as the run proceeds, so a path draws itself without
-reallocating, and `pose` allocates nothing at all — the write helper is hoisted
-out of the loop. Each bounding sphere is computed once from a buffer that is
-still all zeros and never recomputed, so every dynamic line sets
-`frustumCulled = false`: cheaper and safer than recomputing bounds per frame.
-
-**The Two-Lines-Not-A-Shader Rule.** The comet effect is a faint full-length
-history line plus a full-strength 24-point head trail, because
-`LineBasicMaterial` carries one opacity for the whole line. Two draw ranges over
-two buffers is the whole trick; a per-vertex ramp would need a custom shader for
-an effect that is invisible at this line weight.
-
-**The Precompute-Per-Cycle Rule.** Paths are integrated once when a cycle
-begins and reused for every frame of it. Integrating 130 momentum steps per
-runner per frame would be four numerical descents sixty times a second to draw
-a curve that never changes.
-
-**The Retract-Before-Restart Rule.** A finished run retracts to its start before
-the next begins. Cutting a new path in over a completed one reads as a glitch
-rather than as a new run.
-
-**The Turned-Not-Spun Rule.** The plot oscillates ±6.9° about the vertical and
-±1.6° in nod, over 33 and 48 seconds. It is a chart being turned on a desk. A
-full rotation would read the surface from underneath, and a continuously
-spinning object is a logo animation rather than a plot.
-
-**The Accumulated Delta Rule.** Animation time is an accumulated
-`clock.getDelta()` clamped to 1/30, not `getElapsedTime()`. The loop is gated on
-tab visibility and on-screen state, and elapsed time otherwise keeps running
-while the loop is paused and resumes the run from the wrong place.
-
-**The Live Reduced-Motion Rule.** `prefers-reduced-motion` is re-read through a
-`matchMedia("change")` listener. Under it the drawing is a completed run held
-still, the pointer lean is never applied, and the scene renders exactly once — a
-loss surface with a finished descent on it is still the whole drawing. The
-pointer listener stays registered and is gated inside itself, so a mid-session
-change is honoured.
-
-**The Theme-Redraw Rule.** The theme observer re-renders rather than only
-setting material colours, because the loop may be parked (off-screen, hidden
-tab, reduced motion) and a colour change with no draw leaves a stale frame in
-the old palette.
-
-**The Rebuild-On-Loss Rule.** A lost WebGL context cannot be recovered in place;
-three.js does not rebuild GPU resources for a restored context. The component
-tears the scene down, restores the SVG contour map, and builds a fresh one,
-bounded to 2 rebuilds so a machine that keeps dropping the context settles on
-the fallback instead of thrashing.
-
-**The Fallback-Is-The-Other-Standard-Drawing Rule.** The flat version is a
-**contour map with the same paths on it** — real iso-lines traced by marching
-squares over a 48×48 sample, eight levels, the sub-zero ones drawn heavier so
-depth is carried by line weight. That is how this figure is shown on paper, so
-the fallback is not a compromise; it is the other standard drawing of the same
-thing, and it is what prints.
-
-**The Fallback-Has-A-Budget Rule.** The first version of that flat drawing was a
-grid of 1,600 opacity-ramped tiles: **150KB of the page's 335KB of HTML, 45% of
-the document spent on a drawing that is replaced within a second of load.** Eight
-contour paths are 23KB and a better drawing — nested rings read as depth, where a
-tile grid reads as a screenshot of a heatmap. A server-rendered fallback is paid
-for by every visitor including the ones who never see it, so it is measured in
-bytes as well as in looks.
-
-**The SVG-Token Rule.** A token colour in an SVG goes in an inline `style`,
-never in a presentation attribute. `fill="var(--ink)"` does not resolve
-reliably, and a `.spec-*` class on an SVG `<text>` is worse: those classes set
-`font-size`, and CSS beats a presentation attribute, so every `fontSize` in a
-drawing gets silently overridden. Both bugs shipped in this build and were
-caught in inspection.
-
-### The Reticule
-
-A two-axis grid, minor at 8px and major at 40px, drawn from the ink family over
-a solid plate ground. It appears in **exactly one place**: the front page's
-plot cell, which is a measurement surface.
-
-**The Measurement-Surface-Only Rule.** A drawn grid is allowed where it is the
-graph something is plotted on, and nowhere else. It never sits behind prose, and
-it was removed from the block diagram during inspection because a block diagram
-is drawn on a plate, not on graph paper. This is the surviving half of the
-previous world's Light-Not-Pattern Rule, kept for the reason that rule was
-right: a pattern behind text competes with the text however faint it is made.
-
-### The Query Panel
-
-The scripted answer panel is an **application-notes** register, not a chat: a
-plate with a full-ink head, and a ruled transcript where a fixed-width mono mark
-column (`Q` / `A`) aligns questions and answers down an invisible rule. There
-are no chat bubbles, because this is a document rather than a messaging app. Its
-launcher is a secondary key labelled "Common questions" — not "Ask me
-anything", because there is no text input and the answer set is fixed.
-
-### Browser Surfaces
-
-Selection is cyan on white. The caret and `accent-color` are cyan. The focus
-ring is a square cyan outline. The scrollbar reads as the sheet's trim margin: a
-well for the track with a hairline edge, a `--reticule-2` thumb inset 3px, going
-to `--ink-3` on hover, and square. Link underline offset and thickness are set
-from the design, and the thickness doubles on hover rather than the colour
-changing.
+**The Power-On Opt-Out Rule.** The app-wide `power-on` first-paint animation in `globals.css` belongs to the datasheet's main, not to this route. `.cn main { animation: none }` opts out, and that line must survive any refactor of this stylesheet.
 
 ## Do's and Don'ts
 
-**Do**
-
-- State a figure with its unit and the condition it holds under. A number without a condition is an adjective.
-- State a fact once per viewport, and let the next element carry the next fact.
-- Read the availability line from `site.availability`, so the offer is worded in one place.
-- Reach for a table, a rule or a plate before reaching for a container.
-- Cap every paragraph at the reading window, including inside a grid column.
-- Put a token colour in an SVG through inline `style`.
-- Measure a new grey against its effective background, in both materials.
-- Let a drawing region scroll inside itself rather than letting the sheet scroll sideways.
-
-**Don't**
-
-- Add a gradient. Not to type, not to a rule, not to a surface, not behind anything.
-- Add a border radius.
-- Add a third shadow, an edge highlight, a sheen, or a glass layer.
-- Add a third hue, or a third weight of the text face.
-- Build a section as a grid of same-size icon-heading-text cards.
-- Set the uppercase mono label above a heading. It is a field label; the kicker stays banned.
-- Draw the reticule anywhere that is not a measurement surface.
-- Express progress as a bar.
-- Put prose in the mono face, or a glyph where an icon belongs.
-- Repeat the name or the location because a slot happened to be there.
-- Reach for the world's default artifact when the product has an artifact of its own. The datasheet's object is a package; this product's object is a loss surface.
-- Ship a generated field without measuring it. A plausible-looking function whose descent paths stall, collide or hit the wall is a wrong drawing, not a rough one.
-- Let a server-rendered fallback cost more bytes than the content it stands in front of.
-
-## Verified
-
-Checked on the built page at the close of this pass:
-
-- **Contrast:** every text role measured against its effective background in both materials. Light: ink 16.0:1, ink-2 7.3:1, ink-3 4.9:1, trace 5.6:1. Negative: 15.3:1, 8.4:1, 5.9:1, 8.1:1. `--trace-bright` at 3.3:1 is restricted to graphics and large type.
-- **Detector:** `impeccable detect` on the running page — 0 anti-patterns. One advisory remains, `codex-grid-background`, and it is the sanctioned case the advisory itself names: the grid appears only on the measurement surface.
-- **Build:** `next build` clean, `tsc --noEmit` clean, all routes statically prerendered.
-- **Fixed in inspection:** SVG token colours in presentation attributes; `.spec-*` classes overriding SVG `fontSize`; `.spec-head` leading at 1.25 under the 1.3 floor; four uncapped prose measures at 85–136ch; `--ink-3` annotation at 3.3:1 sitting directly on the reticule; a transparent reticule field with no ground; a bordered wrapper double-framing the tables.
-- **Fourth pass on the 3D object, a refinement rather than a replacement.** Added contour rings on the surface and projected on the plate, axis ticks at the contour levels, four concurrent staggered runners with comet head trails, and a live loss readout; the draped graticule stepped back to make room. Every cycle's composition was verified by evaluating the shipped module: three global convergences of 7.3–8.8 units and one trap of 5.5–5.8 units, across six consecutive cycles, none touching the boundary. Page HTML unchanged at 165KB, because all of it is WebGL rather than markup.
-- **Third pass on the 3D object.** Replaced the attention-column field with the loss landscape, for fit and for mass. The field's constants were tuned against the integration and verified by evaluating the shipped module: range −1.354 to 1.366, three global convergences of 7.5–8.5 units, one trap at −0.24 after 5.8 units, no boundary contact. The flat fallback became a real contour map and the page's HTML halved, 335KB to 165KB.
-- **Fixed in the second review:** the name appeared three times in the first viewport and the location twice — the identity strip now carries the current seat and the availability instead. The availability wording moved to `site.availability` and reads "Open to leadership positions in AI". The toolchain gained an open-weight-model group (Llama 3, Mistral, Mixtral, Qwen, Gemma, Phi, DeepSeek, Mamba, BERT), a model-adaptation group, and an agentic group carrying MCP, tool use and planning; the agentic expertise area names MCP too. The 3D object was replaced for fit, not for craft.
-- **Fixed after the user looked at it:** the front page rendered completely blank, because the entrance population was renamed in `globals.css` and not in `Reveal.tsx`. Nothing automated caught it — the markup, the build, the contrast maths and the detector were all clean while the page was invisible. The lesson is recorded as The One-Contract-Two-Files Rule, and a development warning now fires when the population is empty. Also removed in the same pass: a caption under the drawing that described the implementation ("drawn live in WebGL, and drawn again in SVG underneath") to an audience that does not care, and its replacement, which named the object as something it is not.
-
-## Known drift
-
-`PRODUCT.md` records that the scripted answer panel was **removed** in the
-Next.js rebuild. It is present in the code and shipped in this pass, re-skinned
-as the application-notes register. Removing a working function is the user's
-call, not a redesign's, so it was preserved. This is reported, not repaired.
-
----
-
-## The kinetic layer
-
-The datasheet is still the document. What sits on top of it now is one added
-material: **a screen**.
-
-The brief was "dynamic, fully animated, fun to see — code playing." The way to
-answer that without throwing away a working reference document was to add a
-single honest object rather than a coat of effects: this page is a printed
-document about building software, with a live terminal set into it. Everything
-that moves answers to that terminal, so the page reads as one idea rather than
-as eight tricks.
-
-### The screen is dark in both themes
-
-`--term-bg` and the syntax palette are declared once and are not flipped by
-`.dark`. A screen is a screen under any light; a terminal that turns into a
-white editor in the light theme reads as a styled div, not as a machine.
-
-### What moves, and what job it has
-
-| Thing | Where | The job it does |
-| --- | --- | --- |
-| `CodeTerminal` | Hero, right column | Types a real pipeline, runs it, prints the measured figures, wipes, next file. The only decoration on the page that is also evidence — its console prints the same numbers the characteristics table states. |
-| `AmbientCode` | Fixed, behind everything | The screen's spill: sparse falling glyphs plus a pointer-tracked light. Alpha caps at `--ambient-alpha` (0.10 light / 0.16 dark) so it never competes with prose. |
-| `Scramble` | Section heads only | Type resolving out of noise — a character being *written* rather than read. Used on eight heads and nowhere else, or it stops meaning anything. |
-| `Ticker` | Characteristics values | Digits roll and settle. Non-digits (`₹`, `→`, `–`, units) never move, so `650–800` and `6 → 10` survive intact. |
-| `Marquee` | Full-bleed, under the hero | The stack, running. The one band that crosses the whole sheet. Pauses on hover. |
-| `Magnetic` | The two hero actions | A ≤4px lean toward the pointer. A hint that the control is live, capped low enough that it never moves a target away from a cursor aimed at it. |
-| `ScrollProgress` | Fixed hairline, top | Read position. Complements the sheet counter in the running head: the counter says *where*, the hairline says *how much left*. |
-| `.plate-live` | Featured work, résumé, identity plates | The only block hover in the system: the edge takes the second ink and a beam runs the top. No lift, no scale — the sheet does not levitate. |
-
-### The three rules every one of them keeps
-
-1. **Nothing animates behind running prose at readable contrast.** The spill is
-   capped in alpha; the terminal is a bounded region, not a backdrop.
-2. **Everything stops under `prefers-reduced-motion: reduce`.** The terminal
-   renders the first file complete with its run already printed, the spill
-   never starts its rAF loop, and the scramble, ticker, marquee and magnetic
-   lean all no-op. This is checked at the source, not only in CSS.
-3. **Nothing moves a target by more than 4px.** Magnetic is the only thing that
-   moves an interactive element at all.
-
-Plus the ones the rest of the document already had: the terminal and the spill
-are `aria-hidden` (the terminal carries an `sr-only` line saying what it is),
-the marquee is `aria-hidden` because the same names are set as a real list in
-Technical depth, and `@media print` drops the spill, the progress hairline and
-the marquee entirely.
-
-### Performance
-
-The terminal is one rAF loop and two integers of state; a frame slices arrays,
-it does not re-layout. The spill is one canvas at capped DPR that halts on
-`visibilitychange` and re-reads its colours from a `MutationObserver` on the
-theme class rather than sampling `getComputedStyle` every frame. Scroll
-progress writes a transform through a ref, so scrolling never re-renders React.
-
----
-
-## The machine room
-
-The kinetic layer above set a screen into a printed sheet. This pass turns the
-room the sheet is read in into the machine, and it is the world the site now
-ships in.
-
-**The console is the primary material; daylight is the second.** `<html>`
-carries `.dark` from the server and the inline script only ever removes it, so
-an unset preference — and a thrown `localStorage` — both land on the console
-rather than stranding the page in the wrong material. The light theme is
-unchanged in structure: the same document under a lamp.
-
-### What is new, and what each thing is for
-
-| Machine | What it does | Why it is allowed |
-| --- | --- | --- |
-| **Boot** | Six lines and a bar, ~1.6 s, then wipes upward. | Once per session, any key or click ends it, never runs under reduced motion, and the page underneath is fully rendered the whole time. An overlay, not a gate. |
-| **Command palette** (⌘K / Ctrl-K) | Jump to any section; email, résumé, LinkedIn, copy address, flip theme, back to top. Subsequence matching, so `dlr` finds *Download résumé*. | Every entry is reachable another way — that is what makes it safe behind a keystroke. Listbox pattern with `aria-activedescendant`; Escape returns focus to the opener. |
-| **Reticle** | A viewfinder that lags the pointer, with a live coordinate readout, opening up over anything clickable. | The native cursor is deliberately **kept**. Replacing it costs the text I-beam and the link pointer and buys a nicer screenshot. Fine pointers only. |
-| **Field** | A lattice of points: a standing wave, a pointer push, and a shear driven by scroll velocity, with packets running the rows. | Replaces the first pass's falling glyphs — glyph rain is the most-used technical backdrop there is, and it was competing with the terminal, which is the thing on this page that genuinely has code in it. |
-| **Status rail** | Four figures with a trace behind each. | The traces move; **the figures do not**, and the caption says the traces are indicative and not a live feed. A fake dashboard reporting fake live traffic is exactly what this document exists to avoid. |
-| **Timeline spine** | Fills as Experience is scrolled; each role's node lights as it passes the reading line. | A scroll indicator for one section. The revision-history list underneath is unchanged and carries all the information. |
-| **Tilt** | The featured system leans ≤5° into the pointer. | Written as two CSS variables so the easing stays in the stylesheet and the panel settles rather than snapping. |
-| **Uptime** | How long this tab has been open, in the hero status line. | The one genuinely live number on the page, and honest about being trivial. |
-
-### The name
-
-Set at `clamp(2.75rem, 12.5vw, 9rem)`, arriving one glyph at a time off a
-per-character transition delay. Under the pointer a **single** glyph
-mis-registers — cyan plate left, volt plate right, the ink plate staying put
-on top so the letter never stops being legible.
-
-The first attempt split every glyph at once and turned a crisp headline into
-green mush. That is the difference between a registration error and a blurry
-print, and it is why the effect is scoped to `.mega-ch:hover` rather than
-`.mega:hover`.
-
-### Two bugs worth remembering
-
-- **`.js-only` is `display: contents`.** Putting it on the fixed-position ⌘K
-  chip stripped the element's own box and with it the positioning; the chip
-  vanished into the corner. Fixed-position elements get their own `display`
-  guard, never that helper.
-- **An auto grid track sizes to `max-content`.** The terminal sets its code in
-  `white-space: pre`, so on a phone the implicit single-column track grew to
-  the longest line and dragged the prose column out with it — 521px of content
-  in a 390px viewport. The hero grid is now explicitly `grid-cols-1`
-  (`minmax(0, 1fr)`), and the terminal wrapper carries `min-w-0`.
-
-### The guards, restated
-
-Everything above stops under `prefers-reduced-motion: reduce` — the boot never
-mounts, the field never starts its loop, the reticle is `display: none`, tilt
-is `transform: none !important`, and the timeline spine renders full. Print
-drops the field, the reticle, the boot, both chips and the spine. Nothing moves
-an interactive target by more than 4px. The page has no horizontal scroll at
-390px, 768px or 1440px.
-
----
-
-## The motion vocabulary
-
-Until this pass the page had **one** entrance — opacity and six pixels — doing
-every job below the fold. That is why the sections felt flat next to the hero:
-nine different kinds of content were all arriving in exactly the same way.
-
-It is a vocabulary now. Five entrances, each matched to what the thing being
-revealed actually *is*:
-
-| Attribute | Motion | Used for |
-| --- | --- | --- |
-| `data-reveal` | opacity + 6px | the quiet default — prose, captions |
-| `data-rise` | 18px + a 1.5% scale | blocks that arrive: panels, plates, the diagram |
-| `data-wipe` | `clip-path` left to right | things that are *drawn*: every section rule |
-| `data-rows` | per-child stagger at 45ms | tables and lists that populate |
-| `data-slide` | 14px from the margin | the ruled registers — work, leadership, depth, experience |
-| `data-words` | per-word at 42ms | one sentence on the page: the contact address |
-
-The rule that stops it becoming a circus: **one entrance per block, chosen by
-content type, never two competing inside the same region.** Every one of them
-is a transform and an opacity, so none can cost a reflow.
-
-`data-rows` and `data-words` stagger their own children. The reveal script
-writes a `--i` on each row or word once, up front, and the stylesheet turns
-that into a `transition-delay` — the cadence lives in one place instead of in
-nine hand-written delay attributes that drift the moment a row is added.
-
-### The circuit
-
-The block diagram claims four stages are one circuit. A circuit with nothing
-moving in it is a claim you have to take on trust, so a packet now runs the
-three forward connectors and closes the feedback loop, and each stage takes
-the signal a beat after the one before it.
-
-It is SMIL (`animateMotion` along the real path geometry), not CSS keyframes,
-because the feedback route is an L with two corners — expressing that as
-translate keyframes means restating the geometry in the stylesheet, where it
-goes stale silently the first time the drawing is edited. SMIL takes the path
-itself, and the legs are built from the same constants the boxes are.
-
-SMIL cannot be reached from a media query, so the reduced-motion check is made
-in React (`useSyncExternalStore` over the query, so it also responds if the
-setting changes mid-visit) and the packets are simply not rendered.
-
-The packets paint **after** the stages and **before** the feedback group. In
-SVG paint order that puts them over the connectors but under the evaluation
-block, so a packet disappears into that block and comes out the other side —
-which is what the diagram says happens. Painted last, it slid across the
-block's own label and read as a stray dot on the text.
-
-### Everything else that moves now
-
-Two tickers running opposite ways (toolchain out, problem domains back —
-counter-motion is what makes two bands read as a machine rather than one strip
-passing twice); the hero's name and screen leaving at different rates
-(±6% and 4%, shallow on purpose); the nav's trace rule growing under each
-label; prose links drawing their underline instead of thickening it; and the
-keys filling from the left on hover.
-
-### The bug that cost the most
-
-`.key { position: relative }` — added to host an absolutely-positioned sweep —
-**silently broke every fixed-position control on the page.** This stylesheet is
-unlayered; Tailwind's utilities live in `@layer utilities`; unlayered CSS beats
-layered CSS regardless of source order. So that one declaration overrode
-`fixed` on the Ask-me button and moved it out of its corner.
-
-The sweep is a `background-image` with an animating `background-size` now, and
-it claims no positioning at all.
-
-**The general rule this leaves behind:** anything appended to this file that
-sets `position`, `display`, `overflow` or another property Tailwind also ships
-as a utility will beat that utility everywhere the class appears. Give such
-rules a bespoke class name, or find a way to want the property less.
-
-### Verified
-
-Chrome, 1440 / 768 / 390: no horizontal scroll, no console or page errors,
-nothing stuck at `opacity: 0` after reveal. Under
-`prefers-reduced-motion: reduce`: **zero** running animations, zero hidden
-elements, no boot overlay, no reticle.
-
----
-
-## The featured system, and the last of the motion
-
-### Why the phone-call negotiator leads
-
-`Work` features `projects[0]` and sets the register beneath it, so that slot
-is an editorial decision, not an accident of array order. The real-time
-phone-call negotiator holds it because it is the **hardest claim on the page**
-— a live spoken turn inside 800 ms over telephony — and because it is the only
-one whose claim the site can show running.
-
-The ordering rationale now sits in a comment above `projects` in
-`content.ts`, so the next person to add a project knows the first entry is
-load-bearing.
-
-### The latency budget
-
-The featured panel carries `LatencyBudget`: the four stages of a spoken turn
-played in real time at 1 ms per millisecond, against a dashed ceiling at
-800 ms, with the last fourteen turns kept as a strip underneath.
-
-It shares `latency-budget.ts` with the WebGL object in `/lab`, so the flat
-version and the dimensional one cannot disagree about what the figure says.
-Runs come from a cycle index rather than `Math.random`, so a given cycle is
-the same run on the server, on the client and on a reload — and every fourth
-run is a **hot** one where every stage lands at the slow end at once and the
-bar nearly touches the ceiling. That run is the point of the object: a budget
-you always clear by 150 ms is not a budget anyone had to engineer.
-
-Nothing in it is React state. One rAF loop writes widths and text through
-refs — a 60 Hz re-render of nine nodes to move a playhead is work for nothing.
-The bars carry no CSS transition on purpose: the width is written every frame
-from the playhead, and a transition would fight the loop and lag the fill.
-
-### Also added
-
-Power-on flicker on `main` (two dips, once, first paint only); a very low
-contrast sweep crossing the terminal every seven seconds; corner brackets that
-scale out of their corner as a region arrives instead of appearing formed;
-`.row-live` — a trace rule that grows at the left edge of a ruled-register row
-on hover, with its index lighting; ticker items that light under the pointer;
-the rail's figures rolling their digits once on first sight; and the closing
-rule of the document drawing itself like every other rule here.
-
-### Three bugs, all of the same family
-
-Each of these was silent — valid CSS, no error, no warning, and a page that
-merely looked slightly wrong.
-
-**1. One element has one `::after`.** `.bracket::after` (the bottom-right
-corner mark) and `.plate-live::after` (the hover beam) were both correct on
-their own. On the featured panel, which carries both classes, they merged into
-one pseudo-element — the bracket's 10×10 box wearing the beam's fill, glow and
-four-sided inset — and painted a glowing filled square over the panel's
-top-left corner.
-
-`.plate-live` is a `background-image` with an animating `background-size` now,
-so it claims no pseudo-element at all and can be combined with anything.
-
-**2. Unlayered CSS beats `@layer utilities`.** Covered in the previous
-section: `.key { position: relative }` overrode Tailwind's `fixed` everywhere.
-Same resolution — a background instead of a positioned pseudo-element.
-
-**3. IntersectionObserver uses the *clipped* box.** `data-wipe` started its
-targets at `clip-path: inset(0 100% 0 0)`. That is zero area, so the observer
-never reported them as intersecting, so they never received `.is-in` — and
-**every section rule on the page was invisible.** A `transform: scaleX(0)`
-start state has the identical problem for the identical reason.
-
-`data-wipe` is now a wrapper: the observed parent keeps its full box, the
-child gets the clip.
-
-**The family resemblance:** all three are cases where a decorative technique
-quietly claimed a shared resource — the element's single `::after`, the
-cascade position of a utility class, the geometry the observer measures.
-Worth checking for by name when adding to this file.
-
-### Verified
-
-Chrome at 1440 / 768 / 390, scrolling the full page: no horizontal scroll, no
-console or page errors, **zero** elements left at `opacity: 0`, zero rules
-left clipped. Under `prefers-reduced-motion: reduce`: zero running animations
-and zero hidden elements.
-
----
-
-## The first viewport, settled
-
-### The loss surface is back, and the uptime clock is gone
-
-Two changes to what the hero says.
-
-**Out: the uptime counter.** It was the one genuinely live number on the page,
-and it was also the least useful thing a hiring team could read — how long a
-browser tab has been open. The availability statement takes the slot: same
-volt signal in the same position, an actual fact.
-
-**In: the loss surface.** Four optimisers descending a field with one deep
-global basin and a shallower trap in the near corner, with a readout that
-names, at every step, which of the two the leading run is in.
-
-It is the right object for the first viewport because it is the only one on
-the page that states the actual job: getting a model to a good optimum is not
-the same as getting it to *an* optimum, and the difference is the work. The
-trapped fourth runner is the whole point — a figure where every run succeeds
-would be decoration.
-
-The machinery was never deleted, only unused: `HeroArtifact` mounts WebGL from
-a dynamic import fired by an observer, over a server-rendered contour map of
-the same field. No scripting or no GPU gets the flat drawing, and the two
-cannot disagree — both read `loss-surface.ts`.
-
-### The code streamer moved rather than went
-
-`CodeTerminal` now sits in **Technical depth**, under the prose it illustrates.
-
-In the hero it was competing with the loss surface for the same job — *some­
-thing technical is happening here* — and the surface makes the better first
-claim. In Technical depth it is doing something the prose above it cannot:
-showing the shape of the three systems that section describes, in the language
-they were written in. It also means the first viewport now carries one moving
-object instead of two, which the hero needed.
-
-### The shape of the page's animation, after all of this
-
-| Where | What moves | Why it is there |
-| --- | --- | --- |
-| Hero | The loss surface, four runners, live loss readout | The job: a good optimum is not the same as an optimum |
-| Featured work | The latency budget, spent in real time | The hardest claim on the page, shown running |
-| Block diagram | Signal through the circuit | A circuit with nothing in it is a claim on trust |
-| Technical depth | The code streamer | The three pipelines, in their own language |
-| Everywhere | The entrance vocabulary, the field, the reticle | Structure and life, never information |
-
-The rule that holds across all five: **the four large animations each carry
-something the surrounding prose cannot, and the small ones carry nothing at
-all.** Anything in between — an animation that looks like it means something
-and does not — is the failure mode this page keeps avoiding.
-
-### Verified
-
-Chrome at 1440 / 768 / 390, full-page scroll: no horizontal scroll, no console
-or page errors, zero elements stuck at `opacity: 0`. WebGL scene confirmed
-live (`data-artifact="live"`, readout reporting `global min`). Under
-`prefers-reduced-motion: reduce`: zero running animations.
-
----
-
-## The symbol column is gone
-
-The characteristics table shipped with a `Sym` column — `N`, `t`, `Δ` —
-borrowed from the electronics datasheet the original world was modelled on,
-where a symbol exists so a figure can be referenced in a formula elsewhere in
-the document.
-
-Nothing on this page ever referenced one. Five of the ten rows had no symbol
-at all and showed an em dash, because a figure like "incubation funding
-secured" genuinely has no conventional symbol and inventing one would be
-worse than leaving it blank. The column was spending horizontal space —
-enough to push the table into a sideways scroll at 1440 — on atmosphere.
-
-It is removed, from the markup, from the `Characteristic` type and from every
-row. The table is `Parameter | Value | Unit | Conditions` now, it fits at
-1440 without scrolling, and Conditions — the column that actually does the
-work, because it is what stops a reader taking a number without taking where
-it came from — got the space.
-
-**The general note:** this world inherited its grammar from the datasheet, and
-some of that grammar was doing real work while some of it was costume. A
-column no reader can use is costume. Worth re-asking of anything else here
-that is present because the metaphor implies it rather than because the page
-needs it.
+### Do:
+- **Do** declare every new token as a custom property on `.cn`. The `<html>` theme class has no vote inside this world; it is a single material in a single mode.
+- **Do** ground new surfaces on `#000000` and lift them with translucent ink plus `backdrop-filter`, not with an opaque grey.
+- **Do** use the one easing curve (`cubic-bezier(0.16, 1, 0.3, 1)`) for every transition and every timed animation.
+- **Do** draw structure with hairlines at 5.5–10% white, and build panel grids with a 1px seam over a hairline-faint background.
+- **Do** keep the accent to marks that mean live, signal, now, or link, and set the accent half of a headline in a non-italic `<em>`.
+- **Do** set every comparable number with `font-variant-numeric: tabular-nums`, since the scope turns tabular figures off by default.
+- **Do** give any new reveal both an intersection trigger and a hard fallback timer, and start it at 0.25 opacity rather than 0.
+- **Do** split kinetic words on the server, and arm a mask only on elements that are below the fold at the time.
+- **Do** write pointer state as `--mx` / `--my` custom properties and let CSS draw; keep the per-frame cost at one style write.
+- **Do** keep a CSS-only fallback for every scripted visual — the CSS stage for WebGL, `:hover` for the pointer light, the hero's pure-CSS word rise.
+- **Do** suppress movement under `prefers-reduced-motion` while keeping colour, border and glow feedback.
+
+### Don't:
+- **Don't** gate any style on a `.js` class on `<html>`. React removes it during hydration; use `@media (scripting: enabled)`.
+- **Don't** let the app-wide `power-on` animation reach this route; `.cn main { animation: none }` stays.
+- **Don't** add a radius to a content surface. Panels, tables, plates and nodes are square; pills are for controls and tokens; 2px and 4px are for small drawn chart parts only.
+- **Don't** introduce a second typeface, an italic, or a monospace face.
+- **Don't** introduce a second hue. States distinguish themselves with Deep Beam, the 10% wash, or opacity.
+- **Don't** write a rule whose initial state is invisible outside `@media (scripting: enabled)`, and don't ship a reveal without a fallback.
+- **Don't** reuse a class name across two sections (`.cn-role` for a record row and for the hero's identity line); a shared name silently donates that section's grid column and border.
+- **Don't** target the running head with `.cn > header`; that selector outranks `.cn-head` on specificity and takes its stickiness away.
+- **Don't** add scroll snapping. With two full-height screens it fights every anchor jump and was removed for that reason.
+- **Don't** put the pointer light on text blocks. It belongs on surfaces that read as objects.
+- **Don't** use `vh` for a full-screen section; use `svh`, so a collapsing mobile toolbar cannot clip the bottom.
+- **Don't** merge anything from `DESIGN.v2.md` into this system. `/v2` is a separate, still-shipping world; the two share content, not tokens.

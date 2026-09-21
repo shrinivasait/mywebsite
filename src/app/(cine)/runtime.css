@@ -65,10 +65,11 @@
 .cn main { animation: none; }
 
 /* ── The stage ───────────────────────────────────────────────────────────────
-   The object lives on a fixed canvas behind the whole document, so the page
-   reads as one continuous shot rather than a stack of widgets. Underneath it,
-   and permanently if WebGL is missing, a lit room drawn in CSS in the same
-   values — so a visitor who never gets the object still gets a stage.
+   The object lives on a canvas inside the opening — not behind the document.
+   It is the first shot and nothing else: below the fold it is neither drawn
+   nor rendered, and the loop sleeps once the sheet has covered it. Underneath
+   it, and permanently if WebGL is missing, a lit room drawn in CSS in the same
+   values, so a visitor who never gets the object still gets a stage.
    ─────────────────────────────────────────────────────────────────────────── */
 
 /* The stage is offset rather than the object: wide, the canvas occupies the
@@ -631,7 +632,7 @@ html:has(.cn) { scroll-padding-top: 74px; }
 .cn-chart-svg { width: 100%; height: auto; display: block; }
 .cn-grid { stroke: var(--cn-hair-2); stroke-width: 1; }
 .cn-tick { fill: var(--cn-grey-2); font-size: 11px; font-family: inherit; }
-.cn-area { fill: rgb(143 176 255 / 0.09); }
+.cn-chart-area { fill: rgb(143 176 255 / 0.09); }
 .cn-step { fill: none; stroke: var(--cn-hair); stroke-width: 1.6; }
 .cn-step--live { stroke: var(--cn-lit); stroke-dasharray: 40 900; stroke-dashoffset: 940; }
 .cn-step--live { animation: cn-run 3.6s linear infinite; }
@@ -887,7 +888,7 @@ html:has(.cn) { scroll-padding-top: 74px; }
 
 .cn-display .cn-word-in,
 .cn-h2 .cn-word-in,
-.cn-out h2 .cn-word-in {
+.cn-close h2 .cn-word-in {
   transition:
     transform 0.55s var(--cn-ease),
     color 0.55s var(--cn-ease),
@@ -895,7 +896,7 @@ html:has(.cn) { scroll-padding-top: 74px; }
 }
 .cn-display:hover .cn-word-in,
 .cn-h2:hover .cn-word-in,
-.cn-out h2:hover .cn-word-in {
+.cn-close h2:hover .cn-word-in {
   transform: translateY(-0.085em);
   text-shadow: 0 10px 34px rgb(143 176 255 / 0.45);
   transition-delay: calc(var(--i, 0) * 45ms);
@@ -910,7 +911,7 @@ html:has(.cn) { scroll-padding-top: 74px; }
    ─────────────────────────────────────────────────────────────────────────── */
 
 .cn-h2 em .cn-word-in,
-.cn-out h2 em .cn-word-in {
+.cn-close h2 em .cn-word-in {
   animation: cn-glint 6s var(--cn-ease) infinite;
   animation-delay: calc(var(--i, 0) * 260ms);
 }
@@ -922,6 +923,6 @@ html:has(.cn) { scroll-padding-top: 74px; }
 @media (prefers-reduced-motion: reduce) {
   .cn-display:hover .cn-word-in,
   .cn-h2:hover .cn-word-in,
-  .cn-out h2:hover .cn-word-in { transform: none; }
-  .cn-h2 em .cn-word-in, .cn-out h2 em .cn-word-in { animation: none; }
+  .cn-close h2:hover .cn-word-in { transform: none; }
+  .cn-h2 em .cn-word-in, .cn-close h2 em .cn-word-in { animation: none; }
 }

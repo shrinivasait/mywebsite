@@ -270,11 +270,15 @@ html:has(.cn) { scroll-padding-top: 74px; }
 /* The second screen, and only the figures on it. They are the forty-second
    read, so they are given a frame of their own rather than a strip under the
    opening. */
+/* No minimum height. It had one so the figures would sit near the top of
+   their own screen rather than centred in it — but a screen-height floor
+   under 350px of content is 270px of nothing underneath, which is the gap it
+   was supposed to solve, moved. The content sizes the band; the section that
+   follows brings its own top padding as the separation. */
 .cn-screen {
-  min-height: min(calc(100svh - 74px), 620px);
-  display: flex; flex-direction: column; justify-content: flex-start;
+  display: flex; flex-direction: column;
   gap: clamp(20px, 2.4vw, 34px);
-  padding-block: clamp(44px, 7vh, 88px) clamp(40px, 5vw, 76px);
+  padding-block: clamp(44px, 7vh, 88px) 0;
 }
 .cn-screen-head { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; }
 .cn-screen-head p + p { margin-left: auto; }

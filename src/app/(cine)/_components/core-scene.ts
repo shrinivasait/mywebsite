@@ -235,6 +235,7 @@ export function createScene(canvas: HTMLCanvasElement, still: boolean): SceneHan
 
   let drift = 0;
   let stageX = 0;
+  let stageY = 0;
 
   const resize = () => {
     const parent = canvas.parentElement;
@@ -249,9 +250,13 @@ export function createScene(canvas: HTMLCanvasElement, still: boolean): SceneHan
     // the axis of a perspective frame projects as an ellipse. It is the canvas
     // that is offset instead (see `.cn-stage` in runtime.css), so the framing
     // is composed without ever distorting the object.
-    camera.fov = w >= 1100 ? 30 : 34;
-    camera.position.z = w >= 1100 ? 10.4 : 12.4;
+    const wide = w >= 1100;
+    camera.fov = wide ? 30 : 34;
+    camera.position.z = wide ? 10.4 : 13.6;
     stageX = 0;
+    // Narrow, the type runs the full width, so the object drops into the lower
+    // third rather than sitting behind the paragraph.
+    stageY = wide ? 0 : -1.5;
     camera.updateProjectionMatrix();
   };
   resize();
@@ -266,7 +271,7 @@ export function createScene(canvas: HTMLCanvasElement, still: boolean): SceneHan
 
     group.rotation.y = drift * 0.12 + ease * Math.PI * 1.15;
     group.rotation.x = -0.18 + ease * 0.42;
-    group.position.y = ease * 0.55;
+    group.position.y = stageY + ease * 0.55;
     group.position.x = stageX - ease * 1.6;
     group.scale.setScalar(1 - ease * 0.22);
 
@@ -290,6 +295,7 @@ export function createScene(canvas: HTMLCanvasElement, still: boolean): SceneHan
     dust.rotation.y = drift * 0.02 - ease * 0.4;
     dust.position.y = -ease * 0.6;
     dust.position.x = stageX * 0.5;
+    dust.position.y += stageY * 0.5;
 
     renderer.render(scene, camera);
   };

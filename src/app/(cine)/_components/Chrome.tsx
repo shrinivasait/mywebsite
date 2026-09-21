@@ -5,11 +5,11 @@ import { site } from "@/lib/content";
 import { BUDGET_MS, CEILING_MS, offsets, stages } from "./turn";
 
 const SECTIONS = [
-  { id: "systems", label: "Systems" },
-  { id: "latency", label: "Latency" },
-  { id: "scale", label: "Scale" },
-  { id: "depth", label: "Depth" },
-  { id: "record", label: "Record" },
+  { id: "work", label: "Work" },
+  { id: "case-study", label: "Case study" },
+  { id: "leadership", label: "Leadership" },
+  { id: "expertise", label: "Expertise" },
+  { id: "experience", label: "Experience" },
   { id: "contact", label: "Contact" },
 ] as const;
 

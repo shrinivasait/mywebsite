@@ -176,7 +176,7 @@ export default function Cine() {
         </section>
 
         {/* ── Systems ───────────────────────────────────────────────────── */}
-        <section id="systems" className="cn-shell cn-sec">
+        <section id="work" className="cn-shell cn-sec">
           <div className="cn-sec-head cn-in">
             <div>
               <p className="cn-label">Selected work</p>
@@ -235,7 +235,7 @@ export default function Cine() {
         </section>
 
         {/* ── Latency ───────────────────────────────────────────────────── */}
-        <section id="latency" className="cn-shell cn-sec">
+        <section id="case-study" className="cn-shell cn-sec">
           <div className="cn-sec-head cn-in">
             <div>
               <p className="cn-label">The hardest claim on this page</p>
@@ -263,10 +263,10 @@ export default function Cine() {
         </section>
 
         {/* ── Scale ─────────────────────────────────────────────────────── */}
-        <section id="scale" className="cn-shell cn-sec">
+        <section id="leadership" className="cn-shell cn-sec">
           <div className="cn-sec-head cn-in">
             <div>
-              <p className="cn-label">The other half</p>
+              <p className="cn-label">Leadership</p>
               <h2 className="cn-h2" data-kinetic>
                 <Words>{"An architecture is only as durable as"}</Words> <em><Words start={7}>{"the organisation running it"}</Words></em>
               </h2>
@@ -295,7 +295,7 @@ export default function Cine() {
         </section>
 
         {/* ── Depth ─────────────────────────────────────────────────────── */}
-        <section id="depth" className="cn-shell cn-sec">
+        <section id="expertise" className="cn-shell cn-sec">
           <div className="cn-sec-head cn-in">
             <div>
               <p className="cn-label">Technical depth</p>
@@ -340,10 +340,10 @@ export default function Cine() {
         </section>
 
         {/* ── Record ────────────────────────────────────────────────────── */}
-        <section id="record" className="cn-shell cn-sec">
+        <section id="experience" className="cn-shell cn-sec">
           <div className="cn-sec-head cn-in">
             <div>
-              <p className="cn-label">Record</p>
+              <p className="cn-label">Experience</p>
               <h2 className="cn-h2" data-kinetic>
                 <Words>{"Three seats,"}</Words> <em><Words start={2}>{"five years"}</Words></em>
               </h2>

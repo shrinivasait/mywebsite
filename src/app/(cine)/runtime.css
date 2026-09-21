@@ -926,3 +926,26 @@ html:has(.cn) { scroll-padding-top: 74px; }
   .cn-close h2:hover .cn-word-in { transform: none; }
   .cn-h2 em .cn-word-in, .cn-close h2 em .cn-word-in { animation: none; }
 }
+
+/* ── Chart points ────────────────────────────────────────────────────────────
+   Each point carries three facts — when, how many, and what changed — and all
+   three were only readable in the key below. Pointing at a point states them
+   on the point. No JavaScript: the tip is a sibling group shown by `:hover`
+   on the pair, and the same facts stay in the key for anyone not hovering.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.cn-pt-hit { fill: transparent; cursor: default; }
+.cn-dot { transition: r 0.3s var(--cn-ease), fill 0.3s var(--cn-ease); }
+.cn-pt:hover .cn-dot { r: 6; fill: var(--cn-lit); }
+
+.cn-pt-tip { opacity: 0; transform-box: fill-box; pointer-events: none; transition: opacity 0.25s var(--cn-ease); }
+.cn-pt:hover .cn-pt-tip { opacity: 1; }
+.cn-pt-box { fill: #0d1017; stroke: rgb(143 176 255 / 0.32); stroke-width: 1; }
+.cn-pt-when { fill: var(--cn-lit); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; }
+.cn-pt-n { fill: var(--cn-white); font-size: 15px; font-weight: 500; }
+.cn-pt-unit { fill: var(--cn-grey); font-size: 10px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; }
+.cn-pt-note { fill: var(--cn-grey); font-size: 11px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cn-pt-tip, .cn-dot { transition: none; }
+}

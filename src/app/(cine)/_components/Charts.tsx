@@ -39,6 +39,10 @@ const HEADS = [
   { at: "Aug 2025", n: 18, note: "Current seat" },
 ] as const;
 
+/** The point tip, in the chart's own coordinate space. */
+const TIP_W = 150;
+const TIP_H = 64;
+
 export function TeamCurve() {
   const W = 460;
   const H = 200;
@@ -84,16 +88,39 @@ export function TeamCurve() {
         <path className="cn-step" d={step} vectorEffect="non-scaling-stroke" />
         <path className="cn-step cn-step--live" d={step} vectorEffect="non-scaling-stroke" />
 
-        {HEADS.map((h, i) => (
-          <g key={h.at}>
-            <circle className="cn-dot" cx={x(h.at)} cy={y(h.n)} r={4} />
-            {i === 0 ? (
-              <text className="cn-tick" x={x(h.at)} y={H - padB + 20} textAnchor="start">
-                {h.at}
-              </text>
-            ) : null}
-          </g>
-        ))}
+        {HEADS.map((h, i) => {
+          /* The tip is anchored away from the edge it is nearest, so it never
+             hangs off the plot: left-aligned at the first point, right-aligned
+             at the last, centred in between. */
+          const anchor = i === 0 ? -12 : i === HEADS.length - 1 ? -TIP_W + 12 : -TIP_W / 2;
+          /* A point near the top of the plot has no room above it, so its tip
+             hangs below instead of being clipped by the frame. */
+          const above = y(h.n) > TIP_H + 24;
+          const top = above ? -TIP_H - 14 : 14;
+          return (
+            <g className="cn-pt" key={h.at}>
+              {/* A hit area larger than the dot: a 4px target is not a target. */}
+              <circle className="cn-pt-hit" cx={x(h.at)} cy={y(h.n)} r={16} />
+              <circle className="cn-dot" cx={x(h.at)} cy={y(h.n)} r={4} />
+
+              <g className="cn-pt-tip" transform={`translate(${x(h.at)} ${y(h.n)})`}>
+                <rect className="cn-pt-box" x={anchor} y={top} width={TIP_W} height={TIP_H} rx={4} />
+                <text className="cn-pt-when" x={anchor + 12} y={top + 19}>
+                  {h.at}
+                </text>
+                <text className="cn-pt-n" x={anchor + 12} y={top + 41}>
+                  {h.n}
+                  <tspan className="cn-pt-unit" dx={5}>
+                    engineers
+                  </tspan>
+                </text>
+                <text className="cn-pt-note" x={anchor + 12} y={top + 57}>
+                  {h.note}
+                </text>
+              </g>
+            </g>
+          );
+        })}
         <text className="cn-tick" x={right} y={H - padB + 20} textAnchor="end">
           Today
         </text>

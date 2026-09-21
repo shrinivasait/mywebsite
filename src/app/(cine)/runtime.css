@@ -584,6 +584,8 @@ html:has(.cn) { scroll-padding-top: 74px; }
 @media (min-width: 900px) {
   .cn-fb-wrap { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 26px); }
   .cn-fb { grid-column: 3 / span 2; }
+  .cn-fb-stub--in { right: 12%; }
+  .cn-fb-stub--out { left: 12%; }
 }
 .cn-fb {
   position: relative;
@@ -599,8 +601,7 @@ html:has(.cn) { scroll-padding-top: 74px; }
 
 /* The two wires: down out of the systems on the right, back up into the
    architecture on the left. Each is a hairline with the signal running it. */
-.cn-fb-stub { position: absolute; bottom: 100%; width: 1px; height: 44px; background: rgb(246 247 250 / 0.22); display: none; }
-@media (min-width: 900px) { .cn-fb-stub { display: block; } }
+.cn-fb-stub { position: absolute; bottom: 100%; width: 1px; height: 44px; background: rgb(246 247 250 / 0.22); }
 .cn-fb-stub::after {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(180deg, transparent, var(--cn-lit), transparent);
@@ -611,9 +612,9 @@ html:has(.cn) { scroll-padding-top: 74px; }
 @keyframes cn-drop { from { background-position: 0 -44px; } to { background-position: 0 44px; } }
 @keyframes cn-lift { from { background-position: 0 44px; } to { background-position: 0 -44px; } }
 .cn-fb-stub svg { position: absolute; left: 50%; width: 11px; height: 11px; transform: translateX(-50%); fill: none; stroke: var(--cn-grey-2); stroke-width: 1.2; }
-.cn-fb-stub--in { right: 12%; }
+.cn-fb-stub--in { right: 22%; }
 .cn-fb-stub--in svg { bottom: -3px; }
-.cn-fb-stub--out { left: 12%; }
+.cn-fb-stub--out { left: 22%; }
 .cn-fb-stub--out svg { top: -3px; }
 
 /* ── A system's pipeline ─────────────────────────────────────────────────── */
@@ -798,7 +799,7 @@ html:has(.cn) { scroll-padding-top: 74px; }
    else is CSS, so the cost per frame is one style write.
    ─────────────────────────────────────────────────────────────────────────── */
 
-.cn-system, .cn-pillar, .cn-chart, .cn-rail-seg, .cn-field-row { position: relative; }
+.cn-system, .cn-pillar, .cn-chart, .cn-field-row { position: relative; }
 .cn-system::before,
 .cn-pillar::before,
 .cn-chart::before,

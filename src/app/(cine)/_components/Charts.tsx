@@ -234,23 +234,33 @@ export function SeatRail() {
           </span>
         ))}
 
-        {spans.map((s) => (
-          <span
-            key={s.role.org}
-            className="cn-rail-seg"
-            data-current={s.role.current ? "1" : "0"}
-            style={{ left: `${pct(s.from)}%`, width: `${((s.to - s.from) / total) * 100}%` }}
-          >
-            <span className="cn-rail-fill" aria-hidden />
-            <span className="cn-rail-copy">
-              <b>{s.role.title}</b>
-              <i>
-                {s.role.orgShort ?? s.role.org} · {s.to - s.from} mo
-              </i>
+        {spans.map((s) => {
+          const share = (s.to - s.from) / total;
+          /* A seven-month seat is a 40px bar on a phone. A title in it comes
+             out as two letters and an ellipsis, which reads as a rendering
+             fault rather than as a short stay — so the bar carries no copy and
+             the year ticks place it. The role is named in full underneath. */
+          const roomy = share > 0.16;
+          return (
+            <span
+              key={s.role.org}
+              className="cn-rail-seg"
+              data-current={s.role.current ? "1" : "0"}
+              style={{ left: `${pct(s.from)}%`, width: `${share * 100}%` }}
+            >
+              <span className="cn-rail-fill" aria-hidden />
+              {roomy ? (
+                <span className="cn-rail-copy">
+                  <b>{s.role.title}</b>
+                  <i>
+                    {s.role.orgShort ?? s.role.org} · {s.to - s.from} mo
+                  </i>
+                </span>
+              ) : null}
+              {s.role.current ? <span className="cn-rail-now">Now</span> : null}
             </span>
-            {s.role.current ? <span className="cn-rail-now">Now</span> : null}
-          </span>
-        ))}
+          );
+        })}
       </div>
     </figure>
   );
